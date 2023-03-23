@@ -1,0 +1,17 @@
+Social Contract group 12
+
+How do we handle bookings and communicate?
+
+- Communication regarding admin stuff goes in messenger group. 
+- Communication regarding more developing stuff goes in Slack
+- Communication only occurs between 8-17 on weekdays. If not you get 1 pin per message
+- If you come late you 1 pin per minute. 15 pins equals brining fika to the next meeting. 
+- If nothing else stated, meeting is in person. If you have a reason its allowed to be on zoom. If so, write early so others can adjust. 
+
+Document- and filemanagement
+
+- When you implement a change someone else in the group needs to review it and confirm it before it´s implemented. 
+
+Decisionmaking
+
+- Decissions regarding the overall funtionality and look of the product are to be made with mayority. Small details and overall coding is up to each member of the group.
