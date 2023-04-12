@@ -1,53 +1,40 @@
-import React, { useState } from 'react'
-import styles from './style.module.css'
+import useAxios from "axios-hooks";
+import styles from "./style.module.css";
 
-export default function Register() {
 
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-
-  const register = async () => {
-    const response = await fetch('http://localhost:8080/api/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username,
-        password
-      })
-    })
-    return response.json()
-  }
+type SignUpResponse = {
+  success: boolean;
+};
+const SignupPage = () => {
+  const [{ data, loading, error }, signup] = useAxios<SignUpResponse>(
+    {
+      url: "http://localhost:8080/users",
+      method: "POST",
+    },
+    {
+      manual: true,
+    }
+  );
 
   return (
     <>
-        <form className={styles.form}>
-          <label htmlFor="username">Username</label>
-          <input 
-            type="text" 
-            className={styles.input}
-            id="username" 
-            name="username" 
-            value={username} 
-            onChange={(e) => setUsername(e.target.value)} 
-          />
-
-          <label htmlFor="password">Password</label>
-          <input 
-            type="password" 
-            className={styles.input}
-            id="password" 
-            name="password" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-          />
-
-        <button 
-          className={styles.button}
-          onClick={() => register()}> Register </button>
-
-        </form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          signup();
+        }}
+        className={styles.form}
+      >
+        <h1>Sign Up</h1>
+        <input name="username" className={styles.input}/>
+        <input name="password" className={styles.input}/>
+        {error && <p>{error.message}</p>}
+        {data?.success && <p>Successfully signed up</p>}
+        <div>
+          <button className={styles.button}>{loading ? "Loading..." : "Sign up"}</button>
+        </div>
+      </form>
     </>
-  )
-}
+  );
+};
+export default SignupPage;
