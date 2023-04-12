@@ -2,8 +2,11 @@ package com.g12.wallstreetwarriors.user;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.Optional;
+
 @Service
-public class UserService {
+class UserService {
 
     private final UserRepository userRepository;
 
@@ -13,5 +16,13 @@ public class UserService {
 
     User addUser(User user) {
         return userRepository.save(user);
+    }
+
+    Collection<User> getUsers() {
+        return userRepository.findAll();
+    }
+
+    Optional<User> getUserById(Long id) {
+        return userRepository.findById(id);
     }
 }
