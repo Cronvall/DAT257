@@ -1,20 +1,27 @@
-import useAxios from "axios-hooks";
+import React, { useState } from "react";
+import axios from "axios";
 import styles from "./style.module.css";
 
 
-type SignUpResponse = {
-  success: boolean;
-};
+
 const SignupPage = () => {
-  const [{ data, loading, error }, signup] = useAxios<SignUpResponse>(
-    {
-      url: "http://localhost:8080/users",
-      method: "POST",
-    },
-    {
-      manual: true,
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+
+  const signup = async () => {
+    try{
+      axios.post('http://localhost:8080/users',
+      {
+        username: username,
+        password: password
+      })
     }
-  );
+    catch(e){
+      console.log(e)
+    }
+  };
 
   return (
     <>
@@ -26,12 +33,21 @@ const SignupPage = () => {
         className={styles.form}
       >
         <h1>Sign Up</h1>
-        <input name="username" className={styles.input}/>
-        <input name="password" className={styles.input}/>
-        {error && <p>{error.message}</p>}
-        {data?.success && <p>Successfully signed up</p>}
+        <input 
+          name="username" 
+          className={styles.input}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input 
+          name="password" 
+          className={styles.input} 
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        
         <div>
-          <button className={styles.button}>{loading ? "Loading..." : "Sign up"}</button>
+          <button className={styles.button} onClick={signup}>Sign up</button>
         </div>
       </form>
     </>
