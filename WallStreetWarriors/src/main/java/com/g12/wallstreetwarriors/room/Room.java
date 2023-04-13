@@ -31,7 +31,7 @@ public class Room {
     private Integer budget;
 
     @Column(name = "USERS", nullable = false)
-    @OneToMany(mappedBy = "Room", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<User> users = new ArrayList<>();
 
 
