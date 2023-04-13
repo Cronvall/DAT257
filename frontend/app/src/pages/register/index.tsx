@@ -1,53 +1,56 @@
-import React, { useState } from 'react'
-import styles from './style.module.css'
+import React, { useState } from "react";
+import axios from "axios";
+import styles from "./style.module.css";
 
-export default function Register() {
 
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
 
-  const register = async () => {
-    const response = await fetch('http://localhost:8080/api/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        username,
-        password
+const SignupPage = () => {
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+
+  const signup = async () => {
+    try{
+      axios.post('http://localhost:8080/users',
+      {
+        username: username,
+        password: password
       })
-    })
-    return response.json()
-  }
+    }
+    catch(e){
+      console.log(e)
+    }
+  };
 
   return (
     <>
-        <form className={styles.form}>
-          <label htmlFor="username">Username</label>
-          <input 
-            type="text" 
-            className={styles.input}
-            id="username" 
-            name="username" 
-            value={username} 
-            onChange={(e) => setUsername(e.target.value)} 
-          />
-
-          <label htmlFor="password">Password</label>
-          <input 
-            type="password" 
-            className={styles.input}
-            id="password" 
-            name="password" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)} 
-          />
-
-        <button 
-          className={styles.button}
-          onClick={() => register()}> Register </button>
-
-        </form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          signup();
+        }}
+        className={styles.form}
+      >
+        <h1>Sign Up</h1>
+        <input 
+          name="username" 
+          className={styles.input}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <input 
+          name="password" 
+          className={styles.input} 
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        
+        <div>
+          <button className={styles.button} onClick={signup}>Sign up</button>
+        </div>
+      </form>
     </>
-  )
-}
+  );
+};
+export default SignupPage;
