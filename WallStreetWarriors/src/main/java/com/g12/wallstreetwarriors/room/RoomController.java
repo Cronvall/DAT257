@@ -17,10 +17,5 @@ public class RoomController {
     private record RequestWrapper(User user, Room room) {};
     @PostMapping("/room")
     public void addRoom(@RequestBody RequestWrapper requestWrapper) {
-        System.out.println(requestWrapper.room);
-        System.out.println(requestWrapper.room());
-        System.out.println(requestWrapper.user);
-        System.out.println(requestWrapper.user());
-        roomService.createRoom(requestWrapper.user(), requestWrapper.room());
     }
 }
