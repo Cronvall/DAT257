@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@Table(name="ROOM")
+@Table(name="ROOMS")
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,20 +30,38 @@ public class Room {
     @Column(name = "BUDGET", nullable = false)
     private Integer budget;
 
-    @Column(name = "USERS", nullable = false)
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<User> users = new ArrayList<>();
+    @ManyToOne(
+            cascade = CascadeType.ALL)
+    @JoinColumn(
+            name = "owner",
+            referencedColumnName = "id"
+    )
+    private User owner;
 
+    @ManyToMany(
+            cascade = CascadeType.ALL
+    )
+    @JoinTable(
+            name = "room_members",
+            joinColumns = @JoinColumn(
+                    name = "room_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "user_id",
+                    referencedColumnName = "id"
+            )
+    )
+    private List<User> members;
 
-    public void addUser(User user){
-        if (users.size() < this.capacity)
-            users.add(user);
+    void addMember(User user) {
+        if(members == null) {
+            members = new ArrayList<>();
+        }
+        members.add(user);
     }
 
-    public void removeUser(User user){
-        users.remove(user);
+    void removeMember(User user) {
+        members.remove(user);
     }
-
-
-
 }

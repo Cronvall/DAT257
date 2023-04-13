@@ -23,9 +23,6 @@ public class User {
     private String username;
     private String password;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Room room;
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
