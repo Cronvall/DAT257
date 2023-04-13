@@ -18,6 +18,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/users")
     ResponseEntity<User> addUser(@RequestBody User newUser) {
         return new ResponseEntity<>(userService.addUser(newUser), HttpStatus.CREATED);
