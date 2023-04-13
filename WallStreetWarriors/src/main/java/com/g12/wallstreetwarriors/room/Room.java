@@ -1,15 +1,20 @@
 package com.g12.wallstreetwarriors.room;
 
+import com.g12.wallstreetwarriors.user.User;
 import jakarta.persistence.*;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
 @Table(name="ROOM")
 public class Room {
     @Id
@@ -22,51 +27,23 @@ public class Room {
     @Column(name ="CODE", nullable = false)
     private Integer code;
 
-    @Column(name = "BUDGET")
+    @Column(name = "BUDGET", nullable = false)
     private Integer budget;
 
-    //set type to User
-    @OneToMany
-    @NotNull
-    private List<User> users;
+    @Column(name = "USERS", nullable = false)
+    @OneToMany(mappedBy = "Room", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<User> users = new ArrayList<>();
 
-    //Ta bort id?
-    public Room(Long id, Integer capacity, Integer code, Integer budget){
-        this.id = id;
-        this.capacity = capacity;
-        this.code = code;
-        this.budget = budget;
+
+    public void addUser(User user){
+        if (users.size() < this.capacity)
+            users.add(user);
     }
 
-    public Long getId() {
-        return id;
+    public void removeUser(User user){
+        users.remove(user);
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public Integer getCapacity() {
-        return capacity;
-    }
 
-    public void setCapacity(Integer capacity) {
-        this.capacity = capacity;
-    }
-
-    public Integer getCode() {
-        return code;
-    }
-
-    public void setCode(Integer code) {
-        this.code = code;
-    }
-
-    public Integer getBudget() {
-        return budget;
-    }
-
-    public void setBudget(Integer budget) {
-        this.budget = budget;
-    }
 }

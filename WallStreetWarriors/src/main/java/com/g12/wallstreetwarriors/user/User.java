@@ -1,9 +1,7 @@
 package com.g12.wallstreetwarriors.user;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.g12.wallstreetwarriors.room.Room;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Objects;
@@ -24,6 +22,9 @@ public class User {
 
     private String username;
     private String password;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Room room;
 
     @Override
     public boolean equals(Object o) {
