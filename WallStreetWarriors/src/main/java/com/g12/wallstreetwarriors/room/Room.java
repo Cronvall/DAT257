@@ -9,6 +9,7 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -55,6 +56,10 @@ public class Room {
     )
     @ToString.Exclude
     private List<User> members;
+
+    @OneToMany(mappedBy = "room", cascade = {CascadeType.PERSIST, CascadeType.ALL})
+    private Set<UserRoomStockLink> userRoomStockLinks;
+
 
     public void addMember(User user) {
         if(members == null) {
