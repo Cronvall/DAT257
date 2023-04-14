@@ -1,0 +1,10 @@
+Week 1
+
+What do I want to learn or understand better? Consider e.g. teamwork, Scrum, agile processes, technologies etc? 
+- Get to know the spring boot framework better. 
+
+What is my contribution towards the team’s deliveries? How can I help my team do better next sprint?
+- I began working with the stock api. I wrote a rest api in the backend with stock data. Better communication.
+
+Changes/improvements from last week's reflection?
+- NA
