@@ -2,12 +2,12 @@ package com.g12.wallstreetwarriors.room;
 
 import com.g12.wallstreetwarriors.user.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.jetbrains.annotations.NotNull;
 
-import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @NoArgsConstructor
@@ -15,23 +15,24 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@Builder
 @Table(name="ROOMS")
 public class Room {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(name = "CAPACITY",nullable = false)
+    @NotNull
     private Integer capacity;
-
-    @Column(name ="CODE", nullable = false)
+    @NotNull
     private Integer code;
-
-    @Column(name = "BUDGET", nullable = false)
+    @NotNull
     private Integer budget;
 
     @ManyToOne(
-            cascade = CascadeType.ALL)
+            optional = false,
+            cascade = CascadeType.ALL
+    )
     @JoinColumn(
             name = "owner",
             referencedColumnName = "id"
@@ -39,8 +40,7 @@ public class Room {
     private User owner;
 
     @ManyToMany(
-            cascade = CascadeType.ALL
-    )
+            cascade = CascadeType.MERGE)
     @JoinTable(
             name = "room_members",
             joinColumns = @JoinColumn(
@@ -52,16 +52,30 @@ public class Room {
                     referencedColumnName = "id"
             )
     )
+    @ToString.Exclude
     private List<User> members;
 
-    void addMember(User user) {
+    public void addMember(User user) {
         if(members == null) {
             members = new ArrayList<>();
         }
         members.add(user);
     }
 
-    void removeMember(User user) {
+    public void removeMember(User user) {
         members.remove(user);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Room room = (Room) o;
+        return Objects.equals(id, room.id) && Objects.equals(capacity, room.capacity) && Objects.equals(code, room.code) && Objects.equals(budget, room.budget) && Objects.equals(owner, room.owner) && Objects.equals(members, room.members);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, capacity, code, budget, owner, members);
     }
 }
