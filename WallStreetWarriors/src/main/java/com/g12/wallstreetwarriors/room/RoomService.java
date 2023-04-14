@@ -3,6 +3,9 @@ package com.g12.wallstreetwarriors.room;
 import com.g12.wallstreetwarriors.user.User;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class RoomService {
     private final RoomRepository roomRepository;
@@ -11,12 +14,26 @@ public class RoomService {
         this.roomRepository = roomRepository;
     }
 
-    void createRoom(User user, Room newRoom) {
-        newRoom.setOwner(user);
-        roomRepository.save(newRoom);
+    Optional<Room> getRoomById(Long id){
+        return roomRepository.findById(id);
     }
 
-    void addUser(User user, Long id) {
-        roomRepository.findById(id).get().addMember(user);
+    List<Room> getRooms(){
+        return roomRepository.findAll();
     }
+
+    Room createRoom(User user, Room newRoom) {
+        newRoom.setOwner(user);
+        roomRepository.save(newRoom);
+        return newRoom;
+    }
+
+    Optional<Room> addUser(User user, Room room) {
+        Optional<Room> room2 = roomRepository.getRoomByCode(room.getCode());
+        if (room2.isPresent()) {
+            room2.get().addMember(user);
+        }
+        return room2;
+    }
+
 }

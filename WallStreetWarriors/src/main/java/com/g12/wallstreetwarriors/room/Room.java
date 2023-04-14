@@ -1,6 +1,7 @@
 package com.g12.wallstreetwarriors.room;
 
 import com.g12.wallstreetwarriors.user.User;
+import jakarta.annotation.Priority;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -60,6 +61,7 @@ public class Room {
             members = new ArrayList<>();
         }
         members.add(user);
+
     }
 
     public void removeMember(User user) {
