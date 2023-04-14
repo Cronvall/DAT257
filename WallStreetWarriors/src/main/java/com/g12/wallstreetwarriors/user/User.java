@@ -1,6 +1,7 @@
 package com.g12.wallstreetwarriors.user;
 
 import com.g12.wallstreetwarriors.room.Room;
+import jakarta.annotation.Priority;
 import jakarta.persistence.*;
 import lombok.*;
 
