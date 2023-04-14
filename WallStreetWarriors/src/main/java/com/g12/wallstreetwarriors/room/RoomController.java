@@ -19,15 +19,16 @@ public class RoomController {
 
     private record RequestWrapper(User user, Room room) {};
     @PostMapping("/room")
-    ResponseEntity<Room> addRoom(@RequestBody RequestWrapper requestWrapper) {
-        return new ResponseEntity<>(roomService.createRoom(requestWrapper.user, requestWrapper.room), HttpStatus.CREATED);
+    ResponseEntity<Room> addRoom(@RequestBody Room newRoom) {
+        return new ResponseEntity<>(roomService.createRoom(newRoom), HttpStatus.CREATED);
     }
 
     @PostMapping("/room/{id}")
-    ResponseEntity<Room> addPlayer(@PathVariable(name = "id") Long roomId, @RequestBody User user) {
+    ResponseEntity<Room> addPlayer(@PathVariable(name = "id") Long roomId, @RequestBody User user, @RequestParam(name = "code") Integer code) {
         Optional<Room> room = roomService.getRoomById(roomId);
+        System.out.println(code);
         if (room.isPresent()){
-            return new ResponseEntity<>(roomService.addUser(user,room.get()).get(), HttpStatus.CREATED);
+            return new ResponseEntity<>(roomService.addUser(user,room.get(), code).get(), HttpStatus.CREATED);
         }
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
