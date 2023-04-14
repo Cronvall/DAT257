@@ -12,7 +12,7 @@ const SignupPage = () => {
 
   const signup = async () => {
     try{
-      axios.post('http://localhost:8080/users',
+      axios.post('http://localhost:8080/api/users',
       {
         username: username,
         password: password
@@ -28,7 +28,7 @@ const SignupPage = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          // signup();
+          signup();
         }}
         className={styles.form}
       >
@@ -46,9 +46,9 @@ const SignupPage = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         
-        <div>
+        {/* <div> */}
           <button className={styles.button} onClick={signup}>Sign up</button>
-        </div>
+        {/* </div> */}
       </form>
     </>
   );

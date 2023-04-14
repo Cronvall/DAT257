@@ -31,7 +31,7 @@ public class Room {
 
     @ManyToOne(
             optional = false,
-            cascade = CascadeType.ALL
+            cascade = CascadeType.MERGE
     )
     @JoinColumn(
             name = "owner",

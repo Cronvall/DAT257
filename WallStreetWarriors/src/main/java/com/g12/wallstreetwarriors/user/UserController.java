@@ -18,16 +18,19 @@ public class UserController {
         this.userService = userService;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/users")
     ResponseEntity<User> addUser(@RequestBody User newUser) {
         return new ResponseEntity<>(userService.addUser(newUser), HttpStatus.CREATED);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/users")
     ResponseEntity<Collection<User>> getUsers() {
         return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
     }
-
+    
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/users/{id}")
     ResponseEntity<User> getUserById(@PathVariable Long id) {
         return userService.getUserById(id)
