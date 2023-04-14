@@ -28,7 +28,7 @@ const SignupPage = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          signup();
+          // signup();
         }}
         className={styles.form}
       >
