@@ -1,1 +1,8 @@
-Its going great my guy!
+What do I want to learn or understand better? Consider e.g. teamwork, Scrum, agile processes, technologies etc? 
+- Hur databaserna, front end och back end hänger ihop och pratar med varandra. 
+
+What is my contribution towards the team’s deliveries? How can I help my team do better next sprint?
+- Har hjälpt till att utforma vad vi skulle göra denna sprint. Har inte kodat något som levererats mer än att få allt att fungera på min egen dator. 
+
+Changes/improvements from last week's reflection?
+- NA
