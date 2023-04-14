@@ -1,11 +1,13 @@
 package com.g12.wallstreetwarriors.user;
 
 import com.g12.wallstreetwarriors.room.Room;
+import com.g12.wallstreetwarriors.room.UserRoomStockLink;
 import jakarta.annotation.Priority;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -23,6 +25,9 @@ public class User {
 
     private String username;
     private String password;
+
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.ALL})
+    private Set<UserRoomStockLink> userRoomStockLinks;
 
     @Override
     public boolean equals(Object o) {
