@@ -4,6 +4,7 @@ import com.g12.wallstreetwarriors.user.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -22,16 +23,16 @@ public class RoomService {
         return roomRepository.findAll();
     }
 
-    Room createRoom(User user, Room newRoom) {
-        newRoom.setOwner(user);
+    Room createRoom(Room newRoom) {
         roomRepository.save(newRoom);
         return newRoom;
     }
 
-    Optional<Room> addUser(User user, Room room) {
-        Optional<Room> room2 = roomRepository.getRoomByCode(room.getCode());
-        if (room2.isPresent()) {
+    Optional<Room> addUser(User user, Room room, Integer code) {
+        Optional<Room> room2 = roomRepository.findRoomById(room.getId());
+        if (room2.isPresent() && code.equals(room2.get().getCode())) {
             room2.get().addMember(user);
+            roomRepository.save(room2.get());
         }
         return room2;
     }
