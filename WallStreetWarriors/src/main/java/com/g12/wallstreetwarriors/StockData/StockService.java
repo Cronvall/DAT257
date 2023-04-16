@@ -1,10 +1,16 @@
 package com.g12.wallstreetwarriors.StockData;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.time.Duration;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -12,16 +18,28 @@ class StockService {
 
     private final WebClient.Builder twelveDataClient;
 
+
     StockService(WebClient.Builder twelveDataClient) {
         this.twelveDataClient = twelveDataClient;
     }
+    public Optional<StockId> getStockByTicker(String ticker) {
+            Optional optional = Optional.empty();
 
-    Optional<StockController.StockData> getStockByTicker(String ticker) {
-        return Optional.ofNullable(twelveDataClient.build().get()
+            StockId stock = twelveDataClient.build().get()
                 .uri("time_series?&interval=1min&symbol={ticker}&outputsize=1", ticker)
                 .retrieve()
-                .bodyToMono(StockController.StockData.class)
-                .block(Duration.ofSeconds(5)));
+                .bodyToMono(StockId.class)
+                .block(Duration.ofSeconds(5));
+            if(stock.getStatus().equals("error")){
+                return optional;
+            }
+            optional = Optional.of(stock);
+            return  optional;
+
+
+
+
+
     }
 
 //    Optional<StockController.StockData> oldGetStockByTickerd(String ticker) {
