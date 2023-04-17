@@ -12,7 +12,7 @@ const SignupPage = () => {
 
   const signup = async () => {
     try{
-      axios.post('http://localhost:8080/users',
+      axios.post('http://localhost:8080/api/users',
       {
         username: username,
         password: password

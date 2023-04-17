@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/rooms")
 public class RoomController {
 
     private final RoomService roomService;
@@ -18,12 +19,12 @@ public class RoomController {
     }
 
     private record RequestWrapper(User user, Room room) {};
-    @PostMapping("/room")
+    @PostMapping
     ResponseEntity<Room> addRoom(@RequestBody Room newRoom) {
         return new ResponseEntity<>(roomService.createRoom(newRoom), HttpStatus.CREATED);
     }
 
-    @PostMapping("/room/{id}")
+    @PostMapping("/{id}")
     ResponseEntity<Room> addPlayer(@PathVariable(name = "id") Long roomId, @RequestBody User user, @RequestParam(name = "code") Integer code) {
         Optional<Room> room = roomService.getRoomById(roomId);
         System.out.println(code);
@@ -34,7 +35,7 @@ public class RoomController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/room/{id}")
+    @GetMapping("/{id}")
     ResponseEntity<Room> getRoom(@PathVariable Long id){
         if (roomService.getRoomById(id).isPresent())
             return new ResponseEntity<>(roomService.getRoomById(id).get(), HttpStatus.OK);
@@ -42,7 +43,7 @@ public class RoomController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/room")
+    @GetMapping
     ResponseEntity<List<Room>> getRooms(){
         return new ResponseEntity<>(roomService.getRooms(), HttpStatus.OK);
     }
