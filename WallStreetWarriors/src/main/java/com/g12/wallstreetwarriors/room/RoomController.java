@@ -42,10 +42,7 @@ public class RoomController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/room")
-    ResponseEntity<List<Room>> getRooms(){
-        return new ResponseEntity<>(roomService.getRooms(), HttpStatus.OK);
-    }
+
 
 
 }

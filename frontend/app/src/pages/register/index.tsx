@@ -18,7 +18,7 @@ const SignupPage = () => {
       if(lastIO + 1000 > Date.now()) return;
       lastIO = Date.now();
       console.log(lastIO);
-      axios.post('http://localhost:8080/api/api/users',
+      axios.post('http://localhost:8080/api/users',
       {
         username: username,
         password: password,
@@ -73,9 +73,6 @@ const SignupPage = () => {
         <div>
           <button className={styles.button} type="submit">Sign up</button>
         </div>
-        {/* <div> */}
-          <button className={styles.button} onClick={signup}>Sign up</button>
-        {/* </div> */}
       </form>
       <h1>{registerSuccess ? "Register Succeeded" : ""}</h1>
     </>
