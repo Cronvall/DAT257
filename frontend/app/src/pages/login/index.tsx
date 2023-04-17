@@ -1,39 +1,25 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styles from "./style.module.css";
-import navBar from "@/components/navBar";
-
+import { useAuth, AuthProvider, LocalStorageProvider } from "@reactivers/hooks";
 
 
 const SignupPage = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
   const [registerSuccess, setRegisterSuccess] = useState(false);
 
 
   const signup = async () => {
 
-    if(username === "" || password === "" || email === ""){
+    if(username === "" || password === ""){
       alert("Please fill in all fields");
       return;
     }
-
-    try{
-      axios.post('http://localhost:8080/api/users',
-      {
-        username: username,
-        password: password,
-        email: email,
-        userRoomStockLinks: []
-      }).then((response) => {
+    try{axios.get('http://localhost:8080/api/users/'+username).then((response) => {
         console.log(response);
-        setUsername("");
-        setPassword("");
-        setEmail("");
-        setRegisterSuccess(true)
-      })
+        })
     }
     catch(e){
       console.log(e)
@@ -42,7 +28,6 @@ const SignupPage = () => {
 
   return (
     <>
-      {navBar()}
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -50,7 +35,7 @@ const SignupPage = () => {
         }}
         className={styles.form}
       >
-        <h1>Sign Up</h1>
+        <h1>Login</h1>
         <label htmlFor="username">Username</label>
         <input 
           name="username" 
@@ -66,17 +51,9 @@ const SignupPage = () => {
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         />
-        <label htmlFor="email">Email</label>
-        <input 
-          name="email" 
-          type="email"
-          className={styles.input}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
         
         <div>
-          <button className={styles.button} type="submit">Sign up</button>
+          <button className={styles.button} type="submit">Login</button>
         </div>
       </form>
       <h1>{registerSuccess ? "Register Succeeded" : ""}</h1>
