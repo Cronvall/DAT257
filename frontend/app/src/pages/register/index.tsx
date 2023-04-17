@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styles from "./style.module.css";
+import navBar from "@/components/navBar";
 
 
 
@@ -14,6 +15,12 @@ const SignupPage = () => {
 
 
   const signup = async () => {
+
+    if(username === "" || password === "" || email === ""){
+      alert("Please fill in all fields");
+      return;
+    }
+
     try{
       if(lastIO + 1000 > Date.now()) return;
       lastIO = Date.now();
@@ -38,6 +45,7 @@ const SignupPage = () => {
 
   return (
     <>
+      {navBar()}
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -64,6 +72,7 @@ const SignupPage = () => {
         <label htmlFor="email">Email</label>
         <input 
           name="email" 
+          type="email"
           className={styles.input}
           value={email}
           onChange={(e) => setEmail(e.target.value)}

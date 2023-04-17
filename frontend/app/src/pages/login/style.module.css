@@ -1,4 +1,5 @@
 .form{
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,4 +37,3 @@
 
 .button:active {
   background-color: #1e4d87;
-}

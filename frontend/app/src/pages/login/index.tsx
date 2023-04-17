@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import styles from './style.module.css';
 import axios from 'axios';
@@ -43,6 +44,7 @@ const LoginPage = () => {
           // alert('Error during request setup');
         }
       });
+
   };
 
   return (
@@ -50,24 +52,31 @@ const LoginPage = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
+
           login();
+
         }}
         className={styles.form}
       >
         <h1>Login</h1>
+
         <input
           name="username"
+
           className={styles.input}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
+
         <input
           name="password"
           className={styles.input}
+
           value={password}
           type="password"
           onChange={(e) => setPassword(e.target.value)}
         />
+
 
         <button className={styles.button} onClick={login}>
           Login
