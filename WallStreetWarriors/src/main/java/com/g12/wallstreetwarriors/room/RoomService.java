@@ -3,9 +3,7 @@ package com.g12.wallstreetwarriors.room;
 import com.g12.wallstreetwarriors.user.User;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class RoomService {
@@ -24,8 +22,10 @@ public class RoomService {
     }
 
     Room createRoom(Room newRoom) {
-        roomRepository.save(newRoom);
-        return newRoom;
+        Random rnd = new Random();
+        int code = rnd.nextInt(100000,999999);
+        newRoom.setCode(code);
+        return roomRepository.save(newRoom);
     }
 
     Optional<Room> addUser(User user, Room room, Integer code) {
@@ -36,5 +36,7 @@ public class RoomService {
         }
         return room2;
     }
+
+
 
 }
