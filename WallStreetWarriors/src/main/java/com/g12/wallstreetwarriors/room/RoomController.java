@@ -24,12 +24,12 @@ public class RoomController {
         return new ResponseEntity<>(roomService.createRoom(newRoom), HttpStatus.CREATED);
     }
 
-    @PostMapping("/{id}")
-    ResponseEntity<Room> addPlayer(@PathVariable(name = "id") Long roomId, @RequestBody User user, @RequestParam(name = "code") Integer code) {
-        Optional<Room> room = roomService.getRoomById(roomId);
+    @PostMapping("/{code}")
+    ResponseEntity<Room> addPlayer(@PathVariable(name = "code") Integer code, @RequestBody User user) {
+        Optional<Room> room = roomService.getRoomByCode(code);
         System.out.println(code);
         if (room.isPresent()){
-            return new ResponseEntity<>(roomService.addUser(user,room.get(), code).get(), HttpStatus.CREATED);
+            return new ResponseEntity<>(roomService.addUser(user,room.get(), code), HttpStatus.CREATED);
         }
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -7,7 +7,7 @@ export default function Home() {
     <>
       <h1>Super mega stock trader league</h1>
       <h2>The leauge for you and your friends</h2>
-      <button onClick={() => router.push('/register')}>TEST</button>
+      <button onClick={() => router.push('/register')}>Register Page</button>
     </>
   )
 }
