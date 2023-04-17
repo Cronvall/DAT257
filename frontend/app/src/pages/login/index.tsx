@@ -6,10 +6,13 @@ const LoginPage = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  let lastIO = Date.now();
 
 
   const login = async () => {
     try{
+      if(lastIO + 1000 > Date.now()) return;
+      lastIO = Date.now();
       axios.get('http://localhost:8080/api/users').then((res) => console.log(res)),
       {
         // username: username,

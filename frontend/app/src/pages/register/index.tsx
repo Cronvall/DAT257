@@ -8,10 +8,14 @@ const SignupPage = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  let lastIO = Date.now();
 
 
   const signup = async () => {
     try{
+      if(lastIO + 1000 > Date.now()) return;
+      lastIO = Date.now();
+      console.log(lastIO);
       axios.post('http://localhost:8080/api/users',
       {
         username: username,
