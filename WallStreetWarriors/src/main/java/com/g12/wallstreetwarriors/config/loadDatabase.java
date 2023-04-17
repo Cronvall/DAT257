@@ -16,9 +16,9 @@ public class loadDatabase {
 
         return args -> {
 
-            User user1 = User.builder().username("uName1").password("Pass123").build();
-            User user2 = User.builder().username("uName2").password("Pass123").build();
-            User user3 = User.builder().username("uName3").password("Pass123").build();
+            User user1 = User.builder().username("uName1").password("Pass123").email("email1@gmail.com").build();
+            User user2 = User.builder().username("uName2").password("Pass123").email("email2@gmail.com").build();
+            User user3 = User.builder().username("uName3").password("Pass123").email("email3@gmail.com").build();
 
             user1 = userRepository.save(user1);
             user2 = userRepository.save(user2);
