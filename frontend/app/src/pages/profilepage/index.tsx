@@ -3,9 +3,9 @@ import axios from "axios";
 import styles from "./style.module.css";
 
 const ProfilePage = () => {
+  const [userId, setUserId] = useState(2); //Här bör man kunna använda input från login-page?
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [userId, setUserId] = useState(1);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -22,38 +22,15 @@ const ProfilePage = () => {
     fetchUserData();
   }, [userId]);
 
-  const handleUserIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserId(Number(e.target.value));
-  };
-
   return (
     <>
       <form className={styles.form}>
-        <h1>Profile Page</h1>
-        <label htmlFor="userId">User ID</label>
-        <input
-          type="number"
-          name="userId"
-          className={styles.value}
-          value={userId}
-          onChange={handleUserIdChange}
-        />
-        <label htmlFor="username">Username</label>
-        <input
-          name="username"
-          className={styles.value}
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <label htmlFor="email">Email</label>
-        <input
-          name="email"
-          className={styles.value}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <h2>This won't show, but showing user id: {userId}</h2>
+        <label htmlFor="username">Username: {username}</label>
+        <label htmlFor="email">Email: {email}</label>
         <div>
-          <button className={styles.button}>Join league</button>
+          <input type="text" placeholder="Enter league code" />
+          <button type="submit"> Join League </button>  
         </div>
       </form>
     </>
