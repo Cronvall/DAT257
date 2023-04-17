@@ -1,6 +1,7 @@
 package com.g12.wallstreetwarriors.room;
 
 import com.g12.wallstreetwarriors.user.User;
+import jakarta.annotation.Priority;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -8,6 +9,7 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -55,11 +57,16 @@ public class Room {
     @ToString.Exclude
     private List<User> members;
 
+    @OneToMany(mappedBy = "room", cascade = {CascadeType.PERSIST, CascadeType.ALL})
+    private Set<UserRoomStockLink> userRoomStockLinks;
+
+
     public void addMember(User user) {
         if(members == null) {
             members = new ArrayList<>();
         }
         members.add(user);
+
     }
 
     public void removeMember(User user) {
