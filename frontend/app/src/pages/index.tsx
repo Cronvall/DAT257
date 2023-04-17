@@ -8,6 +8,12 @@ export default function Home() {
   
   return (
     <>
+
+      <h1>Super mega stock trader league</h1>
+      <h2>The leauge for you and your friends</h2>
+      <button onClick={() => router.push('/register')}>Register Page</button>
+      <button onClick={() => router.push('/login')}>Login Page</button>
+
       {navBar()}
         <div className="imageContainer">
           <Image
@@ -18,6 +24,7 @@ export default function Home() {
             style={{margin: 'auto', display: 'block', marginTop: '100px'}}
             />
         </div>
+
     </>
   );
 };

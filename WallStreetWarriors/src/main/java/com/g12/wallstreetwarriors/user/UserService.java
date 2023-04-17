@@ -25,4 +25,15 @@ class UserService {
     Optional<User> getUserById(Long id) {
         return userRepository.findById(id);
     }
+
+    Optional<User> getUserByUsername(String username) {
+        Optional<User> user = userRepository.getUserByUsername(username);
+        System.out.println("USER IN USERSERV = " + user);
+        if(user.isPresent()){
+            System.out.println("USER IS PRESENT");
+            return user;
+        }else{
+            return null;
+        }
+    }
 }
