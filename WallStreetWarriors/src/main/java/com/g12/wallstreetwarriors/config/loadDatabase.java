@@ -18,9 +18,11 @@ public class loadDatabase {
 
             User user1 = User.builder().username("uName1").password("Pass123").build();
             User user2 = User.builder().username("uName2").password("Pass123").build();
+            User user3 = User.builder().username("uName3").password("Pass123").build();
 
             user1 = userRepository.save(user1);
             user2 = userRepository.save(user2);
+            userRepository.save(user3);
 
             Room room1 = Room.builder().owner(user1).code(11).budget(10000).capacity(5).build();
             Room room2 = Room.builder().owner(user2).code(22).budget(20000).capacity(6).build();
