@@ -10,6 +10,13 @@ const Body = () => {
     const [start, setStart] = useState(true);
     const [code, setCode] = useState("");
 
+    let testCode = 637170
+    let jsonTest = {
+      "id": 1,
+      "username": "uName1",
+      "password": "Pass123"
+  }
+
 
     const handleCreate = () => {
         setCreate(true);
@@ -30,9 +37,12 @@ const Body = () => {
 
     const joinRoom = async () => {
         try{
-          axios.post('http://localhost:8080/api/rooms',
+          axios.post('http://localhost:8080/api/rooms/' + code,
           {
-            code: code,
+            id: 3,
+            username: "uName3",
+            password: "Pass123",
+            email: "email3@gmail.com"
           })
         }
         catch(e){
@@ -53,14 +63,28 @@ const Body = () => {
      )}
     {join &&( 
         <div className={style.container}>
-        <h3>Enter code</h3>
-        <form action="POST"></form>
+        <h2>Enter code</h2>
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          joinRoom();
+        }}
+        className={style.form}
+        >
+          <label htmlFor="code">Code</label>
+          <input 
+            type="text"
+            name="code"
+            className={style.input}
+            value={code}
+            onChange={(e) => setCode(e.target.value)} />
+        </form>
+        <button className={style.formButton} type="submit">Join</button>
         </div>
 
      )}
      {create &&(
         <div className={style.container}>
-            <h3>Choose your settings</h3>
+            <h2>Choose your settings</h2>
             <li>
                 <ul>aa</ul>
                 <ul>bbb</ul>
