@@ -1,18 +1,25 @@
 import style from "./style.module.css"
+import React, { useState } from "react";
+import axios from "axios";
+
+import Header from '../../components/Header';
+import Body from './Body';
 
 
-export default function HomePage() {
+const HomePage = () => {
+
+  const [code, setCode] = useState(true);
+
+
+
 
   return (
     <>
-    <div className={style.container}>
-      <h1>Super mega stock trader league</h1>
+    <Header />
+    <Body />
 
-      <button className={style.button}>Join league</button>
-      <button className={style.button}>Create league</button>
-    </div>
     </>
-  )
+  );
+};
+export default HomePage;
 
-  
-}
