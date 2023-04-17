@@ -4,7 +4,7 @@ import styles from "./style.module.css";
 
 
 
-const SignupPage = () => {
+const ProfilePage = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -53,4 +53,4 @@ const SignupPage = () => {
     </>
   );
 };
-export default SignupPage;
+export default ProfilePage;
