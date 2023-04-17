@@ -4,6 +4,7 @@ import com.g12.wallstreetwarriors.room.Room;
 import com.g12.wallstreetwarriors.room.UserRoomStockLink;
 import jakarta.annotation.Priority;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -23,12 +24,13 @@ public class User {
     @Id
     @GeneratedValue
     private Long id;
-
     @NotNull
+    @Column(unique = true)
     private String username;
-    @NotNull
     private String password;
     @NotNull
+    @Email
+    @Column(unique = true)
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.ALL})
