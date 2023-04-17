@@ -17,7 +17,6 @@ const SignupPage = () => {
     try{
       if(lastIO + 1000 > Date.now()) return;
       lastIO = Date.now();
-      console.log(lastIO);
       axios.post('http://localhost:8080/api/users',
       {
         username: username,

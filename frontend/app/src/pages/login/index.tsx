@@ -13,11 +13,16 @@ const LoginPage = () => {
     try{
       if(lastIO + 1000 > Date.now()) return;
       lastIO = Date.now();
-      axios.get('http://localhost:8080/api/users').then((res) => console.log(res)),
+      axios.post('http://localhost:8080/api/authentication',
       {
-        // username: username,
-        // password: password
-      }
+        username: username,
+        password: password
+      }).then((response) => {
+        console.log(response);
+        setUsername("");
+        setPassword("");
+      })
+
     }
     catch(e){
       console.log(e)
