@@ -8,6 +8,7 @@ const SignupPage = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [registerSuccess, setRegisterSuccess] = useState(false);
 
 
@@ -17,11 +18,13 @@ const SignupPage = () => {
       {
         username: username,
         password: password,
+        email: email,
         userRoomStockLinks: []
       }).then((response) => {
         console.log(response);
         setUsername("");
         setPassword("");
+        setEmail("");
         setRegisterSuccess(true)
       })
     }
@@ -54,6 +57,13 @@ const SignupPage = () => {
           value={password}
           type="password"
           onChange={(e) => setPassword(e.target.value)}
+        />
+        <label htmlFor="email">Email</label>
+        <input 
+          name="email" 
+          className={styles.input}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         
         <div>
