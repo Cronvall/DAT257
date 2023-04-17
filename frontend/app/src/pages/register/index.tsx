@@ -12,10 +12,15 @@ const SignupPage = () => {
 
   const signup = async () => {
     try{
-      axios.post('http://localhost:8080/users',
+      axios.post('http://localhost:8080/api/users',
       {
         username: username,
-        password: password
+        password: password,
+        userRoomStockLinks: []
+      }).then((response) => {
+        console.log(response);
+        setUsername("");
+        setPassword("");
       })
     }
     catch(e){
@@ -47,7 +52,7 @@ const SignupPage = () => {
         />
         
         <div>
-          <button className={styles.button} onClick={signup}>Sign up</button>
+          <button className={styles.button} type="submit">Sign up</button>
         </div>
       </form>
     </>
