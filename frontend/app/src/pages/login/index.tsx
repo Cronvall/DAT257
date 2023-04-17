@@ -4,7 +4,6 @@ import styles from "./style.module.css";
 import { useAuth, AuthProvider, LocalStorageProvider } from "@reactivers/hooks";
 
 
-
 const SignupPage = () => {
 
   const [username, setUsername] = useState("");
