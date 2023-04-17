@@ -1,0 +1,14 @@
+.container{
+    display: flex;
+    width: auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.button{
+    width: 10rem;
+    height: 3rem;
+    font-size: 1rem;
+}

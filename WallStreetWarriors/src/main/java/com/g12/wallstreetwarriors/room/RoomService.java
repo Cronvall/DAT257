@@ -28,15 +28,16 @@ public class RoomService {
         return roomRepository.save(newRoom);
     }
 
-    Optional<Room> addUser(User user, Room room, Integer code) {
-        Optional<Room> room2 = roomRepository.findRoomById(room.getId());
-        if (room2.isPresent() && code.equals(room2.get().getCode())) {
-            room2.get().addMember(user);
-            roomRepository.save(room2.get());
+    Room addUser(User user, Room room, Integer code) {
+        if (code.equals(room.getCode())) {
+            room.addMember(user);
+            roomRepository.save(room);
         }
-        return room2;
+        return room;
     }
 
 
-
+    public Optional<Room> getRoomByCode(Integer code) {
+        return roomRepository.findRoomByCode(code);
+    }
 }
