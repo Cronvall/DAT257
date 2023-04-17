@@ -10,12 +10,7 @@ const Body = () => {
     const [start, setStart] = useState(true);
     const [code, setCode] = useState("");
 
-    let testCode = 637170
-    let jsonTest = {
-      "id": 1,
-      "username": "uName1",
-      "password": "Pass123"
-  }
+  
 
 
     const handleCreate = () => {
