@@ -1,6 +1,7 @@
 import NavBar from "../components/navBar"
 import SignupSection from "../components/signupSection";
 import styles from "../styles/home.module.css";
+import Footer from "../components/footer";
 
 export default function Home() {
 
@@ -12,7 +13,9 @@ export default function Home() {
         <div className={styles.contentContainer}>
           <SignupSection />
         </div>
+        <div className={styles.whiteSpace}></div>
       </div>
+      <Footer />
     </>
   );
 };
