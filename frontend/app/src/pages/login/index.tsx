@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import styles from "./style.module.css";
 import { useAuth, AuthProvider, LocalStorageProvider } from "@reactivers/hooks";
+import NavBar from "../../components/navBar"
 
 
 const SignupPage = () => {
@@ -28,6 +29,7 @@ const SignupPage = () => {
 
   return (
     <>
+      <NavBar />
       <form
         onSubmit={(e) => {
           e.preventDefault();

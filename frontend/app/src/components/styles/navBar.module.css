@@ -1,0 +1,58 @@
+.navBar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: transparent;
+}
+
+
+.searchInput {
+    width: 8rem;
+    height: 2rem;
+    border-radius: 5px;
+    padding: 0 1rem;
+    margin-right: 2rem;
+    background-color: transparent;
+    border: #f5f5f5 1px solid;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    color: #f5f5f5;
+    font-weight: 400;
+}
+
+.searchInput::placeholder {
+    color: #f5f5f5;
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+
+.headerButton {
+    background-color: transparent;
+    border-bottom: #f5f5f5 2px solid;
+    color: #f5f5f5;
+    border: none;
+    padding: 0.5rem 1rem;
+    margin: 1rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 300;
+    cursor: pointer;
+}
+
+.headerTxtBtn {
+    background-color: transparent;
+    color: #f5f5f5;
+    border: none;
+    padding: 0.5rem;
+    margin: 1rem;
+    cursor: pointer;
+}
+
+.headerTxtBtn h1{
+    font-weight: 300;
+    border-bottom: 1px solid #f5f5f5;
+}
