@@ -41,9 +41,9 @@
 }
 
 .buttonWrapper {
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background: linear-gradient(-45deg, #ee7752, #e73c7e,#00008B, #A020F0, #23a6d5, #23d5ab,#e6b400, #ece75f);
     background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
+    animation: gradient 25s ease infinite;
     width: fit-content;
     height: fit-content;
     background-color: transparent;
@@ -57,16 +57,30 @@
 }
 @keyframes gradient {
 	0% {
-		background-position: 0% 50%;
+		background-position: 0% 0%;
+	}
+	12.5% {
+		background-position: 25% 25%;
+	}
+	25% {
+		background-position: 50% 50%;
+	}
+	37.5% {
+		background-position: 75% 75%;
 	}
 	50% {
-		background-position: 100% 50%;
+		background-position: 75% 75%;
+	}
+	62.5% {
+		background-position: 50% 50%;
+	}
+	75% {
+		background-position: 25% 25%;
 	}
 	100% {
-		background-position: 0% 50%;
+		background-position: 0% 0%;
 	}
 }
-
 .button {
     width: 98%;
     height: 95%;
