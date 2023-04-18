@@ -3,7 +3,9 @@ import { NextPage } from 'next';
 import { useRouter } from "next/router";
 import axios from 'axios';
 import styles from './stock.module.css';
-
+import flag from '../../assets/images/us-flag.png'
+import Header from '../../components/navBar';
+import Image from 'next/image'
 const StockView: NextPage = () =>{
     interface IstockData {
         symbol: string
@@ -31,21 +33,23 @@ const StockView: NextPage = () =>{
       }, [ticker]);
     
         return (
+            <><Header />
             <div className={styles.back}>
+              <div className={styles.row}> 
                 <p className={styles.rubric}>Apple Inc</p>
-                <div className={styles.window}>
-                    
-                </div>
+                <Image src={flag} alt="example" width={25} height={15} className={styles.flag}/>
+                <p className={styles.exchange}>Nasdaq</p>
+              </div>
+            
+              <div className={styles.window}>
 
-            </div>
+              </div>
+
+            </div></>
             
-            
-            
+    
         )
-
-            
-        
-            
+          
 };
 
 export default StockView;
