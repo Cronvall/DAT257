@@ -37,7 +37,7 @@ const SignupPage = () => {
         setEmail("");
         setRegisterSuccess(true)
       })
-      axios.get
+
     }
     catch(e){
       console.log(e)
