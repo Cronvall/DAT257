@@ -3,7 +3,8 @@ import axios from "axios";
 import styles from "./style.module.css";
 import { useAuth, AuthProvider, LocalStorageProvider } from "@reactivers/hooks";
 import NavBar from "../../components/navBar"
-
+import { useRouter } from "next/router";
+import navBar from "@/components/navBar";
 
 const SignupPage = () => {
 
