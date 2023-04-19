@@ -10,7 +10,6 @@ import java.util.Collection;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
