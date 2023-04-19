@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./style.module.css";
+import {loggedInId} from "../login/index";
 
 const ProfilePage = () => {
-  const [userId, setUserId] = useState(1); //Här bör man kunna använda input från login-page
+  const [userId, setUserId] = useState(loggedInId); //Här bör man kunna använda input från login-page
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
 
