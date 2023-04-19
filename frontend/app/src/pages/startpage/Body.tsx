@@ -44,6 +44,25 @@ const Body = () => {
           console.log(e)
         }
       };
+    
+      const createRoom = async () => {
+        try{
+          axios.post('http://localhost:8080/api/rooms',
+          {
+            budget: 1,
+            capacity:1,
+            owner:{
+            id: 3,
+            username: "uName3",
+            password: "Pass123",
+            email: "email3@gmail.com"
+          }
+          })
+        }
+        catch(e){
+          console.log(e)
+        }
+      };
 
 
   return (
@@ -58,7 +77,7 @@ const Body = () => {
      )}
     {join &&( 
         <div className={style.container}>
-        <h2>Enter code</h2>
+        <h2 className={style.rubric}>Enter code</h2>
         <form onSubmit={(e) => {
           e.preventDefault();
           joinRoom();
@@ -73,7 +92,10 @@ const Body = () => {
             value={code}
             onChange={(e) => setCode(e.target.value)} />
         </form>
-        <button className={style.formButton} type="submit">Join</button>
+        <div className={style.joinButtons}>
+          <button className={style.formButton}>Back</button>
+          <button className={style.formButton} type="submit">Join</button>
+        </div>
         </div>
 
      )}
