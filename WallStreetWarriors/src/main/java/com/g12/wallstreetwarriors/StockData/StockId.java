@@ -151,5 +151,7 @@ public class StockId {
         public void setVolume(String volume) {
             this.volume = volume;
         }
+
+
     }
 }

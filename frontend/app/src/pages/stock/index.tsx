@@ -3,6 +3,7 @@ import axios from "axios";
 import styles from "./style.module.css";
 import { NextPage } from 'next';
 import { useRouter } from "next/router";
+import Header from '../../components/navBar';
 const StockView: NextPage = () => {
 
 const [entered, setEntered] = useState("");
@@ -18,15 +19,16 @@ const [entered, setEntered] = useState("");
     }
   };    
 
+  
+
   return (
-    <div>
-         <input
+    <><Header /><div>
+      <input
         type="text"
         value={entered}
         onChange={handleInputChange}
-        onKeyDown={handleEnterPress}
-      />
-    </div>
+        onKeyDown={handleEnterPress} />
+    </div></>
      
   );
 };
