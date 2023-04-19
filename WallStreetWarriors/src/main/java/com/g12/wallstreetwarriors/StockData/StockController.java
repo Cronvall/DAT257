@@ -24,7 +24,8 @@ public class StockController {
         Optional<StockId> stockIdOptional = stockService.getStockByTicker(ticker);
         if(stockIdOptional.isPresent()) {
             StockId stock = stockIdOptional.get();
-            return ResponseEntity.ok(stock.getMeta());
+            RequestStock req = new RequestStock(stock);
+            return ResponseEntity.ok(req);
         } else {
             String message = "Stock not found for ticker: " + ticker;
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message);

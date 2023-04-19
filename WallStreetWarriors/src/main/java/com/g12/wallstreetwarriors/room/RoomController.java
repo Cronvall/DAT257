@@ -35,10 +35,10 @@ public class RoomController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/{id}")
-    ResponseEntity<Room> getRoom(@PathVariable Long id){
-        if (roomService.getRoomById(id).isPresent())
-            return new ResponseEntity<>(roomService.getRoomById(id).get(), HttpStatus.OK);
+    @GetMapping("/{code}")
+    ResponseEntity<Room> getRoom(@PathVariable Integer code){
+        if (roomService.getRoomByCode(code).isPresent())
+            return new ResponseEntity<>(roomService.getRoomByCode(code).get(), HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

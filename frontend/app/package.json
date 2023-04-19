@@ -22,7 +22,7 @@
     "react-dom": "18.2.0",
     "react-router-dom": "^6.10.0",
     "react-switch": "^7.0.0",
-    "typescript": "5.0.4",
-    "use-history": "^1.4.1"
+    "typescript": "5.0.4"
+  
   }
 }
