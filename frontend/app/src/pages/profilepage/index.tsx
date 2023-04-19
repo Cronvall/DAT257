@@ -3,7 +3,7 @@ import axios from "axios";
 import styles from "./style.module.css";
 
 const ProfilePage = () => {
-  const [userId, setUserId] = useState(2); //Här bör man kunna använda input från login-page?
+  const [userId, setUserId] = useState(1); //Här bör man kunna använda input från login-page
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
 
@@ -22,16 +22,19 @@ const ProfilePage = () => {
     fetchUserData();
   }, [userId]);
 
+
+
+  // Showing user id: {userId} ska inte synas på sidan
   return (
     <>
       <form className={styles.form}>
-        <h2>This won't show, but showing user id: {userId}</h2>
+        <h2>Profile Page (for user id: {userId})</h2> 
         <label htmlFor="username">Username: {username}</label>
         <label htmlFor="email">Email: {email}</label>
-        <div>
+       {/* { <div>
           <input type="text" placeholder="Enter league code" />
           <button type="submit"> Join League </button>  
-        </div>
+        </div>} */}
       </form>
     </>
   );
