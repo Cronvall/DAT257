@@ -12,36 +12,24 @@
 }
 
 .leagueContainer{
-    display: flex;
-    flex-direction: column;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    width: fit-content;
+    height: fit-content;
 }
 
-.leagueContainer ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-}
-
-.leagueContainer li {
-    float: left;
-    display: flex;
-    border: 1px solid black;
-    padding: 1rem 0;
-    font-size: 1.5rem;
-    text-align: left;
-    gap: 3rem
-}
-
-.name {
-    float: left;
-}
-
-.gains{
-    float: right;
+.leagueContainer td, .leagueContainer th {
     font-size: 1rem;
-    color: green;
-    margin: auto;
-}
+    margin: 2rem 2rem;
+    padding: 1rem 2rem;
+  }
+  
+  .leagueContainer tr:nth-child(even){background-color: #e4e4e4;}
+  
+  
+  .leagueContainer th {
+    color: #000;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+  }

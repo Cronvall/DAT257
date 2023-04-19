@@ -7,6 +7,7 @@ import Image from "next/image";
 const SignupSection = () => {
 
     const [roomCode, setRoomCode] = useState("");
+    
     // should be dynamic and depending on if user is signed in or not
     const [enterLeagueCode, setEnterLeagueCode] = useState(true);
 
