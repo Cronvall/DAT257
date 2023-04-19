@@ -1,11 +1,16 @@
 import navBar from "../components/navBar"
 import Image from "next/image"
 import WSBImg from "../assets/images/wsb.jpeg"
+import React, { useState } from 'react';
 // import { useRouter } from "next/router";
+
+import { isLoggedIn } from "./login";
+import { id } from "./login";
 
 
 export default function Home() {
 
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   // const router = useRouter()
 
   return (
@@ -17,6 +22,8 @@ export default function Home() {
       <button onClick={() => router.push('/login')}>Login Page</button> */}
 
       {navBar()}
+      {console.log('isloggedin ' + isLoggedIn)}
+      {console.log('id' + id)};
         <div className="imageContainer">
           <Image
             src={WSBImg}
