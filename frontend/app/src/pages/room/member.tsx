@@ -8,7 +8,7 @@ const Member = (props: any) => {
 
     if (users.length > 0){
         return(
-            <div className={style.memberContainer}>
+            <div className={style.memberList}>
 
             {users.map((user: any) => {
                 console.log(user);
