@@ -11,6 +11,7 @@ const SignupPage = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [registerSuccess, setRegisterSuccess] = useState(false);
+  let lastIO = Date.now();
 
 
   const signup = async () => {
@@ -21,6 +22,8 @@ const SignupPage = () => {
     }
 
     try{
+      if(lastIO + 1000 > Date.now()) return;
+      lastIO = Date.now();
       axios.post('http://localhost:8080/api/users',
       {
         username: username,
@@ -34,6 +37,7 @@ const SignupPage = () => {
         setEmail("");
         setRegisterSuccess(true)
       })
+
     }
     catch(e){
       console.log(e)

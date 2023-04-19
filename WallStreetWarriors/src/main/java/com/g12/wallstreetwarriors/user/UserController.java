@@ -10,7 +10,6 @@ import java.util.Collection;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
@@ -19,17 +18,20 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/users")
     ResponseEntity<User> addUser(@RequestBody User newUser) {
         return new ResponseEntity<>(userService.addUser(newUser), HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/users")
     ResponseEntity<Collection<User>> getUsers() {
         return new ResponseEntity<>(userService.getUsers(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/users/{id}")
     ResponseEntity<User> getUserById(@PathVariable Long id) {
         return userService.getUserById(id)
                 .map(value -> new ResponseEntity<>(value, HttpStatus.OK))
