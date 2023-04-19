@@ -37,6 +37,7 @@ const SignupPage = () => {
         setEmail("");
         setRegisterSuccess(true)
       })
+
     }
     catch(e){
       console.log(e)
