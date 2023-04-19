@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useRouter } from "next/router";
 import navBar from "@/components/navBar";
 export let isLoggedIn = false;
-export let id = null;
+export let loggedInId = null;
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -26,9 +26,8 @@ const LoginPage = () => {
       .then((response) => {
         if(response.status >= 200 && response.status <= 299){
           isLoggedIn = true;
-          id = response.data.id; 
-          console.log('id: ' + id);
-          router.push('/');
+          loggedInId = response.data.id; 
+          router.push('/profilepage');
         }
         setUsername('');
         setPassword('');
