@@ -6,6 +6,8 @@ import styles from './stock.module.css';
 import flag from '../../assets/images/us-flag.png'
 import Header from '../../components/navBar';
 import Image from 'next/image'
+import Search from '../../components/InputStock'
+import InputStock from "../../components/InputStock";
 const StockView: NextPage = () =>{
     interface IstockData {
         symbol: string,
@@ -24,7 +26,7 @@ const StockView: NextPage = () =>{
     const LookupStock = async (ticker: any) => {
         try {
           const response = await axios.get(`http://localhost:8080/api/stocks/${ticker}`);
-          console.log("hej")
+          
           setStockData(response.data);
         } catch (error) {
           console.log(error);
@@ -39,7 +41,11 @@ const StockView: NextPage = () =>{
       }, [ticker]);
     
         return (
-            <><Header />
+            <><Header transparent={false} />
+            
+            <InputStock />
+
+
             <div className={styles.back}>
               <div className={styles.row}> 
                 <p className={styles.rubric}>{stockData?.symbol}</p>
