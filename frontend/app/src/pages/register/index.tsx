@@ -46,7 +46,7 @@ const SignupPage = () => {
 
   return (
     <>
-      <NavBar/>
+      <NavBar transparent={false}/>
       <form
         onSubmit={(e) => {
           e.preventDefault();

@@ -5,13 +5,33 @@ export default function SampleLeague() {
     return (
         <div className={styles.mainContainer}>
             <div className={styles.leagueContainer}>
-                <ul>
-                    <li><p className={styles.name}>Oscar</p> <p className={styles.gains}>+53%</p></li>
-                    <li><p className={styles.name}>Isac</p> <p className={styles.gains}>-12%</p></li>
-                    <li><p className={styles.name}>Adam</p> <p className={styles.gains}>+5%</p></li>
-                    <li><p className={styles.name}>Moritz</p> <p className={styles.gains}>+1%</p></li>
-                    <li><p className={styles.name}>Keivan</p> <p className={styles.gains}>-3%</p></li>
-                </ul>
+                <table>
+                    <tr className={styles.dataHeader}>
+                        <th>Rank</th>
+                        <th>Username</th>
+                        <th>Gains</th>
+                    </tr>
+                    <tr>
+                        <td>#1</td>
+                        <td>Oscar</td>
+                        <td>+53%</td>
+                    </tr>
+                    <tr>
+                        <td>#2</td>
+                        <td>Keivan</td>
+                        <td>+45%</td>
+                    </tr>
+                    <tr>
+                        <td>#3</td>
+                        <td>Johannes</td>
+                        <td>+42%</td>
+                    </tr>
+                    <tr>
+                        <td>#4</td>
+                        <td>Isac</td>
+                        <td>+40%</td>
+                    </tr>
+                </table>
             </div>
             <div className={styles.textPitch}>
                 <h2>Why Wall St. Warriors?</h2>

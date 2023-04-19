@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       <div className={styles.body}>
-        <NavBar />
+        <NavBar transparent={true}/>
         <div className={styles.tiltObj} /> 
         <div className={styles.contentContainer}>
           <SignupSection />
