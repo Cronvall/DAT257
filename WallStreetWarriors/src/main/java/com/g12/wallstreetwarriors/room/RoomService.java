@@ -23,7 +23,9 @@ public class RoomService {
 
     Room createRoom(Room newRoom) {
         Random rnd = new Random();
+
         int code = rnd.nextInt(999999);
+
         newRoom.setCode(code);
         return roomRepository.save(newRoom);
     }

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styles from "./style.module.css";
-import navBar from "@/components/navBar";
+import NavBar from "@/components/navBar";
 
 
 
@@ -37,6 +37,7 @@ const SignupPage = () => {
         setEmail("");
         setRegisterSuccess(true)
       })
+
     }
     catch(e){
       console.log(e)
@@ -45,7 +46,7 @@ const SignupPage = () => {
 
   return (
     <>
-      {navBar()}
+      <NavBar/>
       <form
         onSubmit={(e) => {
           e.preventDefault();

@@ -1,8 +1,9 @@
-
+import styles from "./style.module.css";
+import { useAuth, AuthProvider, LocalStorageProvider } from "@reactivers/hooks";
+import NavBar from "../../components/navBar"
 import React, { useState } from 'react';
-import styles from './style.module.css';
 import axios from 'axios';
-import { useRouter } from "next/router"
+import { useRouter } from "next/router";
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -22,7 +23,8 @@ const LoginPage = () => {
       .then((response) => {
         if(response.status >= 200 && response.status <= 299){
           let id = response.data.id; 
-          // router.push('/profilepage/');
+          console.log('id: ' + id);
+          router.push('/');
         }
         setUsername('');
         setPassword('');
@@ -49,6 +51,8 @@ const LoginPage = () => {
 
   return (
     <>
+
+      <NavBar />
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -60,6 +64,7 @@ const LoginPage = () => {
       >
         <h1>Login</h1>
 
+        <label htmlFor="username">Username</label>
         <input
           name="username"
 
@@ -68,6 +73,7 @@ const LoginPage = () => {
           onChange={(e) => setUsername(e.target.value)}
         />
 
+        <label htmlFor="password">Password</label>
         <input
           name="password"
           className={styles.input}
@@ -77,10 +83,11 @@ const LoginPage = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-
-        <button className={styles.button} onClick={login}>
-          Login
-        </button>
+        <div>
+          <button className={styles.button} onClick={login}>
+            Login
+          </button>
+        </div>
         <h1>{failedLogin ? "Invalid password or username" : ""}</h1>
       </form>
     </>

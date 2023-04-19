@@ -25,8 +25,8 @@ public class loadDatabase {
             user2 = userRepository.save(user2);
             userRepository.save(user3);
 
-            Room room1 = Room.builder().owner(user1).code(12).budget(10000).capacity(5).build();
-            Room room2 = Room.builder().owner(user2).code(13).budget(20000).capacity(6).build();
+            Room room1 = Room.builder().owner(user1).name("IT").code(12).budget(10000).capacity(5).build();
+            Room room2 = Room.builder().owner(user2).name("Indek").code(13).budget(20000).capacity(6).build();
 
             room1 = roomRepository.save(room1);
             room2 = roomRepository.save(room2);
