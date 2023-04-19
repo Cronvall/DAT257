@@ -1,6 +1,6 @@
 
 .body {
-	background: linear-gradient(-45deg, #ee7752, #e73c7e,#00008B, #A020F0, #23a6d5, #23d5ab,#e6b400, #ece75f);
+	background: linear-gradient(-45deg, #ee7752, #e73c7e, #af5ae3, #23a6d5, #23d5ab,#e6b400, #ece75f);
 	background-size: 400% 400%;
 	animation: gradient 25s ease infinite;
 }
@@ -15,10 +15,10 @@
 		background-position: 50% 50%;
 	}
 	37.5% {
-		background-position: 75% 75%;
+		background-position: 75% 100%;
 	}
 	50% {
-		background-position: 75% 75%;
+		background-position: 100% 75%;
 	}
 	62.5% {
 		background-position: 50% 50%;
