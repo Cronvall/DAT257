@@ -1,9 +1,9 @@
-
+import styles from "./style.module.css";
+import { useAuth, AuthProvider, LocalStorageProvider } from "@reactivers/hooks";
+import NavBar from "../../components/navBar"
 import React, { useState } from 'react';
-import styles from './style.module.css';
 import axios from 'axios';
 import { useRouter } from "next/router";
-import navBar from "@/components/navBar";
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -51,7 +51,8 @@ const LoginPage = () => {
 
   return (
     <>
-    {navBar()}
+
+      <NavBar />
       <form
         onSubmit={(e) => {
           e.preventDefault();
