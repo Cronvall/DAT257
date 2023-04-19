@@ -1,8 +1,9 @@
 package com.g12.wallstreetwarriors.room;
 
 import com.g12.wallstreetwarriors.user.User;
-import jakarta.annotation.Priority;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -25,10 +26,13 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotNull
+    @Min(1)
     private Integer capacity;
     @NotNull
     private Integer code;
     @NotNull
+    @Min(10000)
+    @Max(100000)
     private Integer budget;
 
     @ManyToOne(

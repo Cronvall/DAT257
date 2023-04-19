@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+
 @Configuration
 public class loadDatabase {
 
@@ -24,8 +25,8 @@ public class loadDatabase {
             user2 = userRepository.save(user2);
             userRepository.save(user3);
 
-            Room room1 = Room.builder().owner(user1).code(11).budget(10000).capacity(5).build();
-            Room room2 = Room.builder().owner(user2).code(22).budget(20000).capacity(6).build();
+            Room room1 = Room.builder().owner(user1).code(12).budget(10000).capacity(5).build();
+            Room room2 = Room.builder().owner(user2).code(13).budget(20000).capacity(6).build();
 
             room1 = roomRepository.save(room1);
             room2 = roomRepository.save(room2);
