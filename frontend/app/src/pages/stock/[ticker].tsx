@@ -45,7 +45,6 @@ const StockView: NextPage = () =>{
             
             <InputStock />
 
-
             <div className={styles.back}>
               <div className={styles.row}> 
                 <p className={styles.rubric}>{stockData?.symbol}</p>
@@ -64,8 +63,11 @@ const StockView: NextPage = () =>{
                     </tr>
                     <tr>
                         <td><p className={styles.price}>{stockData?.currentPrice}$</p></td>
-                        <td><p className={styles.price} style={{color:'green'}}>{stockData?.todayProcent}%</p></td>
-                        <td><p className={styles.price} style={{color:'green'}}>{stockData?.todayChange}$</p></td>
+                        <td><p className={styles.price} style={stockData?.todayProcent !== undefined ? { color: stockData.todayProcent >= 0 ? 'green' : 'red' } : undefined}>
+                            {stockData?.todayProcent}%</p></td>
+                        <td><p className={styles.price} style={stockData?.todayChange !== undefined ? { color: stockData.todayChange >= 0 ? 'green' : 'red' } : undefined} >
+                                {stockData?.todayChange}$
+                            </p></td>
                         <td><p className={styles.price} >{stockData?.openPrice}$</p></td>
                     </tr>
                         
@@ -81,11 +83,7 @@ const StockView: NextPage = () =>{
                             style={{background:'red'}}>
                         Sell
                     </button>
-                    
                 </div>
-                
-
-                
               </div>
 
             </div></>
