@@ -4,13 +4,16 @@ import NavBar from "../../components/navBar"
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from "next/router";
+export let isLoggedIn = false;
+export let loggedInId = null;
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   let lastIO = Date.now();
   const [failedLogin, setFailedLogin] = useState(false);
-  const router = useRouter()
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
 
   const login = () => {
     if (lastIO + 1000 > Date.now()) return;
@@ -22,9 +25,9 @@ const LoginPage = () => {
       })
       .then((response) => {
         if(response.status >= 200 && response.status <= 299){
-          let id = response.data.id; 
-          console.log('id: ' + id);
-          router.push('/');
+          isLoggedIn = true;
+          loggedInId = response.data.id; 
+          router.push('/profilepage');
         }
         setUsername('');
         setPassword('');

@@ -38,7 +38,10 @@ const Room = () => {
         <>
         <div className={style.container}>
             <h1 className={style.name}>{room}</h1>
-            <div className={style.memberList}><Member users={users} /></div>
+            <div className={style.memberContainer}>
+                <h3>Members</h3>
+                <div className={style.memberList}><Member users={users}/></div>
+            </div>
         </div>
         </>
     );
