@@ -4,6 +4,7 @@ import styles from "./style.module.css";
 import { NextPage } from 'next';
 import { useRouter } from "next/router";
 import Header from '../../components/navBar';
+import InputStock from "../../components/InputStock";
 const StockView: NextPage = () => {
 
 const [entered, setEntered] = useState("");
@@ -22,13 +23,8 @@ const [entered, setEntered] = useState("");
   
 
   return (
-    <><Header /><div>
-      <input
-        type="text"
-        value={entered}
-        onChange={handleInputChange}
-        onKeyDown={handleEnterPress} />
-    </div></>
+    <><Header transparent={false} /><InputStock /></>
+      
      
   );
 };

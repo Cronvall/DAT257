@@ -72,7 +72,7 @@
     
 }
 .price{
-    margin-top: -10px;
+    margin-top: 5px;
     margin-left: 30px;
     font-weight: bold;
     font-size: 20px;
@@ -102,5 +102,20 @@
     opacity:0.7;
     
     
+    
+}
+
+.inputDiv{
+position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
+}
+
+.searchInput{
+    border-radius: 5px;
+    height: 40px;
+    width: 250px;
     
 }

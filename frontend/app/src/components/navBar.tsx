@@ -33,18 +33,18 @@ const NavBar = (props: {transparent: boolean}) => {
             <h1 style={{color: txtColor}}>Wall St. Warriors</h1>
         </button>
 
-        <input
-        className={styles.searchInput} placeholder="$APPL"
-        type="text"
-        value={entered}
-        onChange={handleInputChange}
-        onKeyDown={handleEnterPress} />
+        
 
         
         <div>
           {
             transparent ?
-            <input className={styles.searchInput} placeholder="$APPL"></input>
+            <input
+        className={styles.searchInput} placeholder="$APPL"
+        type="text"
+        value={entered}
+        onChange={handleInputChange}
+        onKeyDown={handleEnterPress} />
             :
             <></>
           }
