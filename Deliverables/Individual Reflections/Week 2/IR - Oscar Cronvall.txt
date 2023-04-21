@@ -1,0 +1,18 @@
+Week 2
+
+What do I want to learn or understand better? Consider e.g. teamwork, Scrum, agile processes, technologies etc? 
+    The upcoming week I want to learn understand how we would implement the nextjs/auth library on our frontend application
+    in the best way. We have started to think about how we would authenticate users to show them the correct information on the screen
+    and I think understanding the nextjs/auth library will help us solve this issue.
+
+What is my contribution towards the team’s deliveries? How can I help my team do better next sprint?
+    Last week I said I wanted to understand the connection between backend and frontend better and I 
+    have done this but only for a few hours. Most of my time has been spent building up the landingpage and
+    a few React components so that we can have a coherent design throughout the application. All components haven't
+    been added to the main branch yet but most of them are in tweeking.
+    
+    
+Changes/improvements from last week's reflection?
+    The biggest change this week is that everyone in the group has been able to contribute code to the projects
+    wich has in turn increased our velocity in a very substancial way. This is great and has been lots of fun :D
+    
