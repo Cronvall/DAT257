@@ -1,23 +1,16 @@
-import NavBar from "../components/navBar"
-import SignupSection from "../components/signupSection";
-import SampleLeague from "../components/sampleLeague";
-import styles from "../styles/home.module.css";
-import Footer from "../components/footer";
+import { useRouter } from "next/router"
 
 export default function Home() {
 
+  const router = useRouter()
   return (
     <>
-      <div className={styles.body}>
-        <NavBar transparent={true}/>
-        <div className={styles.tiltObj} /> 
-        <div className={styles.contentContainer}>
-          <SignupSection />
-          <SampleLeague />
-        </div>
-        <div className={styles.whiteSpace} />
-      </div>
-      <Footer />
+      <h1>Super mega stock trader league</h1>
+      <h2>The leauge for you and your friends</h2>
+      <button onClick={() => router.push('/register')}>TEST</button>
+      
     </>
-  );
-};
+  )
+
+  
+}

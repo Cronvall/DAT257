@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { NextRouter, useRouter } from "next/router"
 
-import styles from '../styles/navBar.module.css'
-import React , { useState} from 'react';
+import styles from './styles/navBar.module.css'
 
 
 
