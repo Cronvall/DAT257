@@ -5,7 +5,6 @@ import styles from './styles/navBar.module.css'
 
 
 
-
 const NavBar = (props: {transparent: boolean}) => {
     const router: NextRouter = useRouter();
 

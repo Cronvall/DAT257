@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import styles from "./styles/singupSection.module.css"
 import axios from "axios";
-import rightArrow from "./../assets/icons/right-arrow.svg";
-import Image from "next/image";
+import { NextRouter } from "next/router";
+import HoloButton from "./buttons/holoButton";
 
-const SignupSection = () => {
+const SignupSection = (props : {router: NextRouter}) => {
 
     const [roomCode, setRoomCode] = useState("");
     
     // should be dynamic and depending on if user is signed in or not
-    const [enterLeagueCode, setEnterLeagueCode] = useState(true);
+    const [enterLeagueCode, setEnterLeagueCode] = useState(false);
 
 
     const joinRoom = async () => {
@@ -34,35 +34,39 @@ const SignupSection = () => {
             </div>
 
             <div className={styles.buttonContainer}>
-                <div className={styles.buttonWrapper}>
-                    <button className={styles.button}>Sign Up</button>
-                </div>
-                <div className={styles.buttonWrapper}>
-                    <button className={styles.button}>Join League</button>
-                </div>
-                <div className={styles.buttonWrapper}>
-                    <button className={styles.button}>Create League</button>
-                </div>                    
+                <HoloButton 
+                    onClick={() => props.router.push("./register")} txt="Sign Up" 
+                    width="16rem" height="6rem"/>
+                <HoloButton 
+                    onClick={() => setEnterLeagueCode(!enterLeagueCode)} txt="Join League" 
+                    width="16rem" height="6rem"/>    
+                <HoloButton 
+                    onClick={() => setEnterLeagueCode(!enterLeagueCode)} txt="Create League" 
+                    width="16rem" height="6rem"/>                   
             </div>
-            {
-                enterLeagueCode ?
-                <div className={styles.codeContainer}>
-                    <input className={styles.codeInput} type="text" placeholder="Enter League Code" value={roomCode} onChange={(e) => setRoomCode(e.target.value)} />
-                    <div className={styles.wrapper}>
-
-                    <button onClick={joinRoom} className={styles.button}>
-                    <Image
-                        src={rightArrow}
-                        alt="right arrow"
-                        width={48}
-                        height={48}
-                    />
-                    </button>
+            <div className={styles.inputSpace}>
+                {
+                    enterLeagueCode ?
+                    <div className={styles.codeContainer}>
+                        <input 
+                            className={styles.codeInput} type="text" 
+                            placeholder="Enter League Code" value={roomCode} 
+                            onChange={(e) => setRoomCode(e.target.value)} />
+                        <div className={styles.wrapper}>
+                        
+                        <HoloButton 
+                            onClick={joinRoom} 
+                            width="10rem"
+                            height="4rem"
+                            txt="Go"
+                            rightArrow={true}
+                        />
+                        </div>
                     </div>
-                </div>
-                :
-                <></>
-            }
+                    :
+                    <></>
+                }
+            </div>
         </div>
     );
 };
