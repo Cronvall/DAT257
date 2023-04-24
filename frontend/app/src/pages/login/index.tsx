@@ -37,7 +37,6 @@ const LoginPage = () => {
     login(username, password).then(
       () => {
         router.push("/");
-        window.location.reload();
       },
       (error) => {
         const resMessage =

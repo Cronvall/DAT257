@@ -1,8 +1,12 @@
 import axios from "axios";
 
+const register_URL = "http://localhost:8080/api/users"
+const login_URL = "http://localhost:8080/api/authentication"
+
+
 
 export const register = (username: string, email: string, password: string) => {
-  return axios.post("http://localhost:8080/api/users", {
+  return axios.post(register_URL, {
     username,
     email,
     password,
@@ -11,26 +15,49 @@ export const register = (username: string, email: string, password: string) => {
 
 export const login = (username: string, password: string) => {
   return axios
-    .post("http://localhost:8080/api/authentication/", {
+    .post(login_URL, {
       username,
       password,
     })
     .then((response) => {
-      if (response.data.accessToken) {
-        localStorage.setItem("user", JSON.stringify(response.data));
-      }
-
+      document.cookie = "user="+JSON.stringify(response.data)+"; path=/";
+      console.log("User logged in",response.data);
       return response.data;
     });
 };
 
 export const logout = () => {
-  localStorage.removeItem("user");
+  document.cookie = "user="; "path=/";
+  location.reload();
 };
 
 export const getCurrentUser = () => {
-  const userStr = localStorage.getItem("user");
-  if (userStr) return JSON.parse(userStr);
 
+  let cookie = getCookie("user");
+  if (cookie) {
+    return JSON.parse(cookie);
+  }
   return null;
 };
+
+
+export const getCookie = (cname: string) => {
+  let name = cname + "=";
+  let decodedCookie;
+  try{
+    decodedCookie = decodeURIComponent(document.cookie);
+  } catch (e) {
+    return "";
+  }
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
