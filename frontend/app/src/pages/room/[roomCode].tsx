@@ -8,8 +8,8 @@ import { NextPage } from "next";
 
 const Room: NextPage = () => {
 
-  const router = useRouter();
-  console.log("123")
+  const router = useRouter()
+  const roomCode = router.query.roomCode
 
 
     //const [code, setCode] = useState("")
@@ -23,8 +23,8 @@ const Room: NextPage = () => {
           .then(res => {
             const members = res.data.members;
             const room = res.data.name;
+            console.log("room")
             console.log(members)
-            console.log(room)
             getUsers(members);
             getName(room)
 
@@ -37,7 +37,7 @@ const Room: NextPage = () => {
 
       useEffect (() => {
         getRoom();
-      }, [])
+      }, [roomCode])
 
       const data = [
         {
