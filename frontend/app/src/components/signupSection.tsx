@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles/singupSection.module.css"
 import axios from "axios";
 import { NextRouter } from "next/router";
 import HoloButton from "./buttons/holoButton";
+import CreateRoom from "./createRoom";
 
 const SignupSection = (props : {router: NextRouter}) => {
 
@@ -10,6 +11,8 @@ const SignupSection = (props : {router: NextRouter}) => {
     
     // should be dynamic and depending on if user is signed in or not
     const [enterLeagueCode, setEnterLeagueCode] = useState(false);
+    const [createRoom, setRoomParam] = useState(false);
+
 
 
     const joinRoom = async () => {
@@ -41,7 +44,7 @@ const SignupSection = (props : {router: NextRouter}) => {
                     onClick={() => setEnterLeagueCode(!enterLeagueCode)} txt="Join League" 
                     width="16rem" height="6rem"/>    
                 <HoloButton 
-                    onClick={() => setEnterLeagueCode(!enterLeagueCode)} txt="Create League" 
+                    onClick={() => setRoomParam(!createRoom)} txt="Create League" 
                     width="16rem" height="6rem"/>                   
             </div>
             <div className={styles.inputSpace}>
@@ -63,6 +66,17 @@ const SignupSection = (props : {router: NextRouter}) => {
                         />
                         </div>
                     </div>
+                    :
+                    <></>
+                }
+                
+            </div>
+            <div>
+            {
+                    createRoom ? 
+                    <div>
+                        <CreateRoom/>                        
+                    </div> 
                     :
                     <></>
                 }
