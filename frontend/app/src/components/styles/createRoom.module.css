@@ -1,0 +1,48 @@
+.darkBg{
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0,0.5);
+    z-index: 1000;
+    position: fixed;
+    left: 0;
+    top: 0;
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal{
+    position: relative;
+    background-color: white;
+    width: 25%;
+    min-width: 250px;
+    height: 65%;
+    border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.formButtons{
+    display: flex;
+    gap: 0.5rem;
+}
+
+.formButton{
+    padding: 0.5rem 1rem;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+}
+
+.input{
+    width: 80%;
+    height: 1.5rem;
+}
