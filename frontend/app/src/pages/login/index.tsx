@@ -1,99 +1,110 @@
 import styles from "./style.module.css";
-import { useAuth, AuthProvider, LocalStorageProvider } from "@reactivers/hooks";
 import NavBar from "../../components/navBar"
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useRouter } from "next/router";
-export let isLoggedIn = false;
-export let loggedInId = null;
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
+
+import { login } from "../../services/auth.service";
 
 const LoginPage = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  let lastIO = Date.now();
-  const [failedLogin, setFailedLogin] = useState(false);
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const router = useRouter();
 
-  const login = () => {
-    if (lastIO + 1000 > Date.now()) return;
-    lastIO = Date.now();
-    axios
-      .post('http://localhost:8080/api/authentication', {
-        username: username,
-        password: password,
-      })
-      .then((response) => {
-        if(response.status >= 200 && response.status <= 299){
-          isLoggedIn = true;
-          loggedInId = response.data.id; 
-          router.push('/profilepage');
-        }
-        setUsername('');
-        setPassword('');
-      })
-      .catch((error) => {
-        setFailedLogin(true);
-        if (error.response) {
-          // The request was made and the server responded with a status code outside the range of 2xx
-          console.log(error.response.data);
-          // Show a popup with the error message
-          // alert(error.response.data);
-        } else if (error.request) {
-          // The request was made but no response was received
-          console.log(error.request);
-          // alert('No response from server');
-        } else {
-          // Something happened in setting up the request that triggered an error
-          console.log('Error', error.message);
-          // alert('Error during request setup');
-        }
-      });
+  const [loading, setLoading] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
 
+  const initialValues: {
+    username: string;
+    password: string;
+  } = {
+    username: "",
+    password: "",
   };
 
-  return (
+  const validationSchema = Yup.object().shape({
+    username: Yup.string().required("This field is required!"),
+    password: Yup.string().required("This field is required!"),
+  });
+
+
+  const handleLogin = (formValue: { username: string; password: string }) => {
+    const { username, password } = formValue;
+
+    setMessage("");
+    setLoading(true);
+
+    login(username, password).then(
+      () => {
+        router.push("/");
+        window.location.reload();
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+        setLoading(false);
+        setMessage(resMessage);
+      }
+    );
+  };
+
+
+return (
     <>
+      <NavBar transparent={false}/>
+      <div className={styles.form}>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleLogin}
+        >
+          <Form>
+            <div className="form-group">
+              <label htmlFor="username">Username</label>
+              <Field name="username" type="text" className="form-control" />
+              <ErrorMessage
+                name="username"
+                component="div"
+                className="alert alert-danger"
+              />
+            </div>
 
-      <NavBar />
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <Field name="password" type="password" className="form-control" />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="alert alert-danger"
+              />
+            </div>
 
-          login();
+            <div className="form-group">
+              <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
+                {loading && (
+                  <span className="spinner-border spinner-border-sm"></span>
+                )}
+                <span>Login</span>
+              </button>
+            </div>
 
-        }}
-        className={styles.form}
-      >
-        <h1>Login</h1>
-
-        <label htmlFor="username">Username</label>
-        <input
-          name="username"
-
-          className={styles.input}
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-
-        <label htmlFor="password">Password</label>
-        <input
-          name="password"
-          className={styles.input}
-
-          value={password}
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
-        <div>
-          <button className={styles.button} onClick={login}>
-            Login
-          </button>
-        </div>
-        <h1>{failedLogin ? "Invalid password or username" : ""}</h1>
-      </form>
+            {message && (
+              <div className="form-group">
+                <div className="alert alert-danger" role="alert">
+                  {message}
+                </div>
+              </div>
+            )}
+          </Form>
+        </Formik>
+      </div>
     </>
   );
+
 };
 export default LoginPage;

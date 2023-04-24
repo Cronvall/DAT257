@@ -1,90 +1,159 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+
 import styles from "./style.module.css";
 import NavBar from "@/components/navBar";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
+import IUser from "../../types/user.type";
+import { register } from "../../services/auth.service";
 
 
 const SignupPage = () => {
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [registerSuccess, setRegisterSuccess] = useState(false);
-  let lastIO = Date.now();
+  const [successful, setSuccessful] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
 
+  const router = useRouter();
 
-  const signup = async () => {
-
-    if(username === "" || password === "" || email === ""){
-      alert("Please fill in all fields");
-      return;
-    }
-
-    try{
-      if(lastIO + 1000 > Date.now()) return;
-      lastIO = Date.now();
-      axios.post('http://localhost:8080/api/users',
-      {
-        username: username,
-        password: password,
-        email: email,
-        userRoomStockLinks: []
-      }).then((response) => {
-        console.log(response);
-        setUsername("");
-        setPassword("");
-        setEmail("");
-        setRegisterSuccess(true)
-      })
-
-    }
-    catch(e){
-      console.log(e)
-    }
+  const initialValues: IUser = {
+    username: "",
+    email: "",
+    password: "",   
   };
+
+  useEffect(() => {
+    if(successful){
+      router.push("/");
+    }
+  }, [successful]);
+
+  const validationSchema = Yup.object().shape({
+    username: Yup.string()
+      .test(
+        "len",
+        "The username must be between 3 and 20 characters.",
+        (val: any) =>
+          val &&
+          val.toString().length >= 3 &&
+          val.toString().length <= 20
+      )
+      .required("This field is required!"),
+    email: Yup.string()
+      .email("This is not a valid email.")
+      .required("This field is required!"),
+    password: Yup.string()
+      .test(
+        "len",
+        "The password must be between 6 and 40 characters.",
+        (val: any) =>
+          val &&
+          val.toString().length >= 6 &&
+          val.toString().length <= 40
+      )
+      .required("This field is required!"),
+  });
+
+
+  const handleRegister = (formValue: IUser) => {
+    const { username, email, password } = formValue;
+
+    register(username, email, password).then(
+      (response) => {
+        setMessage(response.data.message);
+        setSuccessful(true);
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+
+        setMessage(resMessage);
+        setSuccessful(false);
+      }
+    );
+  };
+
 
   return (
     <>
       <NavBar transparent={false}/>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          signup();
-        }}
-        className={styles.form}
-      >
-        <h1>Sign Up</h1>
-        <label htmlFor="username">Username</label>
-        <input 
-          name="username" 
-          className={styles.input}
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+      <div className="card card-container">
+        <img
+          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+          alt="profile-img"
+          className="profile-img-card"
         />
-        <label htmlFor="password">Password</label>
-        <input 
-          name="password" 
-          className={styles.input} 
-          value={password}
-          type="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <label htmlFor="email">Email</label>
-        <input 
-          name="email" 
-          type="email"
-          className={styles.input}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        
-        <div>
-          <button className={styles.button} type="submit">Sign up</button>
-        </div>
-      </form>
-      <h1>{registerSuccess ? "Register Succeeded" : ""}</h1>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleRegister}
+        >
+          <Form>
+            {!successful && (
+              <div>
+                <div className="form-group">
+                  <label htmlFor="username"> Username </label>
+                  <Field name="username" type="text" className="form-control" />
+                  <ErrorMessage
+                    name="username"
+                    component="div"
+                    className="alert alert-danger"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="email"> Email </label>
+                  <Field name="email" type="email" className="form-control" />
+                  <ErrorMessage
+                    name="email"
+                    component="div"
+                    className="alert alert-danger"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="password"> Password </label>
+                  <Field
+                    name="password"
+                    type="password"
+                    className="form-control"
+                  />
+                  <ErrorMessage
+                    name="password"
+                    component="div"
+                    className="alert alert-danger"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
+                </div>
+              </div>
+            )}
+
+            {message && (
+              <div className="form-group">
+                <div
+                  className={
+                    successful ? "alert alert-success" : "alert alert-danger"
+                  }
+                  role="alert"
+                >
+                  {message}
+                </div>
+              </div>
+            )}
+          </Form>
+        </Formik>
+      </div>
     </>
   );
+
+ 
 };
 export default SignupPage;

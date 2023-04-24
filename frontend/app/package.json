@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@nextui-org/react": "^1.0.0-beta.12",
     "@reactivers/hooks": "^1.0.15",
     "@types/node": "18.15.11",
     "@types/react": "18.0.34",
@@ -17,12 +18,14 @@
     "axios-hooks": "^4.0.0",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
+    "formik": "^2.2.9",
     "next": "13.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-router-dom": "^6.10.0",
     "react-switch": "^7.0.0",
     "recharts": "^2.5.0",
-    "typescript": "5.0.4"
+    "typescript": "5.0.4",
+    "yup": "^1.1.1"
   }
 }
