@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { NextRouter, useRouter } from "next/router"
 import { logout, getCurrentUser } from "../services/auth.service";
 
@@ -39,13 +39,11 @@ const NavBar = (props: Iprops) => {
         </button>
 
         
-
-        
         <div>
           {
             transparent ?
             <input
-              className={styles.searchInput} placeholder="$APPL"
+              className={styles.searchInput} placeholder="$AAPL"
               type="text"
               value={entered}
               onChange={handleInputChange}
@@ -55,7 +53,6 @@ const NavBar = (props: Iprops) => {
             <></>
           }
           
-          {/*Make dynamic (Don't render if user is signed in*/}
           {
             getCurrentUser()?.username || null ?
             <>
@@ -68,7 +65,6 @@ const NavBar = (props: Iprops) => {
               <button onClick={() => router.push('/login')} className={styles.headerButton} style={{color: txtColor}}>Login</button>
             </>
           }
-
         </div>
       </div>
     )
