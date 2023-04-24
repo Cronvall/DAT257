@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NextRouter, useRouter } from "next/router"
+import { logout, getCurrentUser } from "../services/auth.service";
 
 import styles from './styles/navBar.module.css'
 
+interface Iprops{
+  transparent: boolean
+}
 
 
-const NavBar = (props: {transparent: boolean}) => {
+const NavBar = (props: Iprops) => {
+
     const router: NextRouter = useRouter();
 
 
@@ -40,18 +45,30 @@ const NavBar = (props: {transparent: boolean}) => {
           {
             transparent ?
             <input
-        className={styles.searchInput} placeholder="$APPL"
-        type="text"
-        value={entered}
-        onChange={handleInputChange}
-        onKeyDown={handleEnterPress} />
+              className={styles.searchInput} placeholder="$APPL"
+              type="text"
+              value={entered}
+              onChange={handleInputChange}
+              onKeyDown={handleEnterPress} 
+            />
             :
             <></>
           }
           
           {/*Make dynamic (Don't render if user is signed in*/}
-          <button onClick={() => router.push('/register')} className={styles.headerButton} style={{color: txtColor}}>Register</button>
-          <button onClick={() => router.push('/login')} className={styles.headerButton} style={{color: txtColor}}>Login</button>
+          {
+            getCurrentUser()?.username || null ?
+            <>
+              <button onClick={() => router.push('/profile')} className={styles.headerButton} style={{color: txtColor}}>{getCurrentUser().username}</button>
+              <button onClick={() => logout()} className={styles.headerButton} style={{color: txtColor}}>Logout</button>
+            </>
+            :
+            <>
+              <button onClick={() => router.push('/register')} className={styles.headerButton} style={{color: txtColor}}>Register</button>
+              <button onClick={() => router.push('/login')} className={styles.headerButton} style={{color: txtColor}}>Login</button>
+            </>
+          }
+
         </div>
       </div>
     )
