@@ -1,10 +1,10 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import styles from "./styles/holoButton.module.css";
 import Image from "next/image";
 import rightArrow from "../../assets/icons/right-arrow.svg";
 
 interface HoloButtonProps {
-    onClick: () => void;
+    onClick?: () => void;
     txt?: string;
     rightArrow?: boolean;
     width: string | number;
@@ -15,7 +15,7 @@ interface HoloButtonProps {
 const HoloButton = (props: HoloButtonProps) => {
     return (
         <div className={styles.buttonWrapper} style={{width: props.width, height: props.height }}>
-            <button className={styles.button} onClick={props.onClick}>
+            <button className={styles.button} onClick={props.onClick} >
                 {props.txt}
                 {
                     props.rightArrow ?

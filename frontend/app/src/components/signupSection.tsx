@@ -1,18 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles/singupSection.module.css"
 import axios from "axios";
 import { NextRouter,useRouter } from "next/router";
 import HoloButton from "./buttons/holoButton";
+import { getCurrentUser } from "../services/auth.service";
 
 const SignupSection = (props : {router: NextRouter}) => {
 
     const router = useRouter();
 
     const [roomCode, setRoomCode] = useState("");
-    
+    const [signedIn, setSignedIn] = useState<boolean>(false);
+
     // should be dynamic and depending on if user is signed in or not
     const [enterLeagueCode, setEnterLeagueCode] = useState(false);
 
+
+    useEffect(() => {
+        setSignedIn(!!getCurrentUser()?.username);
+    }, []);
 
     const handleJoinRoom = async () => {
         console.log(roomCode)
@@ -28,15 +34,31 @@ const SignupSection = (props : {router: NextRouter}) => {
             </div>
 
             <div className={styles.buttonContainer}>
-                <HoloButton 
-                    onClick={() => props.router.push("./register")} txt="Sign Up" 
-                    width="16rem" height="6rem"/>
-                <HoloButton 
-                    onClick={() => setEnterLeagueCode(!enterLeagueCode)} txt="Join League" 
-                    width="16rem" height="6rem"/>    
-                <HoloButton 
-                    onClick={() => setEnterLeagueCode(!enterLeagueCode)} txt="Create League" 
-                    width="16rem" height="6rem"/>                   
+                {
+                    signedIn ?
+                    <>
+                        <HoloButton 
+                            onClick={() => setEnterLeagueCode(!enterLeagueCode)} txt="Join League" 
+                            width="16rem" height="6rem"/>
+                        <HoloButton 
+                            onClick={() => setEnterLeagueCode(!enterLeagueCode)} txt="Create League" 
+                            width="16rem" height="6rem"/>     
+                    </>
+                    :
+                    <>
+                        <HoloButton 
+                            onClick={() => props.router.push("./register")} txt="Sign Up" 
+                            width="16rem" height="6rem"/>
+                        <HoloButton 
+                            onClick={() => props.router.push("/login")} txt="Join League" 
+                            width="16rem" height="6rem"/>
+                        <HoloButton 
+                            onClick={() => props.router.push("/login")} txt="Create League" 
+                            width="16rem" height="6rem"/>      
+                    </>
+  
+                }
+           
             </div>
             <div className={styles.inputSpace}>
                 {
