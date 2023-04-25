@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 
 import styles from "./style.module.css";
@@ -7,8 +7,14 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 import IUser from "../../types/user.type";
-import { register } from "../../services/auth.service";
+import { register, login } from "../../services/auth.service";
+import Image from "next/image";
+import WWImg from "../../assets/images/WallstreetWarriors.png"
 
+
+interface IRegisterUser extends IUser {
+  validatePassword : string
+}
 
 const SignupPage = () => {
 
@@ -17,42 +23,25 @@ const SignupPage = () => {
 
   const router = useRouter();
 
-  const initialValues: IUser = {
+  const initialValues: IRegisterUser = {
     username: "",
     email: "",
-    password: "",   
+    password: "",
+    validatePassword: ""   
   };
 
-  useEffect(() => {
-    if(successful){
-      router.push("/");
-    }
-  }, [successful]);
 
   const validationSchema = Yup.object().shape({
     username: Yup.string()
-      .test(
-        "len",
-        "The username must be between 3 and 20 characters.",
-        (val: any) =>
-          val &&
-          val.toString().length >= 3 &&
-          val.toString().length <= 20
-      )
       .required("This field is required!"),
     email: Yup.string()
       .email("This is not a valid email.")
       .required("This field is required!"),
     password: Yup.string()
-      .test(
-        "len",
-        "The password must be between 6 and 40 characters.",
-        (val: any) =>
-          val &&
-          val.toString().length >= 6 &&
-          val.toString().length <= 40
-      )
-      .required("This field is required!"),
+      .required("This field is required!"),  
+      passwordConfirmation: Yup.string()
+      .required('Please fill in')
+      .oneOf([Yup.ref('password'), "null"], "Passwords don't match")
   });
 
 
@@ -62,7 +51,7 @@ const SignupPage = () => {
     register(username, email, password).then(
       (response) => {
         setMessage(response.data.message);
-        setSuccessful(true);
+        login(username,password)
       },
       (error) => {
         const resMessage =
@@ -81,13 +70,17 @@ const SignupPage = () => {
 
   return (
     <>
-      <NavBar transparent={false}/>
-      <div className="card card-container">
-        <img
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-          alt="profile-img"
-          className="profile-img-card"
-        />
+      <NavBar transparent={true}/>
+      <div className={styles.mainContainer}>
+      <div className={styles.imgContainer}>
+                  <Image
+                    src={WWImg}
+                    alt="Wallstreet Warriors"
+                    width={600}
+                  />
+                </div>
+        <div className={styles.formContainer}>
+
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -96,42 +89,71 @@ const SignupPage = () => {
           <Form>
             {!successful && (
               <div>
-                <div className="form-group">
+
+                <div className={styles.inputContainer}>
                   <label htmlFor="username"> Username </label>
-                  <Field name="username" type="text" className="form-control" />
+                  <br/>
+                  <Field 
+                    name="username" 
+                    type="text" 
+                    className={styles.input}
+                  />
                   <ErrorMessage
                     name="username"
                     component="div"
-                    className="alert alert-danger"
                   />
                 </div>
 
-                <div className="form-group">
+                <div className={styles.inputContainer}>
                   <label htmlFor="email"> Email </label>
-                  <Field name="email" type="email" className="form-control" />
+                  <br/>
+                  <Field 
+                    name="email" 
+                    type="email" 
+                    className={styles.input}
+                  />
                   <ErrorMessage
                     name="email"
                     component="div"
-                    className="alert alert-danger"
                   />
                 </div>
 
-                <div className="form-group">
+                <div className={styles.inputContainer}>
                   <label htmlFor="password"> Password </label>
+                  <br/>
                   <Field
                     name="password"
                     type="password"
-                    className="form-control"
+                    className={styles.input}
                   />
                   <ErrorMessage
                     name="password"
                     component="div"
-                    className="alert alert-danger"
                   />
                 </div>
 
-                <div className="form-group">
-                  <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
+                <div className={styles.inputContainer}>
+                  <label htmlFor="passwordConfirmation"> Confirm Password </label>
+                  <br/>
+                  <Field
+                    name="passwordConfirmation"
+                    type="password"
+                    className={styles.input}
+                  />
+                  <ErrorMessage
+                    name="passwordConfirmation"
+                    component="div"
+                  />
+                </div>
+
+                <div className={styles.btnContainer}>
+                  <button type="submit" className={styles.button}>
+                    Sign Up
+                  </button>
+                  <p style={{marginLeft: "1rem", color:"#919191" }}> or </p>
+                  <button className={styles.buttonLogin}>
+                    <a href="/login"> Login </a>
+                  </button>
                 </div>
               </div>
             )}
@@ -150,6 +172,7 @@ const SignupPage = () => {
             )}
           </Form>
         </Formik>
+        </div>
       </div>
     </>
   );
