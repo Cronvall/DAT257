@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styles from "./styles/singupSection.module.css"
 import axios from "axios";
-import { NextRouter } from "next/router";
+import { NextRouter,useRouter } from "next/router";
 import HoloButton from "./buttons/holoButton";
 import { getCurrentUser } from "../services/auth.service";
 
 const SignupSection = (props : {router: NextRouter}) => {
+
+    const router = useRouter();
 
     const [roomCode, setRoomCode] = useState("");
     const [signedIn, setSignedIn] = useState<boolean>(false);
@@ -18,18 +20,9 @@ const SignupSection = (props : {router: NextRouter}) => {
         setSignedIn(!!getCurrentUser()?.username);
     }, []);
 
-
-    const joinRoom = async () => {
+    const handleJoinRoom = async () => {
         console.log(roomCode)
-        try{
-          axios.post('http://localhost:8080/api/rooms',
-          {
-            code: roomCode,
-          })
-        }
-        catch(e){
-          console.log(e)
-        }
+        router.push(`/room/${roomCode}`,)
       };
 
     return (
@@ -78,7 +71,7 @@ const SignupSection = (props : {router: NextRouter}) => {
                         <div className={styles.wrapper}>
                         
                         <HoloButton 
-                            onClick={joinRoom} 
+                            onClick={handleJoinRoom} 
                             width="10rem"
                             height="4rem"
                             txt="Go"
