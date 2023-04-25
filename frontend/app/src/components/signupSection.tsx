@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles/singupSection.module.css"
 import axios from "axios";
 import { NextRouter } from "next/router";
@@ -8,9 +8,15 @@ import { getCurrentUser } from "../services/auth.service";
 const SignupSection = (props : {router: NextRouter}) => {
 
     const [roomCode, setRoomCode] = useState("");
+    const [signedIn, setSignedIn] = useState<boolean>(false);
 
     // should be dynamic and depending on if user is signed in or not
     const [enterLeagueCode, setEnterLeagueCode] = useState(false);
+
+
+    useEffect(() => {
+        setSignedIn(!!getCurrentUser()?.username);
+    }, []);
 
 
     const joinRoom = async () => {
@@ -36,7 +42,7 @@ const SignupSection = (props : {router: NextRouter}) => {
 
             <div className={styles.buttonContainer}>
                 {
-                    getCurrentUser()?.username || null ?
+                    signedIn ?
                     <>
                         <HoloButton 
                             onClick={() => setEnterLeagueCode(!enterLeagueCode)} txt="Join League" 

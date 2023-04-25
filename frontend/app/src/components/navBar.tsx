@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NextRouter, useRouter } from "next/router"
 import { logout, getCurrentUser } from "../services/auth.service";
 
@@ -11,14 +11,20 @@ interface Iprops{
 
 const NavBar = (props: Iprops) => {
 
-    const router: NextRouter = useRouter();
+  const router: NextRouter = useRouter();
+  const [signedIn, setSignedIn] = useState<boolean>(false);
 
 
-    const [transparent, setTransparent] = useState(props.transparent);
-    const [bgColor, setBgColor] = useState(transparent ? "transparent" : "#f5f5f5");
-    const [txtColor, setTxtColor] = useState(transparent ? "white" : "black");
+  const [transparent, setTransparent] = useState(props.transparent);
+  const [bgColor, setBgColor] = useState(transparent ? "transparent" : "#f5f5f5");
+  const [txtColor, setTxtColor] = useState(transparent ? "white" : "black");
 
-    const [entered, setEntered] = useState("");
+  const [entered, setEntered] = useState("");
+
+  
+  useEffect(() => {
+    setSignedIn(!!getCurrentUser()?.username);
+  }, []);
 
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,9 +60,9 @@ const NavBar = (props: Iprops) => {
           }
           
           {
-            getCurrentUser()?.username || null ?
+            signedIn|| null ?
             <>
-              <button onClick={() => router.push('/profile')} className={styles.headerButton} style={{color: txtColor}}>{getCurrentUser().username}</button>
+              <button onClick={() => router.push('/profile')} className={styles.headerButton} style={{color: txtColor}}>{getCurrentUser()?.username}</button>
               <button onClick={() => logout()} className={styles.headerButton} style={{color: txtColor}}>Logout</button>
             </>
             :
