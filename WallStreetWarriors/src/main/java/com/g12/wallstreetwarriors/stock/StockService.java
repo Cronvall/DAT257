@@ -1,16 +1,9 @@
-package com.g12.wallstreetwarriors.StockData;
+package com.g12.wallstreetwarriors.stock;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.time.Duration;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,7 +19,7 @@ class StockService {
             Optional optional = Optional.empty();
 
             StockId stock = twelveDataClient.build().get()
-                .uri("time_series?&interval=1min&symbol={ticker}&outputsize=1", ticker)
+                .uri("time_series?&interval=1day&symbol={ticker}&start_date=2023-01-01 00:00:00&end_date=2023-04-22 00:00:00&previous_close=true", ticker)
                 .retrieve()
                 .bodyToMono(StockId.class)
                 .block(Duration.ofSeconds(5));

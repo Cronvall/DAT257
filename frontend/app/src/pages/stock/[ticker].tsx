@@ -8,6 +8,11 @@ import Header from '../../components/navBar';
 import Image from 'next/image'
 import Search from '../../components/InputStock'
 import InputStock from "../../components/InputStock";
+import StockGraph from "../../components/StockGraph";
+
+
+
+
 const StockView: NextPage = () =>{
     interface IstockData {
         symbol: string,
@@ -16,6 +21,8 @@ const StockView: NextPage = () =>{
         currentPrice: number,
         todayProcent: number,
         todayChange: number
+        historyPrices : Array<number>
+        historyDates : Array<string>
 
     }
     const router = useRouter();
@@ -83,9 +90,15 @@ const StockView: NextPage = () =>{
                             style={{background:'red'}}>
                         Sell
                     </button>
+
+                </div>
+
+                
+                <div className={styles.graphDiv}>
+                  <StockGraph prices={stockData?.historyPrices ? stockData?.historyPrices: [] } dates={stockData?.historyDates ? stockData?.historyDates: []} />
                 </div>
               </div>
-
+              
             </div></>
             
     
