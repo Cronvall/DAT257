@@ -1,12 +1,9 @@
-package com.g12.wallstreetwarriors.StockData;
+package com.g12.wallstreetwarriors.stockTransaction;
 
 
-import com.g12.wallstreetwarriors.room.UserRoomStockLink;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-
-import java.util.Set;
 
 @Entity
 @NoArgsConstructor
