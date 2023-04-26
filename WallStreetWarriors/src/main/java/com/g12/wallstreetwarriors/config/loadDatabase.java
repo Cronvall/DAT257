@@ -7,19 +7,28 @@ import com.g12.wallstreetwarriors.user.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 @Configuration
 public class loadDatabase {
+
+    private final PasswordEncoder passwordEncoder;
+
+    public loadDatabase(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Bean
     CommandLineRunner initDatabase(UserRepository userRepository, RoomRepository roomRepository) {
 
         return args -> {
 
-            User user1 = User.builder().username("uName1").password("Pass123").email("email1@gmail.com").build();
-            User user2 = User.builder().username("uName2").password("Pass123").email("email2@gmail.com").build();
-            User user3 = User.builder().username("uName3").password("Pass123").email("email3@gmail.com").build();
+            User user1 = User.builder().username("uname1").password(passwordEncoder.encode("Pass111")).email("email1@gmail.com").build();
+            User user2 = User.builder().username("uname2").password(passwordEncoder.encode("Pass222")).email("email2@gmail.com").build();
+            User user3 = User.builder().username("uname3").password(passwordEncoder.encode("Pass333")).email("email3@gmail.com").build();
+
+
 
             user1 = userRepository.save(user1);
             user2 = userRepository.save(user2);
