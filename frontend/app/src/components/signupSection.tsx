@@ -4,13 +4,18 @@ import axios from "axios";
 import { NextRouter,useRouter } from "next/router";
 import HoloButton from "./buttons/holoButton";
 import { getCurrentUser } from "../services/auth.service";
+import CreateRoomPanel from "./createRoom";
+
 
 const SignupSection = (props : {router: NextRouter}) => {
 
     const router = useRouter();
+    const user = getCurrentUser();
+
 
     const [roomCode, setRoomCode] = useState("");
     const [signedIn, setSignedIn] = useState<boolean>(false);
+    const [createRoom, setCreateRoom] = useState(false);
 
     // should be dynamic and depending on if user is signed in or not
     const [enterLeagueCode, setEnterLeagueCode] = useState(false);
@@ -18,10 +23,30 @@ const SignupSection = (props : {router: NextRouter}) => {
 
     useEffect(() => {
         setSignedIn(!!getCurrentUser()?.username);
+        console.log("User: ")
+        console.log(user?.username)
     }, []);
 
     const handleJoinRoom = async () => {
         console.log(roomCode)
+        console.log(getCurrentUser());
+        const user = getCurrentUser();
+        
+        try{
+            const respone = await axios.post(`http://localhost:8080/api/rooms/${roomCode}`,
+            {
+              id: user.id,
+              username: user.username,
+              password: user.password,
+              email: user.email
+            });
+            console.log(respone.data)
+          }
+          catch(e){
+            console.log(e)
+          }
+        
+
         router.push(`/room/${roomCode}`,)
       };
 
@@ -41,8 +66,15 @@ const SignupSection = (props : {router: NextRouter}) => {
                             onClick={() => setEnterLeagueCode(!enterLeagueCode)} txt="Join League" 
                             width="16rem" height="6rem"/>
                         <HoloButton 
-                            onClick={() => setEnterLeagueCode(!enterLeagueCode)} txt="Create League" 
-                            width="16rem" height="6rem"/>     
+                            onClick={() => setCreateRoom(!createRoom)} txt="Create League" 
+                            width="16rem" height="6rem"/>  
+                        {
+                        createRoom ? 
+                            <CreateRoomPanel closeMethod={() => setCreateRoom(false)}/>
+                            :
+                            <></>
+                        }
+                         
                     </>
                     :
                     <>
