@@ -6,28 +6,29 @@ import java.util.Optional;
 import com.g12.wallstreetwarriors.user.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/authentication")
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
 
-    public AuthenticationController(AuthenticationService authenticationService) {
+    private final PasswordEncoder passwordEncoder;
+
+    public AuthenticationController(AuthenticationService authenticationService, PasswordEncoder passwordEncoder) {
         this.authenticationService = authenticationService;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping("/authentication")
-    ResponseEntity<?> authenticateUser(@RequestBody User authUser) throws Exception {
+    @PostMapping
+    ResponseEntity<?> authenticateUser(@RequestBody User authUser) {
         try {
             Optional<User> user = authenticationService.authenticateUser(authUser.getUsername());
 
             if (user.isPresent()) {
-                if (user.get().getPassword().equals(authUser.getPassword())) {
+                if (passwordEncoder.matches(authUser.getPassword(), user.get().getPassword())) {
                     return new ResponseEntity<>(user, HttpStatus.OK);
                 } else {
                     return new ResponseEntity<>("Invalid password", HttpStatus.UNAUTHORIZED);
