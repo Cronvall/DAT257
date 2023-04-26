@@ -7,10 +7,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @NoArgsConstructor
@@ -36,6 +33,14 @@ public class Room {
     @Min(10000)
     @Max(100000)
     private Integer budget;
+
+    @NotNull
+    @Temporal(TemporalType.DATE)
+    private Date startDate;
+
+    @NotNull
+    @Temporal(TemporalType.DATE)
+    private Date endDate;
 
     @ManyToOne(
             optional = false,
@@ -64,6 +69,7 @@ public class Room {
     private List<User> members;
 
     @OneToMany(mappedBy = "room", cascade = {CascadeType.PERSIST, CascadeType.ALL})
+    @ToString.Exclude
     private Set<UserRoomStockLink> userRoomStockLinks;
 
 

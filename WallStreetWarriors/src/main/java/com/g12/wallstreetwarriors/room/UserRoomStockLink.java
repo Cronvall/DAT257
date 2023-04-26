@@ -1,7 +1,7 @@
 package com.g12.wallstreetwarriors.room;
 
 
-import com.g12.wallstreetwarriors.StockData.Stock;
+import com.g12.wallstreetwarriors.stock.Stock;
 import com.g12.wallstreetwarriors.user.User;
 import jakarta.persistence.*;
 import lombok.*;
