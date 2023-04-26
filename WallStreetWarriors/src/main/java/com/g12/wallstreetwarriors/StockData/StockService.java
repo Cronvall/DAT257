@@ -26,7 +26,7 @@ class StockService {
             Optional optional = Optional.empty();
 
             StockId stock = twelveDataClient.build().get()
-                .uri("time_series?&interval=1min&symbol={ticker}&outputsize=1", ticker)
+                .uri("time_series?&interval=1day&symbol={ticker}&start_date=2023-01-01 00:00:00&end_date=2023-04-22 00:00:00&previous_close=true", ticker)
                 .retrieve()
                 .bodyToMono(StockId.class)
                 .block(Duration.ofSeconds(5));
