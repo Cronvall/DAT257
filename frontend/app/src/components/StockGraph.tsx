@@ -1,13 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
 import { NextPage } from 'next';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import styles from './stock.module.css';
+import styles from '../pages/stock/stock.module.css';
 interface stockgraph {
   prices: Array<number>;
 dates: Array<string>;
 }
-
-
 
 
 const StockGraph: NextPage<stockgraph> = ({ prices,dates }) => {

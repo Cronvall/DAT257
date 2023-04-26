@@ -8,7 +8,7 @@ import Header from '../../components/navBar';
 import Image from 'next/image'
 import Search from '../../components/InputStock'
 import InputStock from "../../components/InputStock";
-import StockGraph from "./StockGraph";
+import StockGraph from "../../components/StockGraph";
 
 
 
