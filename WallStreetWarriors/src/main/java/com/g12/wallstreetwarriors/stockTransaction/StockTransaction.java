@@ -16,7 +16,7 @@ import java.util.Set;
 @ToString
 @Builder
 @Table(name = "stock")
-public class Stock {
+public class StockTransaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,8 +29,5 @@ public class Stock {
     private Float current;
     @NotNull
     private Integer amount;
-
-    @OneToMany(mappedBy = "stock", cascade = {CascadeType.PERSIST, CascadeType.ALL})
-    private Set<UserRoomStockLink> userRoomStockLinks;
 
 }
