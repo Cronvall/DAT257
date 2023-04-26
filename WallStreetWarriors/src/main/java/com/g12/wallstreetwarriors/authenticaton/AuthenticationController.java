@@ -7,12 +7,10 @@ import com.g12.wallstreetwarriors.user.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@RestController("/authentication")
+@RestController
+@RequestMapping("/authentication")
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
@@ -24,7 +22,6 @@ public class AuthenticationController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping
     ResponseEntity<?> authenticateUser(@RequestBody User authUser) {
         try {
