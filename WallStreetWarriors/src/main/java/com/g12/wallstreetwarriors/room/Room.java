@@ -35,11 +35,11 @@ public class Room {
     @Max(100000)
     private Integer budget;
 
-    @NotNull
+
     @Temporal(TemporalType.DATE)
     private Date startDate;
 
-    @NotNull
+
     @Temporal(TemporalType.DATE)
     private Date endDate;
 

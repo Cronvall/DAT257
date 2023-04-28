@@ -1,4 +1,4 @@
-package com.g12.wallstreetwarriors.stock;
+package com.g12.wallstreetwarriors.stockData;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;

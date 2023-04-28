@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class StockService {
+public class StockTransactionService {
     private final StockRepository stockRepository;
 
-    public StockService(StockRepository stockRepository) {
+    public StockTransactionService(StockRepository stockRepository) {
         this.stockRepository = stockRepository;
     }
 

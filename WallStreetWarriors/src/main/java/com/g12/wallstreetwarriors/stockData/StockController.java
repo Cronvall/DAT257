@@ -1,4 +1,4 @@
-package com.g12.wallstreetwarriors.stock;
+package com.g12.wallstreetwarriors.stockData;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
