@@ -19,10 +19,9 @@ const CreateRoomPanel = (props: {closeMethod: () => void}) => {
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date());
 
-    const onChange = dates => {
+    const onDateChange = (dates: [Date, Date]) => {
       
       const [start, end] = dates;
-      console.log(start)
       setStartDate(start);
       setEndDate(end);
   }
@@ -85,7 +84,7 @@ const CreateRoomPanel = (props: {closeMethod: () => void}) => {
                 onChange={(e) => setCapacity(e.target.value)}
                 />
                 <DatePicker selected={startDate} selectsRange startDate={startDate}
-                  endDate={endDate} onChange={onChange}></DatePicker>
+                  endDate={endDate} onChange={onDateChange}></DatePicker>
             </form>
             <div className={style.formButtons}>
                 <button className={style.formButton} type="submit" form="create-form">Create</button>
