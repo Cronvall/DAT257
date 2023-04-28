@@ -1,4 +1,4 @@
-package com.g12.wallstreetwarriors.StockData;
+package com.g12.wallstreetwarriors.stockData;
 
 import java.util.List;
 

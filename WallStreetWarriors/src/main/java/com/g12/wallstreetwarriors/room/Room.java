@@ -1,5 +1,6 @@
 package com.g12.wallstreetwarriors.room;
 
+import com.g12.wallstreetwarriors.stockTransaction.UserRoomStockLink;
 import com.g12.wallstreetwarriors.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -7,10 +8,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @NoArgsConstructor
@@ -36,6 +34,14 @@ public class Room {
     @Min(10000)
     @Max(100000)
     private Integer budget;
+
+
+    @Temporal(TemporalType.DATE)
+    private Date startDate;
+
+
+    @Temporal(TemporalType.DATE)
+    private Date endDate;
 
     @ManyToOne(
             optional = false,
@@ -64,6 +70,7 @@ public class Room {
     private List<User> members;
 
     @OneToMany(mappedBy = "room", cascade = {CascadeType.PERSIST, CascadeType.ALL})
+    @ToString.Exclude
     private Set<UserRoomStockLink> userRoomStockLinks;
 
 

@@ -1,8 +1,6 @@
 package com.g12.wallstreetwarriors.user;
 
-import com.g12.wallstreetwarriors.room.Room;
-import com.g12.wallstreetwarriors.room.UserRoomStockLink;
-import jakarta.annotation.Priority;
+import com.g12.wallstreetwarriors.stockTransaction.UserRoomStockLink;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;

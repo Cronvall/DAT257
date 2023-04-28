@@ -1,12 +1,9 @@
-package com.g12.wallstreetwarriors.StockData;
+package com.g12.wallstreetwarriors.stockTransaction;
 
 
-import com.g12.wallstreetwarriors.room.UserRoomStockLink;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-
-import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -16,7 +13,7 @@ import java.util.Set;
 @ToString
 @Builder
 @Table(name = "stock")
-public class Stock {
+public class StockTransaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,8 +26,5 @@ public class Stock {
     private Float current;
     @NotNull
     private Integer amount;
-
-    @OneToMany(mappedBy = "stock", cascade = {CascadeType.PERSIST, CascadeType.ALL})
-    private Set<UserRoomStockLink> userRoomStockLinks;
 
 }

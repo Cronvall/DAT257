@@ -1,7 +1,7 @@
-package com.g12.wallstreetwarriors.room;
+package com.g12.wallstreetwarriors.stockTransaction;
 
 
-import com.g12.wallstreetwarriors.StockData.Stock;
+import com.g12.wallstreetwarriors.room.Room;
 import com.g12.wallstreetwarriors.user.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,7 +13,7 @@ import lombok.*;
 @Setter
 @ToString
 @Builder
-@Table(name="user_stock")
+@Table(name="user_stock", uniqueConstraints = @UniqueConstraint(columnNames = {"user_id","room_id"}))
 public class UserRoomStockLink {
 
     @Id
@@ -30,7 +30,7 @@ public class UserRoomStockLink {
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "stock_transaction")
-    private Stock stock;
+    private StockTransaction stock;
 
 
 
