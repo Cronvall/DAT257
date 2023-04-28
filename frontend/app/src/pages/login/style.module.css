@@ -1,38 +1,117 @@
-.form{
-
+.mainContainer{
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin-top: 10%;
+  background-color: red;
+  height: 100vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -100;
+  background: linear-gradient(-45deg, #ee7752, #e73c7e, #af5ae3, #23a6d5, #23d5ab,#e6b400, #ece75f);
+  background-size: 400% 400%;
+animation: gradient 60s ease infinite;
+}
+@keyframes gradient {
+0% {
+  background-position: 0% 0%;
+}
+12.5% {
+  background-position: 25% 25%;
+}
+25% {
+  background-position: 50% 50%;
+}
+37.5% {
+  background-position: 75% 100%;
+}
+50% {
+  background-position: 100% 75%;
+}
+62.5% {
+  background-position: 50% 50%;
+}
+75% {
+  background-position: 25% 25%;
+}
+100% {
+  background-position: 0% 0%;
+}
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30rem;
+  height: 30rem;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.inputContainer {
+  margin-bottom: 2rem;
+  margin-top: 2rem;
+  margin-left: 2.5rem;
+  font-size: 1rem;
+}
+
+.inputContainer label {
+  margin: 1rem;
+  color: #919191;
+  font-weight: bold;
 }
 
 .input {
-  width: 20%;
-  height: 25px;
-  margin: 10px 0;
-  padding: 0 10px;
-  border: 1px solid #ccc;
+  width: 24rem;
+  padding: 0.5rem;
+  border: none;
   border-radius: 5px;
   font-size: 16px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.btnContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    margin-left: 2.5rem;
 }
 
 .button {
-  margin: 10px 0;
-  padding: 10px;
-  border: 1px solid #24a0ed;
-  border-radius: 5px;
-  font-size: 16px;
-  background-color: #24a0ed;
-  color: #f5f5f5;
-  cursor: pointer;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #24a0ed;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #24a0ed;
+    color: #f5f5f5;
+    cursor: pointer;
 }
 
 .button:hover {
-  background-color: #2a6bbe;
+    background-color: #2a6bbe;
+}
+  
+  .button:active {
+    background-color: #1e4d87;
 }
 
-.button:active {
-  background-color: #1e4d87;
+.registerButton {
+    margin-left: 1rem;
+    padding: 10px;
+    border: none;
+    background-color: transparent;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #f5f5f5;
+    cursor: pointer;
+}
+
+.registerButton:hover {
+    background-color: #cdcdcd;
 }

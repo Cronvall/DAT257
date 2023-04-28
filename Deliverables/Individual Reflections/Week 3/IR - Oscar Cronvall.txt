@@ -1,0 +1,17 @@
+Week 3
+
+What do I want to learn or understand better? Consider e.g. teamwork, Scrum, agile processes, technologies etc? 
+    I would like to gain experience either posing as the groups PO or SM next week. Other than that I would 
+    like to work on the portfolio management aspects of our application.
+
+What is my contribution towards the team’s deliveries? How can I help my team do better next sprint?
+    This week I've made our login, register and authentication services. We didn't end up using nextjs/auth as
+    I thought we would last week. Instead we went with a simpler design using browser cookies to authenticate.
+    This isn't optimal for certain corner case nor for security. But it's a well working provisonal service.
+    
+    
+Changes/improvements from last week's reflection?
+    The biggest change this week was that we colaborated more since most of our work colided in the
+    development of leagues and users portfolios. This was fun since I gained insight into how the services other
+    members have developed works.
+    

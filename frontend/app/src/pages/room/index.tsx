@@ -9,56 +9,52 @@ import { NextPage } from "next";
 const Room: NextPage = () => {
 
   const router = useRouter();
-  console.log("123")
+
+  const [users, getUsers] = useState([])
+  const [room, getName] = useState("")
 
 
-    //const [code, setCode] = useState("")
-    const [users, getUsers] = useState([])
-    const [room, getName] = useState("")
+  const getRoom = async () => {
+    try{
+      axios.get(`http://localhost:8080/api/rooms/${roomCode}`)
+      .then(res => {
+        const members = res.data.members;
+        const room = res.data.name;
+        console.log(members)
+        console.log(room)
+        getUsers(members);
+        getName(room);
+      })
+    }
+    catch(e){
+      console.log(e)
+    }
+  };
 
+  useEffect (() => {
+    getRoom();
+  }, [])
 
-    const getRoom = async () => {
-        try{
-          axios.get(`http://localhost:8080/api/rooms/${roomCode}`)
-          .then(res => {
-            const members = res.data.members;
-            const room = res.data.name;
-            console.log(members)
-            console.log(room)
-            getUsers(members);
-            getName(room)
-
-          })
-        }
-        catch(e){
-          console.log(e)
-        }
-      };
-
-      useEffect (() => {
-        getRoom();
-      }, [])
-
-      const data = [
-        {
-            name: "Page A",
-            uv: 10000,
-            pv: 5000,
-            amt: 2400,
-           },
-           {
-            name: "Page B",
-            uv: 3000,
-            pv: 2000,
-            amt: 2000,
-           },
-           {
-            name: "Page C",
-            uv: 2000,
-            pv: 1400,
-            amt: 1400,
-           }
-      ]
+  const data = [
+    {
+      name: "Page A",
+      uv: 10000,
+      pv: 5000,
+      amt: 2400,
+      },
+      {
+      name: "Page B",
+      uv: 3000,
+      pv: 2000,
+      amt: 2000,
+      },
+      {
+      name: "Page C",
+      uv: 2000,
+      pv: 1400,
+      amt: 1400,
+      }
+    ]
 
     return(
         <>
