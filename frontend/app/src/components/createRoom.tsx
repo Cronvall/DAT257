@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { getCurrentUser } from "@/services/auth.service";
+import DatePicker from "react-datepicker";
 
 
 
@@ -15,6 +16,16 @@ const CreateRoomPanel = (props: {closeMethod: () => void}) => {
     const router = useRouter();
     const user = getCurrentUser();
 
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+
+    const onChange = dates => {
+      
+      const [start, end] = dates;
+      console.log(start)
+      setStartDate(start);
+      setEndDate(end);
+  }
 
     const createRoom = async () => {
         try{
@@ -23,11 +34,13 @@ const CreateRoomPanel = (props: {closeMethod: () => void}) => {
             name: name,
             budget: budget,
             capacity: capacity,
+            startDate: startDate,
+            endDate: endDate,
             owner:{
             id: user.id,
             username: user.username,
             password: user.password,
-            email: user.email
+            email: user.email,
           }
           })
           console.log(respone)
@@ -71,6 +84,8 @@ const CreateRoomPanel = (props: {closeMethod: () => void}) => {
                 className={style.input}
                 onChange={(e) => setCapacity(e.target.value)}
                 />
+                <DatePicker selected={startDate} selectsRange startDate={startDate}
+                  endDate={endDate} onChange={onChange}></DatePicker>
             </form>
             <div className={style.formButtons}>
                 <button className={style.formButton} type="submit" form="create-form">Create</button>
