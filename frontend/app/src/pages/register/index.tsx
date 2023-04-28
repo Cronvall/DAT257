@@ -52,6 +52,10 @@ const SignupPage = () => {
       (response) => {
         setMessage(response.data.message);
         login(username,password)
+        setTimeout(() => {
+          router.push("/");
+        }, 1000);
+      
       },
       (error) => {
         const resMessage =
