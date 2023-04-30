@@ -1,11 +1,12 @@
 package com.g12.wallstreetwarriors.user;
 
-import com.g12.wallstreetwarriors.stockTransaction.UserRoomStockLink;
+import com.g12.wallstreetwarriors.stockTransaction.Members;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -16,11 +17,11 @@ import java.util.Set;
 @ToString
 @Builder
 
-@Table(name = "Users")
+@Table(name = "users")
 @Entity
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
     @Column(unique = true)
@@ -31,8 +32,8 @@ public class User {
     @Column(unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.ALL})
-    private Set<UserRoomStockLink> userRoomStockLinks;
+    @OneToMany(mappedBy = "user")
+    private Set<Members> members;
 
     @Override
     public boolean equals(Object o) {

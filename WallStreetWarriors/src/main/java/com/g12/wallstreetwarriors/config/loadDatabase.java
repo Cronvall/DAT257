@@ -43,8 +43,10 @@ public class loadDatabase {
             room1 = roomRepository.save(room1);
             room2 = roomRepository.save(room2);
 
-            room1.addMember(user2);
-            room2.addMember(user1);
+
+
+           /* room1.addMember(user2);
+            room2.addMember(user1);*/
 
             roomRepository.save(room1);
             roomRepository.save(room2);

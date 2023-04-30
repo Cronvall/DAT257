@@ -1,4 +1,4 @@
 package com.g12.wallstreetwarriors.stockTransaction;
 
-public class StockController {
+public class MembersController {
 }

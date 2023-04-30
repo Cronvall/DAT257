@@ -29,11 +29,10 @@ public class RoomController {
         Optional<Room> room = roomService.getRoomByCode(code);
         System.out.println(code);
         if (room.isPresent()){
-            return new ResponseEntity<>(roomService.addUser(user,room.get(), code), HttpStatus.CREATED);
+            return new ResponseEntity<>(roomService.addMember(user,room.get(), code), HttpStatus.CREATED);
         }
         else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);}
 
     @GetMapping("/{code}")
     ResponseEntity<Room> getRoom(@PathVariable Integer code){
