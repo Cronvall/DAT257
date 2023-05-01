@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import style from "./style.module.css"
 import Member from './member'
+import Owner from './owner'
 import { Line, LineChart, XAxis, YAxis } from "recharts"
 import { useRouter } from "next/router";
 import { NextPage } from "next";
@@ -12,7 +13,7 @@ const Room: NextPage = () => {
   const roomCode = router.query.roomCode
 
 
-    //const [code, setCode] = useState("")
+    const [owner, setOwner] = useState("")
     const [users, getUsers] = useState([])
     const [room, getName] = useState("")
 
@@ -21,10 +22,12 @@ const Room: NextPage = () => {
         try{
           axios.get(`http://localhost:8080/api/rooms/${roomCode}`)
           .then(res => {
+            const owner = res.data.owner;
             const members = res.data.members;
             const room = res.data.name;
             console.log("room")
             console.log(members)
+            setOwner(owner);
             getUsers(members);
             getName(room)
 
@@ -67,6 +70,7 @@ const Room: NextPage = () => {
             <div className={style.body}>
                 <div className={style.memberContainer}>
                     <h3>Members</h3>
+                    <div className={style.memberList}><Owner owner={owner}/></div>
                     <div className={style.memberList}><Member users={users}/></div>
                 </div>
                 <LineChart width={500} height={300} data={data}>
