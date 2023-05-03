@@ -8,21 +8,21 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/stocks")
-public class StockController {
+public class StockDataController {
 
-    private final StockService stockService;
+    private final StockDataService stockDataService;
 
-    public StockController(StockService stockService) {
-      this.stockService = stockService;
+    public StockDataController(StockDataService stockDataService) {
+      this.stockDataService = stockDataService;
     }
 
 
 
     @GetMapping("/{ticker}")
     public ResponseEntity<?> getStock(@PathVariable String ticker){
-        Optional<StockId> stockIdOptional = stockService.getStockByTicker(ticker);
+        Optional<StockData> stockIdOptional = stockDataService.getStockByTicker(ticker);
         if(stockIdOptional.isPresent()) {
-            StockId stock = stockIdOptional.get();
+            StockData stock = stockIdOptional.get();
             RequestStock req = new RequestStock(stock);
             return ResponseEntity.ok(req);
         } else {

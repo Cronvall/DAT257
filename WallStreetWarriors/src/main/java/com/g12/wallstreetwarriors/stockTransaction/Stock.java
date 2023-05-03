@@ -1,10 +1,10 @@
 package com.g12.wallstreetwarriors.stockTransaction;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.g12.wallstreetwarriors.portfolio.Portfolio;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -30,4 +30,5 @@ public class Stock {
 
     @Column(name = "amount")
     private int amount;
+
 }

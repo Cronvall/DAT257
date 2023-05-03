@@ -1,5 +1,6 @@
 package com.g12.wallstreetwarriors.room;
 
+import com.g12.wallstreetwarriors.portfolio.Portfolio;
 import com.g12.wallstreetwarriors.stockTransaction.*;
 import com.g12.wallstreetwarriors.user.User;
 import org.springframework.stereotype.Service;
@@ -11,15 +12,14 @@ public class RoomService {
     private final RoomRepository roomRepository;
     private final MembersRepository membersRepository;
     private final StockRepository stockRepository;
-    private boolean change;
 
 
 
     public RoomService(RoomRepository roomRepository, MembersRepository membersRepository, StockRepository stockRepository) {
         this.roomRepository = roomRepository;
         this.membersRepository = membersRepository;
+
         this.stockRepository = stockRepository;
-        change = true;
     }
 
     Optional<Room> getRoomById(Long id){
@@ -40,22 +40,19 @@ public class RoomService {
     }
 
     Room addMember(User user, Room room, Integer code) {
-        Members member = new Members();
         if (code.equals(room.getCode())) {
-            if(change) {
+            Stock stock = new Stock();
+            Stock stock1 = new Stock();
+            Portfolio portfolio = new Portfolio();
+            stock.setTicker("AAPL");
+            stock1.setTicker("MSFT");
+            portfolio.setStocks(List.of(stock, stock1));
+                Members member = new Members();
                 member.setRoom(room);
                 member.setUser(user);
-                member.setTicker("AAPL");
+                member.setPortfolio(portfolio);
+                //member.setStocks(List.of(stock));
                 membersRepository.save(member);
-                change = !change;
-            }
-            else{
-                member.setRoom(room);
-                member.setUser(user);
-                member.setTicker("GTX");
-                membersRepository.save(member);
-                change = !change;
-            }
 
 
         }
