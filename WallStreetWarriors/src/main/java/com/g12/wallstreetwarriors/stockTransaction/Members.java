@@ -19,7 +19,7 @@ import java.util.Objects;
 @ToString
 @Builder
 @Table(name = "members",uniqueConstraints =
-        { @UniqueConstraint(columnNames = { "room_Id", "user_Id", "ticker" }) })
+         @UniqueConstraint(columnNames = { "room_id", "user_id", "ticker" }))
 
 public class Members {
 
@@ -39,24 +39,7 @@ public class Members {
     private User user;
 
 
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(
-            name = "stocks",
-            joinColumns = @JoinColumn(
-                    name = "members_id",
-                    referencedColumnName = "id"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "stocks_id",
-                    referencedColumnName = "id"
-            )
-    )
-    private List<Stock> stocks;
-
-
-
-
-    /*@Column(name = "ticker")
+    @Column(name = "ticker")
     private String ticker;
 
     @Column(name = "average_price")
@@ -79,7 +62,7 @@ public class Members {
     @Override
     public int hashCode() {
         return Objects.hash(id, room, user, ticker, average, current, amount);
-    }*/
+    }
 
     /*public void addMember(User user) {
         if(members == null) {

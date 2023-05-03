@@ -21,5 +21,4 @@ public class MembersId implements Serializable {
 
     private Long roomId;
     private Long userId;
-
 }

@@ -11,14 +11,15 @@ public class RoomService {
     private final RoomRepository roomRepository;
     private final MembersRepository membersRepository;
     private final StockRepository stockRepository;
+    private boolean change;
 
 
 
     public RoomService(RoomRepository roomRepository, MembersRepository membersRepository, StockRepository stockRepository) {
         this.roomRepository = roomRepository;
         this.membersRepository = membersRepository;
-
         this.stockRepository = stockRepository;
+        change = true;
     }
 
     Optional<Room> getRoomById(Long id){
@@ -39,14 +40,22 @@ public class RoomService {
     }
 
     Room addMember(User user, Room room, Integer code) {
+        Members member = new Members();
         if (code.equals(room.getCode())) {
-            Stock stock = new Stock();
-            stock.setTicker("AAPL");
-                Members member = new Members();
+            if(change) {
                 member.setRoom(room);
                 member.setUser(user);
-                member.setStocks(List.of(stock));
+                member.setTicker("AAPL");
                 membersRepository.save(member);
+                change = !change;
+            }
+            else{
+                member.setRoom(room);
+                member.setUser(user);
+                member.setTicker("GTX");
+                membersRepository.save(member);
+                change = !change;
+            }
 
 
         }
