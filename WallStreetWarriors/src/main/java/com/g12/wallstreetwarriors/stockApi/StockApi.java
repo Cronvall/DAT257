@@ -2,7 +2,7 @@ package com.g12.wallstreetwarriors.stockData;
 
 import java.util.List;
 
-public class StockId {
+public class StockData {
     private MetaData meta;
     private List<StockValue> values;
     private  String status;

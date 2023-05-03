@@ -7,21 +7,21 @@ import java.time.Duration;
 import java.util.Optional;
 
 @Service
-class StockService {
+class StockDataService {
 
     private final WebClient.Builder twelveDataClient;
 
 
-    StockService(WebClient.Builder twelveDataClient) {
+    StockDataService(WebClient.Builder twelveDataClient) {
         this.twelveDataClient = twelveDataClient;
     }
-    public Optional<StockId> getStockByTicker(String ticker) {
+    public Optional<StockData> getStockByTicker(String ticker) {
             Optional optional = Optional.empty();
 
-            StockId stock = twelveDataClient.build().get()
+            StockData stock = twelveDataClient.build().get()
                 .uri("time_series?&interval=1day&symbol={ticker}&start_date=2023-01-01 00:00:00&end_date=2023-04-22 00:00:00&previous_close=true", ticker)
                 .retrieve()
-                .bodyToMono(StockId.class)
+                .bodyToMono(StockData.class)
                 .block(Duration.ofSeconds(5));
             if(stock.getStatus().equals("error")){
                 return optional;

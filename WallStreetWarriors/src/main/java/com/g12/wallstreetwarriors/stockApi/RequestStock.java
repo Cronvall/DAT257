@@ -19,7 +19,7 @@ public class RequestStock {
     private List<Double> historyPrices = new ArrayList<>();
     private List<String> historyDates = new ArrayList<>();
 
-    public RequestStock(StockId stock){
+    public RequestStock(StockData stock){
         this.symbol = stock.getMeta().getSymbol();
         this.exchange = stock.getMeta().getExchange();
         this.openPrice = Math.round((Double.parseDouble(stock.getValues().get(0).getOpen())) * 100.0) / 100.0;
@@ -27,10 +27,10 @@ public class RequestStock {
         this.todayChange = Math.round((currentPrice - openPrice) * 100.0) / 100.0;
         this.todayProcent =  (Math.round((currentPrice/openPrice) * 100.0) / 100.0) - 1;
 
-        for (StockId.StockValue d: stock.getValues()){
+        for (StockData.StockValue d: stock.getValues()){
             this.historyPrices.add(Double.parseDouble(d.getClose()));
             }
-        for (StockId.StockValue d: stock.getValues()){
+        for (StockData.StockValue d: stock.getValues()){
             this.historyDates.add(d.getDatetime());
         }
         
