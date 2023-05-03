@@ -28,5 +28,8 @@
     "recharts": "^2.5.0",
     "typescript": "5.0.4",
     "yup": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/react-datepicker": "^4.11.2"
   }
 }
