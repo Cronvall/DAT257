@@ -2,6 +2,7 @@ package com.g12.wallstreetwarriors.stockTransaction;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.g12.wallstreetwarriors.portfolio.Portfolio;
 import com.g12.wallstreetwarriors.room.Room;
 import com.g12.wallstreetwarriors.user.User;
 import jakarta.persistence.*;
@@ -19,7 +20,7 @@ import java.util.Objects;
 @ToString
 @Builder
 @Table(name = "members",uniqueConstraints =
-        { @UniqueConstraint(columnNames = { "room_Id", "user_Id", "ticker" }) })
+        { @UniqueConstraint(columnNames = { "room_Id", "user_Id"}) })
 
 public class Members {
 
@@ -39,34 +40,13 @@ public class Members {
     private User user;
 
 
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(
-            name = "stocks",
-            joinColumns = @JoinColumn(
-                    name = "members_id",
-                    referencedColumnName = "id"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "stocks_id",
-                    referencedColumnName = "id"
-            )
-    )
-    private List<Stock> stocks;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    private Portfolio portfolio;
 
 
 
 
-    /*@Column(name = "ticker")
-    private String ticker;
-
-    @Column(name = "average_price")
-    private Float average;
-
-    @Column(name = "current_price")
-    private Float current;
-
-    @Column(name = "amount")
-    private int amount;
+    /*
 
     @Override
     public boolean equals(Object o) {

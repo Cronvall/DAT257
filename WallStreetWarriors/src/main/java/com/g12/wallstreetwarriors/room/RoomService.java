@@ -1,5 +1,6 @@
 package com.g12.wallstreetwarriors.room;
 
+import com.g12.wallstreetwarriors.portfolio.Portfolio;
 import com.g12.wallstreetwarriors.stockTransaction.*;
 import com.g12.wallstreetwarriors.user.User;
 import org.springframework.stereotype.Service;
@@ -41,11 +42,16 @@ public class RoomService {
     Room addMember(User user, Room room, Integer code) {
         if (code.equals(room.getCode())) {
             Stock stock = new Stock();
+            Stock stock1 = new Stock();
+            Portfolio portfolio = new Portfolio();
             stock.setTicker("AAPL");
+            stock1.setTicker("MSFT");
+            portfolio.setStocks(List.of(stock, stock1));
                 Members member = new Members();
                 member.setRoom(room);
                 member.setUser(user);
-                member.setStocks(List.of(stock));
+                member.setPortfolio(portfolio);
+                //member.setStocks(List.of(stock));
                 membersRepository.save(member);
 
 
