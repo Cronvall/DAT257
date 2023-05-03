@@ -32,8 +32,6 @@ public class User {
     @Column(unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "user")
-    private Set<Members> members;
 
     @Override
     public boolean equals(Object o) {

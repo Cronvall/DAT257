@@ -1,8 +1,6 @@
 package com.g12.wallstreetwarriors.room;
 
-import com.g12.wallstreetwarriors.stockTransaction.Members;
-import com.g12.wallstreetwarriors.stockTransaction.MembersId;
-import com.g12.wallstreetwarriors.stockTransaction.MembersRepository;
+import com.g12.wallstreetwarriors.stockTransaction.*;
 import com.g12.wallstreetwarriors.user.User;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +10,15 @@ import java.util.*;
 public class RoomService {
     private final RoomRepository roomRepository;
     private final MembersRepository membersRepository;
-    private boolean change;
+    private final StockRepository stockRepository;
 
 
-    public RoomService(RoomRepository roomRepository, MembersRepository membersRepository) {
+
+    public RoomService(RoomRepository roomRepository, MembersRepository membersRepository, StockRepository stockRepository) {
         this.roomRepository = roomRepository;
         this.membersRepository = membersRepository;
-        this.change = true;
 
+        this.stockRepository = stockRepository;
     }
 
     Optional<Room> getRoomById(Long id){
@@ -41,28 +40,18 @@ public class RoomService {
 
     Room addMember(User user, Room room, Integer code) {
         if (code.equals(room.getCode())) {
-            System.out.println("boolean: " + change);
-            if(change){
+            Stock stock = new Stock();
+            stock.setTicker("AAPL");
                 Members member = new Members();
                 member.setRoom(room);
                 member.setUser(user);
-                member.setTicker("AAPL");
+                member.setStocks(List.of(stock));
                 membersRepository.save(member);
-                change = !change;
-            }
-            else{
-                Members member = new Members();
-                member.setRoom(room);
-                member.setUser(user);
-                member.setTicker("GTX");
-                membersRepository.save(member);
-                change = !change;
-            }
+
 
         }
         return room;
     }
-
 
     public Optional<Room> getRoomByCode(Integer code) {
         return roomRepository.findRoomByCode(code);

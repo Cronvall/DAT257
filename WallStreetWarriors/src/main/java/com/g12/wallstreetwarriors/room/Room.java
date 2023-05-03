@@ -1,5 +1,6 @@
 package com.g12.wallstreetwarriors.room;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.g12.wallstreetwarriors.stockTransaction.Members;
 import com.g12.wallstreetwarriors.user.User;
 import jakarta.persistence.*;

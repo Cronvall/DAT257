@@ -23,13 +23,10 @@ const SignupSection = (props : {router: NextRouter}) => {
 
     useEffect(() => {
         setSignedIn(!!getCurrentUser()?.username);
-        console.log("User: ")
-        console.log(user?.username)
+    
     }, []);
 
     const handleJoinRoom = async () => {
-        console.log(roomCode)
-        console.log(getCurrentUser());
         const user = getCurrentUser();
         
         try{

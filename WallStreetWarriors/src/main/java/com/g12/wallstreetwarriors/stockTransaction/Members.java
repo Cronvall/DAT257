@@ -1,12 +1,15 @@
 package com.g12.wallstreetwarriors.stockTransaction;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.g12.wallstreetwarriors.room.Room;
 import com.g12.wallstreetwarriors.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @NoArgsConstructor
@@ -20,22 +23,40 @@ import java.util.ArrayList;
 
 public class Members {
 
-
     @EmbeddedId
     private MembersId id = new MembersId();
 
+    @JsonIgnore
     @ManyToOne
     @MapsId("roomId")
     //@JoinColumn(name = "room_id")
     private Room room;
 
+    @JsonIgnore
     @ManyToOne
     @MapsId("userId")
     //@JoinColumn(name = "user_id")
     private User user;
 
 
-    @Column(name = "ticker")
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "stocks",
+            joinColumns = @JoinColumn(
+                    name = "members_id",
+                    referencedColumnName = "id"
+            ),
+            inverseJoinColumns = @JoinColumn(
+                    name = "stocks_id",
+                    referencedColumnName = "id"
+            )
+    )
+    private List<Stock> stocks;
+
+
+
+
+    /*@Column(name = "ticker")
     private String ticker;
 
     @Column(name = "average_price")
@@ -47,6 +68,18 @@ public class Members {
     @Column(name = "amount")
     private int amount;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Members members = (Members) o;
+        return amount == members.amount && Objects.equals(id, members.id) && Objects.equals(room, members.room) && Objects.equals(user, members.user) && Objects.equals(ticker, members.ticker) && Objects.equals(average, members.average) && Objects.equals(current, members.current);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, room, user, ticker, average, current, amount);
+    }*/
 
     /*public void addMember(User user) {
         if(members == null) {
