@@ -20,6 +20,7 @@ const NavBar = (props: Iprops) => {
   const [txtColor, setTxtColor] = useState(transparent ? "white" : "black");
 
   const [entered, setEntered] = useState("");
+  const [enteredUser, setEnteredUser] = useState("");   
 
   
   useEffect(() => {
@@ -36,6 +37,19 @@ const NavBar = (props: Iprops) => {
       router.push(`/stock/${entered}`);
     }
   };
+
+  const handleInputChangeUser = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEnteredUser(event.target.value);
+  };
+
+
+  const handleEnterPressUser = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      router.push(`/profilepage/${enteredUser}`);
+    }
+  };
+
+  
 
 
     return (
@@ -56,14 +70,39 @@ const NavBar = (props: Iprops) => {
               onKeyDown={handleEnterPress} 
             />
             :
-            <></>
+            <input
+              className={styles.searchInputTransp} placeholder="$AAPL"
+              type="text"
+              value={entered}
+              onChange={handleInputChange}
+              onKeyDown={handleEnterPress} 
+            />
+          }
+
+{
+            transparent ?
+            <input
+              className={styles.searchInput} placeholder="Enter user id"
+              type="text"
+              value={enteredUser}
+              onChange={handleInputChangeUser}
+              onKeyDown={handleEnterPressUser} 
+            />
+            :
+            <input
+              className={styles.searchInputTransp} placeholder="Enter user id"
+              type="text"
+              value={enteredUser}
+              onChange={handleInputChangeUser}
+              onKeyDown={handleEnterPressUser} 
+            />
           }
           
           {
             signedIn|| null ?
             <>
-              <button onClick={() => router.push('/profile')} className={styles.headerButton} style={{color: txtColor}}>{getCurrentUser()?.username}</button>
-              <button onClick={() => logout()} className={styles.headerButton} style={{color: txtColor}}>Logout</button>
+              <button onClick={() => router.push('/myprofile')} className={styles.headerButton} style={{color: txtColor}}>{getCurrentUser()?.username}</button>
+              <button onClick={() => { logout()}} className={styles.headerButton} style={{color: txtColor}}>Logout</button>
             </>
             :
             <>
