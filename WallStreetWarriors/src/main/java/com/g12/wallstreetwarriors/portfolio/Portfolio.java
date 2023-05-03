@@ -1,6 +1,7 @@
 package com.g12.wallstreetwarriors.portfolio;
 
-import com.g12.wallstreetwarriors.stockTransaction.Stock;
+import com.g12.wallstreetwarriors.member.Member;
+import com.g12.wallstreetwarriors.stock.Stock;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,9 +21,12 @@ public class Portfolio {
 
     private Integer total;
 
-    @OneToMany(cascade = CascadeType.MERGE)
 
+    @OneToMany(cascade = CascadeType.MERGE)
     @ToString.Exclude
     private List<Stock> stocks;
+
+    @OneToOne
+    private Member member;
 
 }

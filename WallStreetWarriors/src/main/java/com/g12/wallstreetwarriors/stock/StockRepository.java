@@ -1,4 +1,4 @@
-package com.g12.wallstreetwarriors.stockTransaction;
+package com.g12.wallstreetwarriors.stock;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,10 +1,7 @@
-package com.g12.wallstreetwarriors.stockTransaction;
+package com.g12.wallstreetwarriors.stock;
 
-import com.g12.wallstreetwarriors.portfolio.Portfolio;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
 
 @Entity
 @NoArgsConstructor

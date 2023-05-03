@@ -1,7 +1,9 @@
 package com.g12.wallstreetwarriors.room;
 
+import com.g12.wallstreetwarriors.member.Member;
+import com.g12.wallstreetwarriors.member.MemberRepository;
 import com.g12.wallstreetwarriors.portfolio.Portfolio;
-import com.g12.wallstreetwarriors.stockTransaction.*;
+import com.g12.wallstreetwarriors.stock.*;
 import com.g12.wallstreetwarriors.user.User;
 import org.springframework.stereotype.Service;
 
@@ -10,14 +12,14 @@ import java.util.*;
 @Service
 public class RoomService {
     private final RoomRepository roomRepository;
-    private final MembersRepository membersRepository;
+    private final MemberRepository memberRepository;
     private final StockRepository stockRepository;
 
 
 
-    public RoomService(RoomRepository roomRepository, MembersRepository membersRepository, StockRepository stockRepository) {
+    public RoomService(RoomRepository roomRepository, MemberRepository memberRepository, StockRepository stockRepository) {
         this.roomRepository = roomRepository;
-        this.membersRepository = membersRepository;
+        this.memberRepository = memberRepository;
 
         this.stockRepository = stockRepository;
     }
@@ -47,12 +49,12 @@ public class RoomService {
             stock.setTicker("AAPL");
             stock1.setTicker("MSFT");
             portfolio.setStocks(List.of(stock, stock1));
-                Members member = new Members();
+                Member member = new Member();
                 member.setRoom(room);
                 member.setUser(user);
                 member.setPortfolio(portfolio);
                 //member.setStocks(List.of(stock));
-                membersRepository.save(member);
+                memberRepository.save(member);
 
 
         }

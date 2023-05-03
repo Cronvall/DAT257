@@ -1,7 +1,6 @@
 package com.g12.wallstreetwarriors.room;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.g12.wallstreetwarriors.stockTransaction.Members;
+import com.g12.wallstreetwarriors.member.Member;
 import com.g12.wallstreetwarriors.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -55,7 +54,7 @@ public class Room {
     private User owner;
 
     @OneToMany(mappedBy = "room")
-    private List<Members> members;
+    private List<Member> members;
 
     /*public void addMember(User user){
         members.add(user);

@@ -2,9 +2,8 @@ package com.g12.wallstreetwarriors;
 
 import com.g12.wallstreetwarriors.room.Room;
 import com.g12.wallstreetwarriors.room.RoomService;
-import com.g12.wallstreetwarriors.stockTransaction.Members;
-import com.g12.wallstreetwarriors.stockTransaction.MembersRepository;
-import com.g12.wallstreetwarriors.stockTransaction.MembersService;
+import com.g12.wallstreetwarriors.member.MemberRepository;
+import com.g12.wallstreetwarriors.member.MemberService;
 import com.g12.wallstreetwarriors.user.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,11 +13,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class MemberTest {
 
     private final RoomService roomService;
-    private final MembersRepository membersRepository;
+    private final MemberRepository memberRepository;
 
-    public MemberTest(RoomService roomService, MembersService membersService, MembersRepository membersRepository) {
+    public MemberTest(RoomService roomService, MemberService memberService, MemberRepository memberRepository) {
         this.roomService = roomService;
-        this.membersRepository = membersRepository;
+        this.memberRepository = memberRepository;
     }
 
     @Test

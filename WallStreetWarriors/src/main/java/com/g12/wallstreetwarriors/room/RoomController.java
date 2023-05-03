@@ -1,6 +1,6 @@
 package com.g12.wallstreetwarriors.room;
 
-import com.g12.wallstreetwarriors.stockTransaction.MembersService;
+import com.g12.wallstreetwarriors.member.MemberService;
 import com.g12.wallstreetwarriors.user.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +14,12 @@ import java.util.Optional;
 public class RoomController {
 
     private final RoomService roomService;
-    private final MembersService membersService;
+    private final MemberService memberService;
 
 
-    public RoomController(RoomService roomService, MembersService membersService) {
+    public RoomController(RoomService roomService, MemberService memberService) {
         this.roomService = roomService;
-        this.membersService = membersService;
+        this.memberService = memberService;
     }
 
     private record RequestWrapper(User user, Room room) {};

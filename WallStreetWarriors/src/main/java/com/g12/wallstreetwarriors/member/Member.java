@@ -1,4 +1,4 @@
-package com.g12.wallstreetwarriors.stockTransaction;
+package com.g12.wallstreetwarriors.member;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,10 +7,6 @@ import com.g12.wallstreetwarriors.room.Room;
 import com.g12.wallstreetwarriors.user.User;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 @Entity
 @NoArgsConstructor
@@ -22,10 +18,10 @@ import java.util.Objects;
 @Table(name = "members",uniqueConstraints =
         { @UniqueConstraint(columnNames = { "room_Id", "user_Id"}) })
 
-public class Members {
+public class Member {
 
     @EmbeddedId
-    private MembersId id = new MembersId();
+    private MemberId id = new MemberId();
 
     @JsonIgnore
     @ManyToOne
@@ -40,7 +36,7 @@ public class Members {
     private User user;
 
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.MERGE)
     private Portfolio portfolio;
 
 

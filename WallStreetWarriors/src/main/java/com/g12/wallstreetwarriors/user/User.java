@@ -1,14 +1,11 @@
 package com.g12.wallstreetwarriors.user;
 
-import com.g12.wallstreetwarriors.stockTransaction.Members;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Getter
 @Setter
