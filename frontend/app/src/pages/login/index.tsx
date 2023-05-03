@@ -55,17 +55,24 @@ const LoginPage = () => {
 
 return (
     <>
-      <NavBar transparent={false}/>
-      <div className={styles.form}>
+      <NavBar transparent={true}/>
+      <div className={styles.mainContainer}>
+      <div className={styles.formContainer}>
+        <h1 style={{marginTop: "4rem"}}>Login</h1>
+
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={handleLogin}
         >
           <Form>
-            <div className="form-group">
+          <div className={styles.inputContainer}>
               <label htmlFor="username">Username</label>
-              <Field name="username" type="text" className="form-control" />
+              <Field 
+                name="username" 
+                type="text" 
+                className={styles.input}
+              />
               <ErrorMessage
                 name="username"
                 component="div"
@@ -73,9 +80,13 @@ return (
               />
             </div>
 
-            <div className="form-group">
+            <div className={styles.inputContainer}>
               <label htmlFor="password">Password</label>
-              <Field name="password" type="password" className="form-control" />
+              <Field 
+                name="password" 
+                type="password" 
+                className={styles.input}
+              />
               <ErrorMessage
                 name="password"
                 component="div"
@@ -83,17 +94,18 @@ return (
               />
             </div>
 
-            <div className="form-group">
-              <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
-                {loading && (
-                  <span className="spinner-border spinner-border-sm"></span>
-                )}
-                <span>Login</span>
-              </button>
-            </div>
+            <div className={styles.btnContainer}>
+                  <button type="submit" className={styles.button}>
+                    Login
+                  </button>
+                  <p style={{marginLeft: "1rem", color:"#919191" }}> or </p>
+                  <button className={styles.registerButton}>
+                    <a href="/register"> register </a>
+                  </button>
+              </div>
 
             {message && (
-              <div className="form-group">
+              <div className={styles.inputContainer}>
                 <div className="alert alert-danger" role="alert">
                   {message}
                 </div>
@@ -101,6 +113,7 @@ return (
             )}
           </Form>
         </Formik>
+        </div>
       </div>
     </>
   );

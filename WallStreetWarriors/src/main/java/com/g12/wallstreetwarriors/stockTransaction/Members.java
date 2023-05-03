@@ -15,8 +15,11 @@ import java.util.ArrayList;
 @Setter
 @ToString
 @Builder
-@Table(name="members")
+@Table(name = "members",uniqueConstraints =
+        { @UniqueConstraint(columnNames = { "room_Id", "user_Id", "ticker" }) })
+
 public class Members {
+
 
     @EmbeddedId
     private MembersId id = new MembersId();
@@ -31,6 +34,7 @@ public class Members {
     //@JoinColumn(name = "user_id")
     private User user;
 
+
     @Column(name = "ticker")
     private String ticker;
 
@@ -42,7 +46,6 @@ public class Members {
 
     @Column(name = "amount")
     private int amount;
-
 
 
     /*public void addMember(User user) {
