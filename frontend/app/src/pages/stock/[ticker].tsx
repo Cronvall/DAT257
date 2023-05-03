@@ -9,6 +9,8 @@ import Image from 'next/image'
 import Search from '../../components/InputStock'
 import InputStock from "../../components/InputStock";
 import StockGraph from "../../components/StockGraph";
+import { logout, getCurrentUser } from "../../services/auth.service";
+import BuyStock from "../../components/BuyStock";
 
 
 
@@ -23,11 +25,32 @@ const StockView: NextPage = () =>{
         todayChange: number
         historyPrices : Array<number>
         historyDates : Array<string>
-
     }
     const router = useRouter();
     const {ticker} = router.query;
     const [stockData, setStockData] = useState<IstockData|undefined>(undefined);
+    const [signedIn, setSignedIn] = useState<boolean>(false);
+    const [showModelPanel, setShowModelPanel] = useState(false);
+    
+    
+  
+    const handleCloseModelPanel = () => {
+      setShowModelPanel(false);
+    };
+    useEffect(() => {
+      setSignedIn(!!getCurrentUser()?.username);
+    }, []);
+
+    const buysellButton = () => {
+      if (!signedIn){
+        router.push(`/login`)
+      } else{
+        setShowModelPanel(true)
+
+      }
+    };
+  
+
     
 
     const LookupStock = async (ticker: any) => {
@@ -83,11 +106,15 @@ const StockView: NextPage = () =>{
                 </div>
                 <div className={styles.buySell}>
                     <button className={styles.buttonbuysell}
-                            style={{background:'#24a0ed'}}>
+                            style={{background:'#24a0ed'}}
+                            onClick={buysellButton}>
+                              
                         Buy
                     </button>
                     <button className={styles.buttonbuysell}
-                            style={{background:'red'}}>
+                            style={{background:'red'}}
+                            onClick={buysellButton}>
+                            
                         Sell
                     </button>
 
@@ -98,8 +125,9 @@ const StockView: NextPage = () =>{
                   <StockGraph prices={stockData?.historyPrices ? stockData?.historyPrices: [] } dates={stockData?.historyDates ? stockData?.historyDates: []} />
                 </div>
               </div>
-              
+              {showModelPanel && <BuyStock onClose={handleCloseModelPanel} ticker={stockData?.symbol} price={stockData?.currentPrice} />}
             </div></>
+            
             
     
         )
