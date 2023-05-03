@@ -20,12 +20,13 @@ const Room: NextPage = () => {
 
     const getRoom = async () => {
         try{
-          axios.get(`http://localhost:8080/api/rooms/${roomCode}`)
+          const post = axios.get(`http://localhost:8080/api/rooms/${roomCode}`)
           .then(res => {
             const owner = res.data.owner;
             const members = res.data.members;
             const room = res.data.name;
-            console.log("room")
+            console.log("room: ")
+            console.log(post)
             console.log(members)
             setOwner(owner);
             getUsers(members);

@@ -1,5 +1,6 @@
 package com.g12.wallstreetwarriors.room;
 
+import com.g12.wallstreetwarriors.member.MemberService;
 import com.g12.wallstreetwarriors.user.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +14,12 @@ import java.util.Optional;
 public class RoomController {
 
     private final RoomService roomService;
+    private final MemberService memberService;
 
-    public RoomController(RoomService roomService) {
+
+    public RoomController(RoomService roomService, MemberService memberService) {
         this.roomService = roomService;
+        this.memberService = memberService;
     }
 
     private record RequestWrapper(User user, Room room) {};
@@ -29,11 +33,10 @@ public class RoomController {
         Optional<Room> room = roomService.getRoomByCode(code);
         System.out.println(code);
         if (room.isPresent()){
-            return new ResponseEntity<>(roomService.addUser(user,room.get(), code), HttpStatus.CREATED);
+            return new ResponseEntity<>(roomService.addMember(user,room.get(), code), HttpStatus.CREATED);
         }
         else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);}
 
     @GetMapping("/{code}")
     ResponseEntity<Room> getRoom(@PathVariable Integer code){

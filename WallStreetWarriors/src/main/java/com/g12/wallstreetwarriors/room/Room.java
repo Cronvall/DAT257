@@ -1,6 +1,6 @@
 package com.g12.wallstreetwarriors.room;
 
-import com.g12.wallstreetwarriors.stockTransaction.UserRoomStockLink;
+import com.g12.wallstreetwarriors.member.Member;
 import com.g12.wallstreetwarriors.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -17,11 +17,11 @@ import java.util.*;
 @Setter
 @ToString
 @Builder
-@Table(name="ROOMS")
+@Table(name="rooms")
 public class Room {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
     private String name;
@@ -53,38 +53,12 @@ public class Room {
     )
     private User owner;
 
-    @ManyToMany(
-            cascade = CascadeType.MERGE)
-    @JoinTable(
-            name = "room_members",
-            joinColumns = @JoinColumn(
-                    name = "room_id",
-                    referencedColumnName = "id"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "user_id",
-                    referencedColumnName = "id"
-            )
-    )
-    @ToString.Exclude
-    private List<User> members;
+    @OneToMany(mappedBy = "room")
+    private List<Member> members;
 
-    @OneToMany(mappedBy = "room", cascade = {CascadeType.PERSIST, CascadeType.ALL})
-    @ToString.Exclude
-    private Set<UserRoomStockLink> userRoomStockLinks;
-
-
-    public void addMember(User user) {
-        if(members == null) {
-            members = new ArrayList<>();
-        }
+    /*public void addMember(User user){
         members.add(user);
-
-    }
-
-    public void removeMember(User user) {
-        members.remove(user);
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {
