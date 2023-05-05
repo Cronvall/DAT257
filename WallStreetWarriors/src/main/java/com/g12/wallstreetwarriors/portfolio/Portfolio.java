@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.g12.wallstreetwarriors.member.Member;
 import com.g12.wallstreetwarriors.stock.Stock;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ public class Portfolio {
     @Transient
     private Float percentageIncrease;
 
+    @Min(0)
+    private float remainingBudget;
 
     @OneToMany(cascade = CascadeType.MERGE)
     @JsonBackReference
@@ -40,7 +43,9 @@ public class Portfolio {
     void addStock(Stock stock) {
         if (stocks == null)
             stocks = new ArrayList<>();
+        remainingBudget =- stock.getValue();
         stocks.add(stock);
+
     }
 
     void removeStock(Stock stock) {

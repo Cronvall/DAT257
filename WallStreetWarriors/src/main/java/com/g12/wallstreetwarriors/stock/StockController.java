@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/stocks")
+@RequestMapping("/tempStocks")
 public class StockController {
 
     private final StockService stockService;

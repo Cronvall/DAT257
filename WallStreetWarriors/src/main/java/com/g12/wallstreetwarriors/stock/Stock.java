@@ -1,6 +1,5 @@
 package com.g12.wallstreetwarriors.stock;
 
-import com.g12.wallstreetwarriors.member.Member;
 import com.g12.wallstreetwarriors.portfolio.Portfolio;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,7 +21,7 @@ public class Stock {
     private String ticker;
 
     @Column(name = "average_price")
-    private Float average;
+    private Float value;
 
     @Column(name = "current_price")
     private Float current;

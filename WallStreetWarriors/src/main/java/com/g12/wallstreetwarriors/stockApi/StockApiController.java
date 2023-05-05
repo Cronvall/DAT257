@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/apiStocks")
+@RequestMapping("/stocks")
 public class StockApiController {
 
     private final StockApiService stockApiService;

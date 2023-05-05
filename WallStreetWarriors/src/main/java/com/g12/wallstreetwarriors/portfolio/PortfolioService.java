@@ -14,6 +14,7 @@ public class PortfolioService {
     private final StockRepository stockRepository;
 
 
+
     public PortfolioService(PortfolioRepository portfolioRepository, StockRepository stockRepository) {
         this.portfolioRepository = portfolioRepository;
         this.stockRepository = stockRepository;
@@ -33,6 +34,12 @@ public class PortfolioService {
 
     List<Stock> getPortfolioStocks(Long id) {
         return stockRepository.findAllByPortfolioId(id);
+    }
+
+    Stock addStock(Long id, Stock stock) throws Exception {
+        Portfolio portfolio = getPortfolioById(id);
+        portfolio.addStock(stock);
+        return stock;
     }
 
 }

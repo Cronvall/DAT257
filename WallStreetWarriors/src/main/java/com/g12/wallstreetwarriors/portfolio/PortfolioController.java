@@ -34,8 +34,8 @@ public class PortfolioController {
     }
 
     @PostMapping("/{id}/stocks")
-    ResponseEntity<List<Stock>> setPortfolioStocks(@PathVariable Long id){
-        return ResponseEntity.ok(portfolioService.getPortfolioStocks(id));
+    ResponseEntity<Stock> addStock(@PathVariable Long id, @RequestBody Stock stock) throws Exception {
+        return ResponseEntity.ok(portfolioService.addStock(id, stock));
     }
 
 }
