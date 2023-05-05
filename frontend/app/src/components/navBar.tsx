@@ -12,7 +12,7 @@ interface Iprops{
 const NavBar = (props: Iprops) => {
 
   const router: NextRouter = useRouter();
-  const [signedIn, setSignedIn] = useState<boolean>(false);
+  
 
 
   const [transparent, setTransparent] = useState(props.transparent);
@@ -20,9 +20,11 @@ const NavBar = (props: Iprops) => {
   const [txtColor, setTxtColor] = useState(transparent ? "white" : "black");
 
   const [entered, setEntered] = useState("");
+
+  const [signedIn, setSignedIn] = useState<boolean>(false);
   const [enteredUser, setEnteredUser] = useState("");   
 
-  
+
   useEffect(() => {
     setSignedIn(!!getCurrentUser()?.username);
   }, []);
@@ -48,9 +50,6 @@ const NavBar = (props: Iprops) => {
       router.push(`/profilepage/${enteredUser}`);
     }
   };
-
-  
-
 
     return (
       <div className={styles.navBar} style={{background: bgColor, color: txtColor}}>
