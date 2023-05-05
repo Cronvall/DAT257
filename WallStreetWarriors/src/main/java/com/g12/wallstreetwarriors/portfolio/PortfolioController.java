@@ -1,41 +1,41 @@
 package com.g12.wallstreetwarriors.portfolio;
 
 
-import com.g12.wallstreetwarriors.room.Room;
-import com.g12.wallstreetwarriors.user.User;
+import com.g12.wallstreetwarriors.stock.Stock;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
-
-import static java.lang.Long.parseLong;
 
 @RestController
 @RequestMapping("/portfolios")
 public class PortfolioController {
 
-    private final PortfolioRepository portfolioRepository;
+    private final PortfolioService portfolioService;
 
-    public PortfolioController(PortfolioRepository portfolioRepository) {
-        this.portfolioRepository = portfolioRepository;
+    public PortfolioController(PortfolioService portfolioService) {
+        this.portfolioService = portfolioService;
     }
-/*
-    @GetMapping
-    ResponseEntity<Portfolio> getPortfolio(@RequestParam Map<String, String> requestParams){
-        System.out.println(requestParams.get("roomId"));
-        System.out.println(requestParams.get("userId"));
-        Long roomId = parseLong(requestParams.get("roomId"));
-        Long userId = parseLong(requestParams.get("userId"));
-        System.out.println(roomId);
-        System.out.println(userId);
-        return new ResponseEntity<>(portfolioRepository.findByMember_UserIdAndMember_RoomId(userId, roomId).get(), HttpStatus.OK);
-    }*/
+
+    @GetMapping("/{id}")
+    ResponseEntity<Portfolio> getPortfolio(@PathVariable Long id) throws Exception {
+        return ResponseEntity.ok(portfolioService.getPortfolioById(id));
+    }
 
     @GetMapping
     ResponseEntity<List<Portfolio>> getPortfolios(){
-        return new ResponseEntity<>(portfolioRepository.findAll(), HttpStatus.OK);
+        return ResponseEntity.ok(portfolioService.getAllPortfolios());
+    }
+
+    @GetMapping("/{id}/stocks")
+    ResponseEntity<List<Stock>> getPortfolioStocks(@PathVariable Long id){
+        return ResponseEntity.ok(portfolioService.getPortfolioStocks(id));
+    }
+
+    @PostMapping("/{id}/stocks")
+    ResponseEntity<List<Stock>> setPortfolioStocks(@PathVariable Long id){
+        return ResponseEntity.ok(portfolioService.getPortfolioStocks(id));
     }
 
 }

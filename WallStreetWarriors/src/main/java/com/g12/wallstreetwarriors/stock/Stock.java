@@ -1,5 +1,7 @@
 package com.g12.wallstreetwarriors.stock;
 
+import com.g12.wallstreetwarriors.member.Member;
+import com.g12.wallstreetwarriors.portfolio.Portfolio;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,5 +29,8 @@ public class Stock {
 
     @Column(name = "amount")
     private int amount;
+
+    @ManyToOne
+    private Portfolio portfolio;
 
 }
