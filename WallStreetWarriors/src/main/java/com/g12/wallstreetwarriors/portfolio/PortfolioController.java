@@ -35,7 +35,7 @@ public class PortfolioController {
 
     @PostMapping("/{id}/stocks")
     ResponseEntity<Stock> addStock(@PathVariable Long id, @RequestBody Stock stock) throws Exception {
-        return ResponseEntity.ok(portfolioService.addStock(id, stock));
+        return ResponseEntity.ok(portfolioService.stockBuyOrder(id, stock));
     }
 
 }
