@@ -107,7 +107,23 @@ return (
             {message && (
               <div className={styles.inputContainer}>
                 <div className="alert alert-danger" role="alert">
-                  {message}
+                {(() => {
+                  if(message.includes("400")){
+                    return "Invalid request";
+                  }
+                  else if(message.includes("404")){
+                    return "User not found"
+                  }
+                  else if(message.includes("401")){
+                    return "Invalid username or password";
+                  }
+                  else if(message.includes("500")){
+                    return "Server error";
+                  }
+                  else{
+                    return message;
+                  }
+                })()}
                 </div>
               </div>
             )}

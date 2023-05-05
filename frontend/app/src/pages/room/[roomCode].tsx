@@ -1,87 +1,92 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import style from "./style.module.css"
-import Member from './member'
-import Owner from './owner'
-import { Line, LineChart, XAxis, YAxis } from "recharts"
+import MembersLeaderboard from './components/membersLeaderboard'
 import { useRouter } from "next/router";
 import { NextPage } from "next";
+import NavBar from "../../components/navBar";
+import LeagueChart from "./components/leagueChart";
+import StocksTable from "./components/stocksTable";
+import { Grid, Spacer } from "@nextui-org/react";
+import Chat from "./components/chat";
+import { getCurrentUser } from "@/services/auth.service";
 
 const Room: NextPage = () => {
 
-  const router = useRouter()
-  const roomCode = router.query.roomCode
+  const router = useRouter();
+
+  const [users, setUsers] = useState([])
+  const [room, setRoom] = useState("")
+  const {roomCode} = router.query;
 
 
-    const [owner, setOwner] = useState("")
-    const [users, getUsers] = useState([])
-    const [room, getName] = useState("")
+  const getRoom = async () => {
+    try{
+      axios.get(`http://localhost:8080/api/rooms/${roomCode}`)
+      .then(res => {
+        setUsers(res.data.members);
+        setRoom(res.data.name);
+      })
+    }
+    catch(e){
+      console.log(e)
+    }
+  };
 
 
-    const getRoom = async () => {
-        try{
-          const post = axios.get(`http://localhost:8080/api/rooms/${roomCode}`)
-          .then(res => {
-            const owner = res.data.owner;
-            const members = res.data.members;
-            const room = res.data.name;
-            console.log("room: ")
-            console.log(post)
-            console.log(members)
-            setOwner(owner);
-            getUsers(members);
-            getName(room)
+  useEffect(() => {
+    //getRoom();
+  }, []);
 
-          })
-        }
-        catch(e){
-          console.log(e)
-        }
-      };
-
-      useEffect (() => {
-        getRoom();
-      }, [roomCode])
-
-      const data = [
-        {
-            name: "Page A",
-            uv: 10000,
-            pv: 5000,
-            amt: 2400,
-           },
-           {
-            name: "Page B",
-            uv: 3000,
-            pv: 2000,
-            amt: 2000,
-           },
-           {
-            name: "Page C",
-            uv: 2000,
-            pv: 1400,
-            amt: 1400,
-           }
-      ]
 
     return(
         <>
-        <div className={style.container}>
-            <h1 className={style.name}>{room}</h1>
-            <div className={style.body}>
-                <div className={style.memberContainer}>
-                    <h3>Members</h3>
-                    <div className={style.memberList}><Owner owner={owner}/></div>
-                    <div className={style.memberList}><Member users={users}/></div>
-                </div>
-                <LineChart width={500} height={300} data={data}>
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-                        <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-                    </LineChart>
+          <NavBar transparent={false}/>
+
+          <div className={style.mainContainer}>
+            <div className={style.headerContainer}>
+              <h1 className={style.name}>{room}</h1>
+              <h2>{roomCode || "pathname"}</h2>
             </div>
-        </div>
+
+              <Grid.Container 
+                className={style.body}
+                justify="center"
+                gap={2}
+              >
+                <Grid
+                  className={style.memberContainer}
+                  xs={12} sm={12} md={12} lg={6} xl={6}
+                >
+                    <h2>Leaderboard</h2>
+                    <MembersLeaderboard users={users}/>
+                </Grid>
+
+                <Grid 
+                  className={style.chartContainer}
+                  xs={12} sm={12} md={12} lg={6} xl={6}
+                >
+                  <h2>Performance</h2>
+                  <LeagueChart />
+                </Grid>
+                <Grid
+                  className={style.memberContainer}
+                  xs={12} sm={12} md={12} lg={6} xl={6}
+                >
+
+                  <h2>{getCurrentUser()?.username}'s Portfolio</h2>
+                  <StocksTable />
+                </Grid>
+                <Grid
+                  className={style.memberContainer}
+                  xs={12} sm={12} md={12} lg={6} xl={6}
+                >
+                  <h2>Chat</h2>
+                  <Chat/>
+                </Grid>
+
+              </Grid.Container>
+          </div>
         </>
     );
 
