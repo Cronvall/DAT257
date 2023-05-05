@@ -1,4 +1,4 @@
-package com.g12.wallstreetwarriors.stockData;
+package com.g12.wallstreetwarriors.stockApi;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -7,21 +7,21 @@ import java.time.Duration;
 import java.util.Optional;
 
 @Service
-class StockService {
+class StockApiService {
 
     private final WebClient.Builder twelveDataClient;
 
 
-    StockService(WebClient.Builder twelveDataClient) {
+    StockApiService(WebClient.Builder twelveDataClient) {
         this.twelveDataClient = twelveDataClient;
     }
-    public Optional<StockId> getStockByTicker(String ticker) {
+    public Optional<StockApi> getStockByTicker(String ticker) {
             Optional optional = Optional.empty();
 
-            StockId stock = twelveDataClient.build().get()
+            StockApi stock = twelveDataClient.build().get()
                 .uri("time_series?&interval=1day&symbol={ticker}&start_date=2023-01-01 00:00:00&end_date=2023-04-22 00:00:00&previous_close=true", ticker)
                 .retrieve()
-                .bodyToMono(StockId.class)
+                .bodyToMono(StockApi.class)
                 .block(Duration.ofSeconds(5));
             if(stock.getStatus().equals("error")){
                 return optional;

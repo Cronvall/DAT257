@@ -1,4 +1,4 @@
-package com.g12.wallstreetwarriors.stockData;
+package com.g12.wallstreetwarriors.stockApi;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,21 +8,21 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/stocks")
-public class StockController {
+public class StockApiController {
 
-    private final StockService stockService;
+    private final StockApiService stockApiService;
 
-    public StockController(StockService stockService) {
-      this.stockService = stockService;
+    public StockApiController(StockApiService stockApiService) {
+      this.stockApiService = stockApiService;
     }
 
 
 
     @GetMapping("/{ticker}")
     public ResponseEntity<?> getStock(@PathVariable String ticker){
-        Optional<StockId> stockIdOptional = stockService.getStockByTicker(ticker);
+        Optional<StockApi> stockIdOptional = stockApiService.getStockByTicker(ticker);
         if(stockIdOptional.isPresent()) {
-            StockId stock = stockIdOptional.get();
+            StockApi stock = stockIdOptional.get();
             RequestStock req = new RequestStock(stock);
             return ResponseEntity.ok(req);
         } else {

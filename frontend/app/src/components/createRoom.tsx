@@ -24,7 +24,11 @@ const CreateRoomPanel = (props: {closeMethod: () => void}) => {
       const [start, end] = dates;
       setStartDate(start);
       setEndDate(end);
+
   }
+
+  
+  
 
     const createRoom = async () => {
         try{
@@ -51,7 +55,14 @@ const CreateRoomPanel = (props: {closeMethod: () => void}) => {
         
       };
 
+      
+      const goBack = () => {
+        if (window.confirm("Do you really want to go back? Your input will not be saved.")) {
+          props.closeMethod();
+        }
+      };
   return (
+    
     <>
     <div className={style.darkBg}>
         <div className={style.modal}>
@@ -83,12 +94,21 @@ const CreateRoomPanel = (props: {closeMethod: () => void}) => {
                 className={style.input}
                 onChange={(e) => setCapacity(e.target.value)}
                 />
-                <DatePicker selected={startDate} selectsRange startDate={startDate}
-                  endDate={endDate} onChange={onDateChange}></DatePicker>
+                <div className={style.datePickerContainer}>
+                <label htmlFor="period" className={style.datePickerLabel}>Choose desired period </label>
+                <DatePicker
+                  selected={startDate}
+                  selectsRange
+                  startDate={startDate}
+                  endDate={endDate}
+                  onChange={onDateChange}
+                />
+              </div>
+            
             </form>
             <div className={style.formButtons}>
-                <button className={style.formButton} type="submit" form="create-form">Create</button>
-                <button className={style.formButton} onClick={props.closeMethod}>Back</button>
+                <button className={style.formButtongreen} type="submit" form="create-form">Create</button>
+                <button className={style.formButtonred} onClick={goBack}>Back</button>
             </div>
         </div>
     </div>
