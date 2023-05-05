@@ -48,8 +48,16 @@ const Graphdata = [
 
 export default function LeagueChart(props: Iprops) {
     return (
-        <div style={{width: "35vw", height:"25rem",
-            minHeight:"20rem", minWidth:"35rem"}}>
+        <div 
+            style={{
+            width: "35vw", height:"25rem",
+            minHeight:"20rem", minWidth:"35rem",
+            backgroundColor: "rgba(255,255,255,0.25)",
+            padding: "1rem",
+            borderRadius: "1rem",
+            boxShadow: "0px 0px 10px 0px rgba(0,0,0,0.1)"
+        }}
+        >
             <ResponsiveContainer width="100%" height="100%">
                 <LineChart width={500} height={300} data={Graphdata}>
                     <XAxis dataKey="name" />

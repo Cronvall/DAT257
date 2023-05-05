@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import style from './style.module.css'
-import { Table } from '@nextui-org/react'
+import { Table, Link } from '@nextui-org/react'
+import { useRouter } from 'next/router';
 
 interface IStock{
     ticker: string;
@@ -15,6 +16,7 @@ interface IStock{
 
 const StocksTable = () => {
 
+    const router = useRouter();
 
     //Remove prepopulated users when backend is ready
     const [stocks, setStocks] = React.useState<IStock[]>([
@@ -87,7 +89,9 @@ const StocksTable = () => {
                                     marginBottom: "5rem",
                                 }}>
                                     <Table.Cell>{item.name}</Table.Cell>
-                                    <Table.Cell>${item.ticker}</Table.Cell>
+                                    <Table.Cell >
+                                       <Link href={"/stock/"+item.ticker}>${item.ticker}</Link> 
+                                    </Table.Cell>
                                     <Table.Cell>{item.number}</Table.Cell>
                                     <Table.Cell>$ {item.portfolioValue}</Table.Cell>
                                     <Table.Cell css={item.growth > 0 ?

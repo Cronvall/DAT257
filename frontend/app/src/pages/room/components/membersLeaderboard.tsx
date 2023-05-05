@@ -55,7 +55,31 @@ const MembersLeaderboard = (props: Iprops) => {
             numStocks: 1,
             portfolioValue: 1100,
             growth: 10
-        }
+        },
+        {
+            username: "test5",
+            email: "test5@gmail.com",
+            balance: 250,
+            numStocks: 6,
+            portfolioValue: 4100,
+            growth: -25
+        },
+        {
+            username: "test6",
+            email: "test6@gmail.com",
+            balance: 200,
+            numStocks: 1,
+            portfolioValue: 1100,
+            growth: 10
+        },
+        {
+            username: "test7",
+            email: "test7@gmail.com",
+            balance: 230,
+            numStocks: 4,
+            portfolioValue: 1600,
+            growth: 13
+        },
     ]);
 
     const tableColumns = [
