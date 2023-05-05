@@ -1,0 +1,14 @@
+Week 4
+
+What do I want to learn or understand better? Consider e.g. teamwork, Scrum, agile processes, technologies etc? 
+   I want to better understand diffrent style libraries to design our website better.
+
+What is my contribution towards the team’s deliveries? How can I help my team do better next sprint?
+    This week I've spent most my time developing the transaction view for the 
+    frontend and made it fetch data from the rest api.
+
+    
+    
+Changes/improvements from last week's reflection?
+    Wrote better and more reusable code for the frontend. 
+    
