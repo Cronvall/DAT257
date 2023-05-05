@@ -1,8 +1,8 @@
-package com.g12.wallstreetwarriors.stockData;
+package com.g12.wallstreetwarriors.stockApi;
 
 import java.util.List;
 
-public class StockId {
+public class StockApi {
     private MetaData meta;
     private List<StockValue> values;
     private  String status;
