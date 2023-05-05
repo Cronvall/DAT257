@@ -36,7 +36,7 @@ public class Member {
     private User user;
 
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.ALL)
     private Portfolio portfolio;
 
     @Override

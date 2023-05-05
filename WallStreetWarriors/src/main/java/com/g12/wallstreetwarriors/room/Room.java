@@ -54,6 +54,7 @@ public class Room {
     private User owner;
 
     @OneToMany(mappedBy = "room")
+    @ToString.Exclude
     private List<Member> members;
 
     /*public void addMember(User user){

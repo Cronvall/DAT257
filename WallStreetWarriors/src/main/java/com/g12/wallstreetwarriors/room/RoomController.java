@@ -32,8 +32,8 @@ public class RoomController {
     ResponseEntity<Room> addPlayer(@PathVariable(name = "code") Integer code, @RequestBody User user) {
         Optional<Room> room = roomService.getRoomByCode(code);
         System.out.println(code);
-        if (room.isPresent()){
-            return new ResponseEntity<>(roomService.addMember(user,room.get(), code), HttpStatus.CREATED);
+        if (room.isPresent() && roomService.roomCodeIsValid(room.get().getCode(), code)){
+            return new ResponseEntity<>(roomService.addMember(user,room.get()), HttpStatus.CREATED);
         }
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);}

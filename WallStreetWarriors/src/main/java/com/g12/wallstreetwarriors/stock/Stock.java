@@ -20,7 +20,7 @@ public class Stock {
     @Column(name = "ticker")
     private String ticker;
 
-    @Column(name = "average_price")
+    @Column(name = "value")
     private Float value;
 
     @Column(name = "current_price")

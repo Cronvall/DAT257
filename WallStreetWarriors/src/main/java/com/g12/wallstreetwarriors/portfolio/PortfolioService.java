@@ -1,5 +1,6 @@
 package com.g12.wallstreetwarriors.portfolio;
 
+import com.g12.wallstreetwarriors.room.Room;
 import com.g12.wallstreetwarriors.stock.Stock;
 import com.g12.wallstreetwarriors.stock.StockRepository;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,12 @@ public class PortfolioService {
         Portfolio portfolio = getPortfolioById(id);
         portfolio.addStock(stock);
         return stock;
+    }
+
+    public Portfolio createPortfolio(Room room) {
+        Portfolio portfolio = new Portfolio();
+        portfolio.setRemainingBudget(room.getBudget().floatValue());
+        return portfolio;
     }
 
 }

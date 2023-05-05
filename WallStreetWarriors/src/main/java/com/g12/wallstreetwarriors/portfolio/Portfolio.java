@@ -23,13 +23,13 @@ public class Portfolio {
     @GeneratedValue
     private Long id;
 
-    private Float totalValue;
+    private Float totalValue = (float) 0;
 
     @Transient
     private Float percentageIncrease;
 
     @Min(0)
-    private float remainingBudget;
+    private Float remainingBudget;
 
     @OneToMany(cascade = CascadeType.MERGE)
     @JsonBackReference
