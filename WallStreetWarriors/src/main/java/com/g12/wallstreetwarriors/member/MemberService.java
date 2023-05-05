@@ -21,10 +21,6 @@ public class MemberService {
         this.portfolioService = portfolioService;
     }
 
-    public Optional<Room> getMembersByRoomCode(Integer code){
-        return memberRepository.findByRoom(code);
-    }
-
     public Member createMember(User user, Room room) {
 
         Member newMember = new Member();
