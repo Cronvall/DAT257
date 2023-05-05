@@ -7,7 +7,9 @@ import { NextPage } from "next";
 import NavBar from "../../components/navBar";
 import LeagueChart from "./components/leagueChart";
 import StocksTable from "./components/stocksTable";
-import { Grid } from "@nextui-org/react";
+import { Grid, Spacer } from "@nextui-org/react";
+import Chat from "./components/chat";
+import { getCurrentUser } from "@/services/auth.service";
 
 const Room: NextPage = () => {
 
@@ -32,7 +34,7 @@ const Room: NextPage = () => {
   };
 
   useEffect(() => {
-    getRoom();
+    //getRoom();
   }, []);
 
 
@@ -70,9 +72,18 @@ const Room: NextPage = () => {
                   className={style.memberContainer}
                   xs={12} sm={12} md={12} lg={6} xl={6}
                 >
-                  <h2>Portfolio</h2>
+
+                  <h2>{getCurrentUser()?.username}'s Portfolio</h2>
                   <StocksTable />
                 </Grid>
+                <Grid
+                  className={style.memberContainer}
+                  xs={12} sm={12} md={12} lg={6} xl={6}
+                >
+                  <h2>Chat</h2>
+                  <Chat/>
+                </Grid>
+
               </Grid.Container>
           </div>
         </>
