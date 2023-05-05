@@ -1,0 +1,15 @@
+Week 4
+
+What do I want to learn or understand better? Consider e.g. teamwork, Scrum, agile processes, technologies etc? 
+   The upcoming week I want to gain more insight into the backend of our project.
+   Unfortunatly most of my time has been spent on the frontend with very little time spent on the backend.
+
+What is my contribution towards the team’s deliveries? How can I help my team do better next sprint?
+    This week I've spent most my time styling and refactoring/adding the component we want to
+    have in the league dashboard. 
+    
+    
+Changes/improvements from last week's reflection?
+    This week I've tried refactoring previous "slopy" written code.
+    This has gone great but fortunatly enough our code debt wasn't that significant.
+    
