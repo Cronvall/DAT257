@@ -9,31 +9,43 @@ import com.g12.wallstreetwarriors.user.User;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class RoomService {
     private final RoomRepository roomRepository;
     private final MemberRepository memberRepository;
-    private final StockRepository stockRepository;
 
     private final MemberService memberService;
 
 
 
-    public RoomService(RoomRepository roomRepository, MemberRepository memberRepository, StockRepository stockRepository, MemberService memberService) {
+    public RoomService(RoomRepository roomRepository, MemberRepository memberRepository, MemberService memberService) {
         this.roomRepository = roomRepository;
         this.memberRepository = memberRepository;
-
-        this.stockRepository = stockRepository;
         this.memberService = memberService;
     }
 
-    Optional<Room> getRoomById(Long id){
-        return roomRepository.findById(id);
+    Room getRoomById(Long id) throws Exception {
+        Optional<Room> room = roomRepository.findById(id);
+        if(room.isPresent()) {
+            return room.get();
+        } else {
+            throw new Exception();
+        }
     }
 
     List<Room> getRooms(){
         return roomRepository.findAll();
+    }
+
+    List<Room> getUserRooms(Long userId) {
+        List<Room> rooms = new ArrayList<>();
+        List<Member> members = memberRepository.findAllByUserId(userId);
+        for (Member member : members) {
+            rooms.add(member.getRoom());
+        }
+        return rooms;
     }
 
     Room createRoom(Room newRoom) {

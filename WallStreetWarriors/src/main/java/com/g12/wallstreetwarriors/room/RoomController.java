@@ -46,9 +46,15 @@ public class RoomController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+
+
     @GetMapping
-    ResponseEntity<List<Room>> getRooms(){
-        return new ResponseEntity<>(roomService.getRooms(), HttpStatus.OK);
+    ResponseEntity<List<Room>> getRooms(@RequestParam(required = false) Long userId) throws Exception {
+        if (userId == null) {
+            return new ResponseEntity<>(roomService.getRooms(), HttpStatus.OK);
+        } else {
+            return ResponseEntity.ok(roomService.getUserRooms(userId));
+        }
     }
 
 
