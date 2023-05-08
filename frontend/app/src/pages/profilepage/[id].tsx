@@ -12,6 +12,7 @@ const ProfilePage: NextPage = () => {
   const [user, setUser] = useState<any>(null);
   const [email, setEmail] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
+  // const [leagues, setLeagues] = useState<any>(null);
 
   useEffect(() => {
     if (id) {
@@ -20,6 +21,17 @@ const ProfilePage: NextPage = () => {
           console.log(res.data);
           setUser(res.data.username);
           setEmail(res.data.email);
+          setError(false);
+        })
+        .catch(err => {
+          console.log(err);
+          setError(true);
+        })
+    }
+    if (id) {
+      axios.get(`http://localhost:8080/api/rooms`, {params : {userId : id}})
+        .then(res => {
+          console.log(res.data);
           setError(false);
         })
         .catch(err => {
@@ -43,6 +55,7 @@ const ProfilePage: NextPage = () => {
         <h1>Profile of {user}</h1>
         <h2>Email: {email}</h2>
         <h3> Currently in leagues: </h3>
+        <button>Join League</button>
         
           </div>
         }
