@@ -10,27 +10,35 @@ const MyProfile = () => {
   const [leagues, setLeagues] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/rooms`, {params : {userId : user.id}})
-      .then(res => {
-        console.log(res.data);
-        setLeagues(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  }, [user.id])
+    if (user?.id) {
+      axios
+        .get(`http://localhost:8080/api/rooms`, { params: { userId: user.id } })
+        .then((res) => {
+          console.log(res.data);
+          setLeagues(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  },[]);
 
   return (
     <>
-      <NavBar transparent={false}/>
+      <NavBar transparent={false} />
       <form className={styles.form}>
-        <h2>Profile Page (for user id:{ user.id})</h2> 
+        <h2>Profile Page</h2>
         <label htmlFor="username">Username: {user.username}</label>
         <label htmlFor="email">Email: {user.email}</label>
         <label htmlFor="leagues">Leagues: </label>
         {leagues.map((league: any, index: number) => (
-              <button key={index} onClick={() => router.push(`/room/${league.id}`)}>{league.name}</button>
-            ))}
+          <button
+            key={index}
+            onClick={() => router.push(`/room/${league.id}`)}
+          >
+            {league.name}
+          </button>
+        ))}
       </form>
     </>
   );
