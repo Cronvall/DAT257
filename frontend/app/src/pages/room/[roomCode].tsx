@@ -8,12 +8,12 @@ import NavBar from "../../components/navBar";
 import LeagueChart from "./components/leagueChart";
 import StocksTable from "./components/stocksTable";
 import { Grid } from "@nextui-org/react";
-import Chat from "./components/chat";
 import { getCurrentUser } from "@/services/auth.service";
 import IUser from "@/types/user.type";
+import MyStats from "./components/myStats";
 
 
-interface IAPIResponse{
+interface IRoom{
   id: number;
   name: string;
   capacity: number;
@@ -44,16 +44,15 @@ const Room: NextPage = () => {
 
   const [users, setUsers] = useState([])
   const [currentUser, setCurrentUser] = useState<IUser | undefined>(undefined);
-  const [room, setRoom] = useState("")
-  const {roomCode} = router.query;
+  const [room, setRoom] = useState<IRoom | undefined>(undefined);
 
 
   const getRoom = async () => {
-    setUsers([]);
-    setRoom("");
+    const {roomCode} = router.query;
     try{
       axios.get(`http://localhost:8080/api/rooms/${roomCode}`)
       .then(res => {
+        console.log(res.data);
         setUsers(res.data.members);
         setRoom(res.data.name);
       })
@@ -77,8 +76,8 @@ const Room: NextPage = () => {
 
           <div className={style.mainContainer}>
             <div className={style.headerContainer}>
-              <h1 className={style.name}>{room}</h1>
-              <h2>{roomCode || "pathname"}</h2>
+              <h1 className={style.name}>{room?.name || "pathname"}</h1>
+              <h2>{room?.code || "pathcode"}</h2>
             </div>
 
               <Grid.Container 
@@ -113,7 +112,8 @@ const Room: NextPage = () => {
                   className={style.memberContainer}
                   xs={12} sm={12} md={12} lg={6} xl={6}
                 >
-                  <h2>Chat</h2>
+                  <h2>My Stats</h2>
+                  <MyStats/>
                 </Grid>
 
               </Grid.Container>
