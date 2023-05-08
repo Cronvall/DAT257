@@ -26,7 +26,7 @@ public class Member {
     private MemberId id = new MemberId();
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.MERGE)
     @MapsId("roomId")
     private Room room;
 
