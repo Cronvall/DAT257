@@ -33,9 +33,22 @@ public class PortfolioController {
         return ResponseEntity.ok(portfolioService.getPortfolioStocks(id));
     }
 
-    @PostMapping("/{id}/stocks")
-    ResponseEntity<Stock> addStock(@PathVariable Long id, @RequestBody Stock stock) throws Exception {
+    @PutMapping("/{id}/stocks")
+    ResponseEntity<Stock> buyStock(@PathVariable Long id, @RequestBody Stock stock) throws Exception {
         return ResponseEntity.ok(portfolioService.stockBuyOrder(id, stock));
     }
 
+//    record sellStock(String ticker, Float currentPrice, Integer amount) {};
+//    @PutMapping("/{portfolioId}/stocks")
+//    ResponseEntity<Stock> sellStock(@PathVariable String portfolioId,
+//                                    @RequestBody sellStock) throws Exception {
+//        return ResponseEntity.ok(portfolioService.stockSellOrder(portfolioId, sellStock));
+//    }
+
+    @DeleteMapping("/{portfolioId}/stocks/{stockId}")
+    ResponseEntity<Portfolio> sellAllStocks(@PathVariable Long portfolioId,
+                                 @PathVariable Long stockId) {
+        portfolioService.sellAll(portfolioId, stockId);
+        return ResponseEntity.noContent().build();
+    }
 }
