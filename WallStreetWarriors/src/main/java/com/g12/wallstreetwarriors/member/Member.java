@@ -8,6 +8,8 @@ import com.g12.wallstreetwarriors.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Objects;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,47 +28,27 @@ public class Member {
     @JsonIgnore
     @ManyToOne
     @MapsId("roomId")
-    //@JoinColumn(name = "room_id")
     private Room room;
 
     @JsonIgnore
     @ManyToOne
     @MapsId("userId")
-    //@JoinColumn(name = "user_id")
     private User user;
 
 
-    @OneToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.ALL)
     private Portfolio portfolio;
-
-
-
-
-    /*
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Members members = (Members) o;
-        return amount == members.amount && Objects.equals(id, members.id) && Objects.equals(room, members.room) && Objects.equals(user, members.user) && Objects.equals(ticker, members.ticker) && Objects.equals(average, members.average) && Objects.equals(current, members.current);
+        Member member = (Member) o;
+        return Objects.equals(id, member.id) && Objects.equals(room, member.room) && Objects.equals(user, member.user) && Objects.equals(portfolio, member.portfolio);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, room, user, ticker, average, current, amount);
-    }*/
-
-    /*public void addMember(User user) {
-        if(members == null) {
-            members = new ArrayList<>();
-        }
-        members.add(user);
+        return Objects.hash(id, room, user, portfolio);
     }
-
-    public void removeMember(User user) {
-        members.remove(user);
-    }
-*/
-
 }
