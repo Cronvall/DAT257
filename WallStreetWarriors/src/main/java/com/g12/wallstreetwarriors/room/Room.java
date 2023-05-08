@@ -57,9 +57,15 @@ public class Room {
     @ToString.Exclude
     private List<Member> members;
 
-    /*public void addMember(User user){
-        members.add(user);
-    }*/
+    public void addMember(Member member){
+        if (members == null)
+            members = new ArrayList<>();
+        members.add(member);
+    }
+
+    public void removeMember(Member member){
+        members.remove(member);
+    }
 
     @Override
     public boolean equals(Object o) {
