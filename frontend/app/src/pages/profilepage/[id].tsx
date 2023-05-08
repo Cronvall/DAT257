@@ -12,7 +12,7 @@ const ProfilePage: NextPage = () => {
   const [user, setUser] = useState<any>(null);
   const [email, setEmail] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
-  // const [leagues, setLeagues] = useState<any>(null);
+  const [leagues, setLeagues] = useState<any>([]);
 
   useEffect(() => {
     if (id) {
@@ -32,6 +32,7 @@ const ProfilePage: NextPage = () => {
       axios.get(`http://localhost:8080/api/rooms`, {params : {userId : id}})
         .then(res => {
           console.log(res.data);
+          setLeagues(res.data); // update the leagues state variable with the data from your API
           setError(false);
         })
         .catch(err => {
@@ -41,7 +42,6 @@ const ProfilePage: NextPage = () => {
     }
   }, [id])
 
-
   return (
     <>
     <NavBar transparent={false}/>
@@ -50,14 +50,17 @@ const ProfilePage: NextPage = () => {
         error ? 
         <h1>Profile not found for {id}</h1>
           :
-          // 
-          <div>
+      <div>
         <h1>Profile of {user}</h1>
         <h2>Email: {email}</h2>
         <h3> Currently in leagues: </h3>
-        <button>Join League</button>
-        
+        <div>
+            {leagues.map((league: any, index: number) => (
+              <button key={index} onClick={() => router.push(`/room/${league.id}`)}>{league.name}</button>
+            ))}
           </div>
+        
+      </div>
         }
       </div>  
 
