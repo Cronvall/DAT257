@@ -81,7 +81,7 @@ const NavBar = (props: Iprops) => {
 {
             transparent ?
             <input
-              className={styles.searchInput} placeholder="Enter user id"
+              className={styles.searchInput} placeholder="Search for user"
               type="text"
               value={enteredUser}
               onChange={handleInputChangeUser}
@@ -89,7 +89,7 @@ const NavBar = (props: Iprops) => {
             />
             :
             <input
-              className={styles.searchInputTransp} placeholder="Enter user id"
+              className={styles.searchInputTransp} placeholder="Search for user"
               type="text"
               value={enteredUser}
               onChange={handleInputChangeUser}
