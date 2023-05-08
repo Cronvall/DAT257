@@ -1,5 +1,8 @@
 package com.g12.wallstreetwarriors.config;
 
+import com.g12.wallstreetwarriors.member.Member;
+import com.g12.wallstreetwarriors.member.MemberRepository;
+import com.g12.wallstreetwarriors.portfolio.Portfolio;
 import com.g12.wallstreetwarriors.room.Room;
 import com.g12.wallstreetwarriors.room.RoomRepository;
 import com.g12.wallstreetwarriors.user.User;
@@ -23,7 +26,7 @@ public class loadDatabase {
     }
 
     @Bean
-    CommandLineRunner initDatabase(UserRepository userRepository, RoomRepository roomRepository) {
+    CommandLineRunner initDatabase(UserRepository userRepository, RoomRepository roomRepository, MemberRepository memberRepository) {
 
         return args -> {
 
@@ -44,9 +47,26 @@ public class loadDatabase {
             room2 = roomRepository.save(room2);
 
 
+            Member member1 = new Member();
+            member1.setUser(user1);
+            member1.setRoom(room2);
 
-           /* room1.addMember(user2);
-            room2.addMember(user1);*/
+            Portfolio portfolio1 = new Portfolio();
+            portfolio1.setRemainingBudget(member1.getRoom().getBudget().floatValue());
+            member1.setPortfolio(portfolio1);
+
+            memberRepository.save(member1);
+
+            Member member2 = new Member();
+            member2.setUser(user2);
+            member2.setRoom(room1);
+
+            Portfolio portfolio2 = new Portfolio();
+            portfolio2.setRemainingBudget(member2.getRoom().getBudget().floatValue());
+            member2.setPortfolio(portfolio2);
+
+            memberRepository.save(member1);
+            memberRepository.save(member2);
 
             roomRepository.save(room1);
             roomRepository.save(room2);
