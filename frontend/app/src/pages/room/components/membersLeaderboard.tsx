@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import style from './style.module.css'
 import { Table } from '@nextui-org/react'
+import MembersRow from './membersRow';
 
 interface IUserPortfolio{
     username: string;
     email: string;
     balance: number;
-    numStocks: number;
     portfolioValue: number;
     growth: number;
 }
@@ -28,7 +28,6 @@ const MembersLeaderboard = (props: Iprops) => {
             username: "test1",
             email: "test1@gmail.com",
             balance: 1000,
-            numStocks: 5,
             portfolioValue: 2000,
             growth: -80,
         },
@@ -36,7 +35,6 @@ const MembersLeaderboard = (props: Iprops) => {
             username: "test2",
             email: "test2@gmail.com",
             balance: 800,
-            numStocks: 3,
             portfolioValue: 6000,
             growth: -40
         },
@@ -44,7 +42,6 @@ const MembersLeaderboard = (props: Iprops) => {
             username: "test3",
             email: "test3@gmail.com",
             balance: 500,
-            numStocks: 2,
             portfolioValue: 15000,
             growth: 50
         },
@@ -52,7 +49,6 @@ const MembersLeaderboard = (props: Iprops) => {
             username: "test4",
             email: "test4@gmail.com",
             balance: 200,
-            numStocks: 1,
             portfolioValue: 1100,
             growth: 10
         },
@@ -60,7 +56,6 @@ const MembersLeaderboard = (props: Iprops) => {
             username: "test5",
             email: "test5@gmail.com",
             balance: 250,
-            numStocks: 6,
             portfolioValue: 4100,
             growth: -25
         },
@@ -68,7 +63,6 @@ const MembersLeaderboard = (props: Iprops) => {
             username: "test6",
             email: "test6@gmail.com",
             balance: 200,
-            numStocks: 1,
             portfolioValue: 1100,
             growth: 10
         },
@@ -76,7 +70,6 @@ const MembersLeaderboard = (props: Iprops) => {
             username: "test7",
             email: "test7@gmail.com",
             balance: 230,
-            numStocks: 4,
             portfolioValue: 1600,
             growth: 13
         },
@@ -103,6 +96,7 @@ const MembersLeaderboard = (props: Iprops) => {
     return (
         <>
         {
+
             hasUsers ?
             <Table
                 striped
@@ -135,7 +129,8 @@ const MembersLeaderboard = (props: Iprops) => {
                                     <Table.Cell>{item.balance}</Table.Cell>
                                     <Table.Cell>{item.portfolioValue}</Table.Cell>
                                     <Table.Cell css={item.growth > 0 ?
-                                         {color: "#6fe3b4"} : {color: "#ff6961"}}
+                                         {color: "#6fe3b4"} : {color: "#ff6961"
+                                        }}
                                     >
                                         {item.growth} %
                                     </Table.Cell>
