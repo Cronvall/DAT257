@@ -8,8 +8,6 @@ import * as Yup from "yup";
 
 import IUser from "../../types/user.type";
 import { register, login } from "../../services/auth.service";
-import Image from "next/image";
-import WWImg from "../../assets/images/WallstreetWarriors.png"
 
 
 interface IRegisterUser extends IUser {
@@ -76,15 +74,9 @@ const SignupPage = () => {
     <>
       <NavBar transparent={true}/>
       <div className={styles.mainContainer}>
-      <div className={styles.imgContainer}>
-                  <Image
-                    src={WWImg}
-                    alt="Wallstreet Warriors"
-                    width={600}
-                  />
-                </div>
+      
         <div className={styles.formContainer}>
-
+        <h1 style={{marginTop: "4rem"}}>Register</h1>
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
