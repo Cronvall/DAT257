@@ -10,6 +10,7 @@ import StocksTable from "./components/stocksTable";
 import { Grid } from "@nextui-org/react";
 import Chat from "./components/chat";
 import { getCurrentUser } from "@/services/auth.service";
+import IUser from "@/types/user.type";
 
 
 interface IAPIResponse{
@@ -42,11 +43,14 @@ const Room: NextPage = () => {
   const router = useRouter();
 
   const [users, setUsers] = useState([])
+  const [currentUser, setCurrentUser] = useState<IUser | undefined>(undefined);
   const [room, setRoom] = useState("")
   const {roomCode} = router.query;
 
 
   const getRoom = async () => {
+    setUsers([]);
+    setRoom("");
     try{
       axios.get(`http://localhost:8080/api/rooms/${roomCode}`)
       .then(res => {
@@ -62,7 +66,7 @@ const Room: NextPage = () => {
 
   useEffect(() => {
     getRoom();
-
+    setCurrentUser(getCurrentUser());
     console.log(users)
   }, []);
 
@@ -95,22 +99,21 @@ const Room: NextPage = () => {
                   xs={12} sm={12} md={12} lg={6} xl={6}
                 >
                   <h2>Performance</h2>
-                  <LeagueChart />
+                  <LeagueChart/>
                 </Grid>
                 <Grid
                   className={style.memberContainer}
                   xs={12} sm={12} md={12} lg={6} xl={6}
                 >
 
-                  <h2>{getCurrentUser()?.username}'s Portfolio</h2>
-                  <StocksTable />
+                  <h2>{currentUser?.username} Portfolio</h2>
+                  <StocksTable/>
                 </Grid>
                 <Grid
                   className={style.memberContainer}
                   xs={12} sm={12} md={12} lg={6} xl={6}
                 >
                   <h2>Chat</h2>
-                  <Chat/>
                 </Grid>
 
               </Grid.Container>

@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
-import style from './style.module.css'
 import { Table } from '@nextui-org/react'
-import MembersRow from './membersRow';
 
 interface IUserPortfolio{
     username: string;
