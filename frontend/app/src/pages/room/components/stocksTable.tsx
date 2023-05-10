@@ -54,6 +54,7 @@ const StocksTable = () => {
     ];
 
     const renderCell = (row: IStock, columnKey: React.Key) => {
+        // Will be marked as an error by Typescript, but works in practice
         const cellValue = row[columnKey];
 
         switch(columnKey){
