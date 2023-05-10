@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
-import style from './style.module.css'
 import { Table, Link } from '@nextui-org/react'
 import { useRouter } from 'next/router';
 
 interface IStock{
     ticker: string;
-    name: string;
     number: number;
     portfolioValue: number;
     growth: number;
@@ -21,28 +19,24 @@ const StocksTable = () => {
     //Remove prepopulated users when backend is ready
     const [stocks, setStocks] = React.useState<IStock[]>([
         {
-            name: "Alphabet",
             ticker: "GOOGL",
             number: 5,
             portfolioValue: 2000,
             growth: -80,
         },
         {
-            name: "META",
             ticker: "META",
             number: 3,
             portfolioValue: 6000,
             growth: -40
         },
         {
-            name: "Tesla",
             ticker: "TSLA",
             number: 2,
             portfolioValue: 15000,
             growth: 50
         },
         {
-            name: "Apple",
             ticker: "AAPL",
             number: 1,
             portfolioValue: 1100,
@@ -51,7 +45,6 @@ const StocksTable = () => {
     ]);
 
     const tableColumns = [
-        { name: "Company", selector: "Company", type: "string" },
         { name: "Ticker", selector: "Ticker", type: "string" },
         { name: "Number #", selector: "Number", sortable: true, type: "number"},
         { name: "Value $", selector: "Value", sortable: true, type: "number" },
@@ -88,7 +81,6 @@ const StocksTable = () => {
                                     {
                                     marginBottom: "5rem",
                                 }}>
-                                    <Table.Cell>{item.name}</Table.Cell>
                                     <Table.Cell >
                                        <Link href={"/stock/"+item.ticker}>${item.ticker}</Link> 
                                     </Table.Cell>
