@@ -16,7 +16,7 @@ export default function Home() {
         <div className={styles.tiltObj} /> 
         <div className={styles.contentContainer}>
           <SignupSection router={router}/>
-          <SampleLeague />
+          <div className={styles.whiteSpace} />
         </div>
 
       </div>
