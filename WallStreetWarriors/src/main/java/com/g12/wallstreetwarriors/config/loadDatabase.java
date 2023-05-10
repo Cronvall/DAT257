@@ -47,13 +47,29 @@ public class loadDatabase {
             room2 = roomRepository.save(room2);
 
 
+            Member owner1 = new Member();
+            owner1.setUser(user1);
+            owner1.setRoom(room1);
+
+            Portfolio portfolio1 = new Portfolio();
+            portfolio1.setRemainingBudget(owner1.getRoom().getBudget().floatValue());
+            owner1.setPortfolio(portfolio1);
+
+            Member owner2 = new Member();
+            owner1.setUser(user2);
+            owner1.setRoom(room2);
+
+            Portfolio portfolio2 = new Portfolio();
+            portfolio1.setRemainingBudget(owner2.getRoom().getBudget().floatValue());
+            owner2.setPortfolio(portfolio2);
+
             Member member1 = new Member();
             member1.setUser(user1);
             member1.setRoom(room2);
 
-            Portfolio portfolio1 = new Portfolio();
-            portfolio1.setRemainingBudget(member1.getRoom().getBudget().floatValue());
-            member1.setPortfolio(portfolio1);
+            Portfolio portfolio3 = new Portfolio();
+            portfolio3.setRemainingBudget(member1.getRoom().getBudget().floatValue());
+            member1.setPortfolio(portfolio3);
 
             memberRepository.save(member1);
 
@@ -61,9 +77,9 @@ public class loadDatabase {
             member2.setUser(user2);
             member2.setRoom(room1);
 
-            Portfolio portfolio2 = new Portfolio();
-            portfolio2.setRemainingBudget(member2.getRoom().getBudget().floatValue());
-            member2.setPortfolio(portfolio2);
+            Portfolio portfolio4 = new Portfolio();
+            portfolio4.setRemainingBudget(member2.getRoom().getBudget().floatValue());
+            member2.setPortfolio(portfolio4);
 
             memberRepository.save(member1);
             memberRepository.save(member2);
