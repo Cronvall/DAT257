@@ -56,20 +56,16 @@ public class RoomService {
         newRoom.setCode(code);
         newRoom = roomRepository.save(newRoom);
 
-        Member member = new Member();
-        member.setUser(newRoom.getOwner());
-        member.setRoom(newRoom);
-        memberRepository.save(member);
-        newRoom.addMember(member);
-        roomRepository.save(newRoom);
+        Room room = addMember(newRoom.getOwner(), newRoom);
+        return roomRepository.save(room);
 
-        return newRoom;
 
     }
 
     Room addMember(User user, Room room) {
         Member member = memberService.createMember(user, room);
         memberRepository.save(member);
+        room.addMember(member);
         return room;
     }
 
