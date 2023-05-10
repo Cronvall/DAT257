@@ -4,6 +4,7 @@ import com.g12.wallstreetwarriors.room.Room;
 import com.g12.wallstreetwarriors.stock.Stock;
 import com.g12.wallstreetwarriors.stock.StockRepository;
 import com.g12.wallstreetwarriors.stock.StockService;
+import com.g12.wallstreetwarriors.stock.StockTransaction;
 import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -45,32 +46,47 @@ public class PortfolioService {
         return stockRepository.findAllByPortfolioId(id);
     }
 
-    Stock stockBuyOrder(Long portfolio ,Stock buyStock) throws Exception {
+    Stock stockBuyOrder(Long portfolio , StockTransaction transaction) throws Exception {
 
         Portfolio pf = getPortfolioById(portfolio);
 
         for(Stock currentStock : pf.getStocks()){
-            if(Objects.equals(currentStock.getTicker(), buyStock.getTicker())){
-                Stock newStock = stockService.updateStock(currentStock, buyStock);
-                pf.updateStock(currentStock, newStock);
+            if(Objects.equals(currentStock.getTicker(), transaction.ticker())){
+                Stock updatedStock = stockService.updateBuyStock(currentStock, transaction);
+                pf.updateBuyStock(currentStock, updatedStock, transaction);
                 portfolioRepository.save(pf);
-                return newStock;
+                return updatedStock;
             }
         }
-        Stock newStock = stockService.createStock(buyStock.getTicker(),buyStock.getAverage(),buyStock.getCurrent(),buyStock.getAmount());
+        Stock newStock = stockService.createStock(pf, transaction.ticker(), transaction.price(), transaction.amount());
         pf.addStock(newStock);
         portfolioRepository.save(pf);
         return newStock;
     }
 
-//    Stock stockSellOrder(Long portfolioId ,SellStock buyStock) throws Exception {
-//
-//        //Portfolio pf = getPortfolioById(portfolio);
-//
-//        Optional<Stock> stock = stockRepository.findById(stockId);
-//
-//        return stock.get();
-//    }
+    Stock stockSellOrder(Long portfolioId , StockTransaction transaction) throws Exception {
+
+        Portfolio pf = getPortfolioById(portfolioId);
+        Optional<Stock> findStock = stockRepository.findByPortfolioIdAndTicker(portfolioId, transaction.ticker());
+        Stock updatedStock;
+
+        if (findStock.isPresent()) {
+            Stock currentStock = findStock.get();
+            if (currentStock.getAmount() == transaction.amount()) {
+
+                pf.removeStock(currentStock);
+                portfolioRepository.save(pf);
+                return null;
+            }
+            else {
+                updatedStock = stockService.updateSellStock(currentStock, transaction);
+                pf.updateSellStock(currentStock, updatedStock, transaction);
+                portfolioRepository.save(pf);
+            }
+
+            return updatedStock;
+        } else throw new Exception();
+    }
 
     public void sellAll(Long portfolioId, Long stockId) {
         Portfolio portfolio = portfolioRepository.findById(portfolioId).get();
@@ -83,6 +99,8 @@ public class PortfolioService {
     public Portfolio createPortfolio(Room room) {
         Portfolio portfolio = new Portfolio();
         portfolio.setRemainingBudget(room.getBudget().floatValue());
+        portfolio.setTotalValue((float)0);
+        portfolio.setPercentageIncrease((float)0);
         return portfolio;
     }
 

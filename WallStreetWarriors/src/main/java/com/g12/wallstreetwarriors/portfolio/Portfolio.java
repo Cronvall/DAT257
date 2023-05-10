@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.g12.wallstreetwarriors.member.Member;
 import com.g12.wallstreetwarriors.stock.Stock;
+import com.g12.wallstreetwarriors.stock.StockTransaction;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import lombok.*;
@@ -24,17 +25,16 @@ public class Portfolio {
     @GeneratedValue
     private Long id;
 
-    private Float totalValue = (float) 0;
+    private Float totalValue ;
 
     @Transient
     private Float percentageIncrease;
 
-    @Min(0)
     private Float remainingBudget;
 
-    @OneToMany(cascade = CascadeType.MERGE)
-    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL)
     @ToString.Exclude
+    @JsonManagedReference
     private List<Stock> stocks;
 
     @OneToOne
@@ -48,10 +48,17 @@ public class Portfolio {
         stocks.add(stock);
     }
 
-    void updateStock(Stock currentStock, Stock buyStock){
+    void updateBuyStock(Stock currentStock, Stock newStock, StockTransaction transaction){
         int i = stocks.indexOf(currentStock);
-        stocks.set(i,buyStock);
-        remainingBudget -= buyStock.getAverage()*buyStock.getAmount();
+        stocks.set(i, newStock);
+        remainingBudget -= newStock.getAverage()*transaction.amount();
+    }
+
+    void updateSellStock(Stock currentStock, Stock newStock, StockTransaction transaction){
+        int i = stocks.indexOf(currentStock);
+        stocks.set(i, newStock);
+
+        remainingBudget += newStock.getCurrent()*transaction.amount();
     }
 
     void removeStock(Stock stock) {

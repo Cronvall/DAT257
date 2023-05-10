@@ -66,6 +66,7 @@ public class loadDatabase {
 
             Portfolio portfolio1 = new Portfolio();
             portfolio1.setRemainingBudget(room1.getBudget().floatValue());
+            portfolio1.setTotalValue((float)0);
             owner1.setPortfolio(portfolio1);
 
 
