@@ -9,9 +9,16 @@ interface IUserPortfolio{
     growth: number;
 }
 
+interface IMember{
+    id: number;
+    username: string;
+    email: string;
+    password: string;
+}    
+
 
 interface Iprops {
-    users: IUserPortfolio[];
+    users?: IUserPortfolio[] | undefined;
 }
 
 
@@ -83,9 +90,7 @@ const MembersLeaderboard = (props: Iprops) => {
     
 
     useEffect(() => {
-        if (props.users.length > 0) {
-            setHasUsers(true);
-        }
+        setHasUsers(props.users !== undefined);
 
         //Sort users by portfolio value
         users.sort((a, b) => ( a.portfolioValue > b.portfolioValue ? -1 : 1));

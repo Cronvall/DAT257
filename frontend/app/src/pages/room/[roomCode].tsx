@@ -42,9 +42,8 @@ const Room: NextPage = () => {
 
   const router = useRouter();
 
-  const [users, setUsers] = useState([])
   const [currentUser, setCurrentUser] = useState<IUser | undefined>(undefined);
-  const [room, setRoom] = useState<IRoom | undefined>(undefined);
+  const [roomData, setRoomData] = useState<IRoom | undefined>(undefined);
 
 
   const getRoom = async () => {
@@ -53,8 +52,7 @@ const Room: NextPage = () => {
       axios.get(`http://localhost:8080/api/rooms/${roomCode}`)
       .then(res => {
         console.log(res.data);
-        setUsers(res.data.members);
-        setRoom(res.data.name);
+        setRoomData(res.data);
       })
     }
     catch(e){
@@ -64,10 +62,16 @@ const Room: NextPage = () => {
 
 
   useEffect(() => {
-    getRoom();
     setCurrentUser(getCurrentUser());
-    console.log(users)
   }, []);
+
+
+  useEffect(() => {
+    if(router.isReady){
+      getRoom();
+    }
+    console.log('roomData:',roomData)
+  }, [router.isReady]);
 
 
     return(
@@ -76,8 +80,8 @@ const Room: NextPage = () => {
 
           <div className={style.mainContainer}>
             <div className={style.headerContainer}>
-              <h1 className={style.name}>{room?.name || "pathname"}</h1>
-              <h2>{room?.code || "pathcode"}</h2>
+              <h1 className={style.name}>{roomData?.name || "pathname"}</h1>
+              <h2>{roomData?.code || "pathcode"}</h2>
             </div>
 
               <Grid.Container 
@@ -90,7 +94,7 @@ const Room: NextPage = () => {
                   xs={12} sm={12} md={12} lg={6} xl={6}
                 >
                     <h2>Leaderboard</h2>
-                    <MembersLeaderboard users={users}/>
+                    <MembersLeaderboard users={undefined}/>
                 </Grid>
 
                 <Grid 
