@@ -3,6 +3,7 @@ import { NextRouter, useRouter } from "next/router"
 import { logout, getCurrentUser } from "../services/auth.service";
 
 import styles from './styles/navBar.module.css'
+import Breadcrumbs from "./breadcrumbs";
 
 interface Iprops{
   transparent: boolean
@@ -52,7 +53,8 @@ const NavBar = (props: Iprops) => {
   };
 
     return (
-      <div className={styles.navBar} style={{background: bgColor, color: txtColor}}>
+      <div className={styles.mainContainer} style={{background: bgColor, color: txtColor}}>
+      <div className={styles.navBar}>
         <button onClick={() =>  router.push('/')} className={styles.headerTxtBtn}>
             <h1 style={{color: txtColor}}>Wall St. Warriors</h1>
         </button>
@@ -81,7 +83,7 @@ const NavBar = (props: Iprops) => {
 {
             transparent ?
             <input
-              className={styles.searchInput} placeholder="Enter user id"
+              className={styles.searchInput} placeholder="Search for user"
               type="text"
               value={enteredUser}
               onChange={handleInputChangeUser}
@@ -89,7 +91,7 @@ const NavBar = (props: Iprops) => {
             />
             :
             <input
-              className={styles.searchInputTransp} placeholder="Enter user id"
+              className={styles.searchInputTransp} placeholder="Search for user"
               type="text"
               value={enteredUser}
               onChange={handleInputChangeUser}
@@ -110,6 +112,8 @@ const NavBar = (props: Iprops) => {
             </>
           }
         </div>
+      </div>
+        <Breadcrumbs transparent={props.transparent}/>
       </div>
     )
   }

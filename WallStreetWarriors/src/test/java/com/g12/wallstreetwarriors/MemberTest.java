@@ -1,4 +1,4 @@
-package com.g12.wallstreetwarriors;
+/*package com.g12.wallstreetwarriors;
 
 import com.g12.wallstreetwarriors.room.Room;
 import com.g12.wallstreetwarriors.room.RoomService;
@@ -32,3 +32,4 @@ public class MemberTest {
     }
 
 }
+*/

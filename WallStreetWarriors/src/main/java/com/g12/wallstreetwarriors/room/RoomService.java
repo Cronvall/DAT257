@@ -54,12 +54,18 @@ public class RoomService {
         int code = rnd.nextInt(999999);
 
         newRoom.setCode(code);
-        return roomRepository.save(newRoom);
+        newRoom = roomRepository.save(newRoom);
+
+        Room room = addMember(newRoom.getOwner(), newRoom);
+        return roomRepository.save(room);
+
+
     }
 
     Room addMember(User user, Room room) {
         Member member = memberService.createMember(user, room);
         memberRepository.save(member);
+        room.addMember(member);
         return room;
     }
 

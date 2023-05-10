@@ -7,9 +7,35 @@ import { NextPage } from "next";
 import NavBar from "../../components/navBar";
 import LeagueChart from "./components/leagueChart";
 import StocksTable from "./components/stocksTable";
-import { Grid, Spacer } from "@nextui-org/react";
+import { Grid } from "@nextui-org/react";
 import Chat from "./components/chat";
 import { getCurrentUser } from "@/services/auth.service";
+
+
+interface IAPIResponse{
+  id: number;
+  name: string;
+  capacity: number;
+  code: number;
+  budget: number;
+  startDate: number;
+  endDate: number;
+  owner: {
+    id: number;
+    username: string;
+    email: string;
+    password: string;
+  };
+  members: [
+    {
+      id: number;
+      username: string;
+      email: string;
+      password: string;
+    }
+  ];  
+}
+
 
 const Room: NextPage = () => {
 
@@ -35,7 +61,9 @@ const Room: NextPage = () => {
 
 
   useEffect(() => {
-    //getRoom();
+    getRoom();
+
+    console.log(users)
   }, []);
 
 

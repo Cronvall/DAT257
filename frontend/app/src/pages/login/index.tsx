@@ -100,7 +100,7 @@ return (
                   </button>
                   <p style={{marginLeft: "1rem", color:"#919191" }}> or </p>
                   <button className={styles.registerButton}>
-                    <a href="/register"> register </a>
+                    <a href="/register"> Sign Up </a>
                   </button>
               </div>
 
