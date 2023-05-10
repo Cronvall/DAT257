@@ -4,8 +4,12 @@ import com.g12.wallstreetwarriors.room.Room;
 import com.g12.wallstreetwarriors.stock.Stock;
 import com.g12.wallstreetwarriors.stock.StockRepository;
 import com.g12.wallstreetwarriors.stock.StockService;
+import org.apache.catalina.connector.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -57,6 +61,23 @@ public class PortfolioService {
         pf.addStock(newStock);
         portfolioRepository.save(pf);
         return newStock;
+    }
+
+//    Stock stockSellOrder(Long portfolioId ,SellStock buyStock) throws Exception {
+//
+//        //Portfolio pf = getPortfolioById(portfolio);
+//
+//        Optional<Stock> stock = stockRepository.findById(stockId);
+//
+//        return stock.get();
+//    }
+
+    public void sellAll(Long portfolioId, Long stockId) {
+        Portfolio portfolio = portfolioRepository.findById(portfolioId).get();
+        Stock stock = stockRepository.findById(stockId).get();
+        portfolio.removeStock(stock);
+        portfolioRepository.save(portfolio);
+
     }
 
     public Portfolio createPortfolio(Room room) {
