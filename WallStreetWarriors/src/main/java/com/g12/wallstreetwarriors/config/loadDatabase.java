@@ -66,7 +66,10 @@ public class loadDatabase {
 
             Portfolio portfolio1 = new Portfolio();
             portfolio1.setRemainingBudget(room1.getBudget().floatValue());
+            portfolio1.setTotalValue((float)0);
+            portfolio1.setPercentageIncrease((float)0);
             owner1.setPortfolio(portfolio1);
+            portfolio1.setMember(owner1);
 
 
             Member owner2 = new Member();
@@ -74,7 +77,9 @@ public class loadDatabase {
             owner2.setRoom(room2);
 
             Portfolio portfolio2 = new Portfolio();
-            portfolio1.setRemainingBudget(room2.getBudget().floatValue());
+            portfolio2.setRemainingBudget(room2.getBudget().floatValue());
+            portfolio2.setTotalValue((float)0);
+            portfolio2.setPercentageIncrease((float)0);
             owner2.setPortfolio(portfolio2);
 
 
@@ -84,6 +89,8 @@ public class loadDatabase {
 
             Portfolio portfolio3 = new Portfolio();
             portfolio3.setRemainingBudget(member1.getRoom().getBudget().floatValue());
+            portfolio3.setTotalValue((float)0);
+            portfolio3.setPercentageIncrease((float)0);
             member1.setPortfolio(portfolio3);
 
 
@@ -93,6 +100,8 @@ public class loadDatabase {
 
             Portfolio portfolio4 = new Portfolio();
             portfolio4.setRemainingBudget(member2.getRoom().getBudget().floatValue());
+            portfolio4.setTotalValue((float)0);
+            portfolio4.setPercentageIncrease((float)0);
             member2.setPortfolio(portfolio4);
 
 

@@ -22,7 +22,6 @@ public class RoomController {
         this.memberService = memberService;
     }
 
-    private record RequestWrapper(User user, Room room) {};
     @PostMapping
     ResponseEntity<Room> addRoom(@RequestBody Room newRoom) {
         return new ResponseEntity<>(roomService.createRoom(newRoom), HttpStatus.CREATED);

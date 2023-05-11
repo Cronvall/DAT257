@@ -2,6 +2,7 @@ package com.g12.wallstreetwarriors.portfolio;
 
 
 import com.g12.wallstreetwarriors.stock.Stock;
+import com.g12.wallstreetwarriors.stock.StockTransaction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,9 +34,19 @@ public class PortfolioController {
         return ResponseEntity.ok(portfolioService.getPortfolioStocks(id));
     }
 
-    @PutMapping("/{id}/stocks")
-    ResponseEntity<Stock> buyStock(@PathVariable Long id, @RequestBody Stock stock) throws Exception {
-        return ResponseEntity.ok(portfolioService.stockBuyOrder(id, stock));
+    @PutMapping("/{id}/stocks/buy")
+    ResponseEntity<Portfolio> buyStock(@PathVariable Long id, @RequestBody StockTransaction transaction) throws Exception {
+        return ResponseEntity.ok(portfolioService.stockBuyOrder(id, transaction));
+    }
+
+    @PutMapping("/{id}/stocks/sell")
+    ResponseEntity<Portfolio> sellStock(@PathVariable Long id, @RequestBody StockTransaction transaction) throws Exception {
+        return ResponseEntity.ok(portfolioService.stockSellOrder(id, transaction));
+    }
+
+    @PatchMapping("/{id}/stocks/update")
+    ResponseEntity<Portfolio> updateStocks(@PathVariable Long id) {
+        return ResponseEntity.ok(portfolioService.updatePortfolioStocks(id));
     }
 
 //    record sellStock(String ticker, Float currentPrice, Integer amount) {};
@@ -45,10 +56,10 @@ public class PortfolioController {
 //        return ResponseEntity.ok(portfolioService.stockSellOrder(portfolioId, sellStock));
 //    }
 
-    @DeleteMapping("/{portfolioId}/stocks/{stockId}")
-    ResponseEntity<Portfolio> sellAllStocks(@PathVariable Long portfolioId,
-                                 @PathVariable Long stockId) {
-        portfolioService.sellAll(portfolioId, stockId);
-        return ResponseEntity.noContent().build();
-    }
+//    @DeleteMapping("/{portfolioId}/stocks/{stockId}")
+//    ResponseEntity<Portfolio> sellAllStocks(@PathVariable Long portfolioId,
+//                                 @PathVariable Long stockId) {
+//        portfolioService.sellAll(portfolioId, stockId);
+//        return ResponseEntity.noContent().build();
+//    }
 }

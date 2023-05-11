@@ -7,7 +7,7 @@ import java.time.Duration;
 import java.util.Optional;
 
 @Service
-class StockApiService {
+public class StockApiService {
 
     private final WebClient.Builder twelveDataClient;
 

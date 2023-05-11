@@ -20,17 +20,28 @@ public class Stock {
     @Column(name = "ticker")
     private String ticker;
 
-    @Column(name = "value")
+    @Column(name = "average")
     private Float average;
 
     @Column(name = "current_price")
     private Float current;
 
     @Column(name = "amount")
-    private int amount;
+    private Integer amount;
+
+    @Column(name = "value")
+    private Float profit;
+
+    @Transient
+    private Float profitPercentage;
 
     @ManyToOne
     @JsonBackReference
     private Portfolio portfolio;
+
+    void calculateProfit() {
+        profit = (current - average) * amount;
+        profitPercentage = ((current - average) / average) * 100;
+    }
 
 }
