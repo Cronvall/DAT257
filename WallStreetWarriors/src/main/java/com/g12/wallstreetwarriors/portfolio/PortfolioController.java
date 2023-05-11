@@ -44,6 +44,11 @@ public class PortfolioController {
         return ResponseEntity.ok(portfolioService.stockSellOrder(id, transaction));
     }
 
+    @PatchMapping("/{id}/stocks/update")
+    ResponseEntity<List<Stock>> updateStocks(@PathVariable Long id) {
+        return ResponseEntity.ok(portfolioService.updatePortfolioStocks(id));
+    }
+
 //    record sellStock(String ticker, Float currentPrice, Integer amount) {};
 //    @PutMapping("/{portfolioId}/stocks")
 //    ResponseEntity<Stock> sellStock(@PathVariable String portfolioId,

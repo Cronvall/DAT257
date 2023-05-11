@@ -5,12 +5,11 @@ import com.g12.wallstreetwarriors.stock.Stock;
 import com.g12.wallstreetwarriors.stock.StockRepository;
 import com.g12.wallstreetwarriors.stock.StockService;
 import com.g12.wallstreetwarriors.stock.StockTransaction;
-import org.apache.catalina.connector.Response;
-import org.springframework.http.HttpStatus;
+import com.g12.wallstreetwarriors.stockApi.StockApi;
+import com.g12.wallstreetwarriors.stockApi.StockApiService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
-import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -22,12 +21,15 @@ public class PortfolioService {
     private final StockRepository stockRepository;
     private final StockService stockService;
 
+    private final StockApiService stockApiService;
 
 
-    public PortfolioService(PortfolioRepository portfolioRepository, StockRepository stockRepository, StockService stockService) {
+
+    public PortfolioService(PortfolioRepository portfolioRepository, StockRepository stockRepository, StockService stockService, StockApiService stockApiService) {
         this.portfolioRepository = portfolioRepository;
         this.stockRepository = stockRepository;
         this.stockService = stockService;
+        this.stockApiService = stockApiService;
     }
 
      Portfolio getPortfolioById(Long id) throws Exception {
@@ -102,6 +104,19 @@ public class PortfolioService {
         portfolio.setTotalValue((float)0);
         portfolio.setPercentageIncrease((float)0);
         return portfolio;
+    }
+
+    List<Stock> updatePortfolioStocks(Long portfolioId) {
+        List<Stock> stocks = getPortfolioStocks(portfolioId);
+        List<Stock> updateStocks = new ArrayList<>();
+        for (Stock stock : stocks) {
+            Optional<StockApi> stockApi = stockApiService.getStockByTicker(stock.getTicker());
+            if (stockApi.isPresent()) {
+                stock.setCurrent(Float.parseFloat(stockApi.get().getValues().get(0).getClose()));
+                updateStocks.add(stock);
+            }
+        }
+        return stockRepository.saveAll(updateStocks);
     }
 
 }
