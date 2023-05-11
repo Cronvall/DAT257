@@ -1,40 +1,86 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles/sampleLeague.module.css";
-import { Table } from "@nextui-org/react";
+import Create from "../assets/images/Create.png";
+import Login from "../assets/images/Login.png";
+import Profile from "../assets/images/Profile.png";
+import Stocks from "../assets/images/Stocks.png";
+import Why from "../assets/images/WhyWW.png";
+import Image from "next/image";
 
 export default function SampleLeague() {
-    return (
-        <>
-            <div className={styles.mainContainer}>
-                <div className={styles.leagueContainer}>
-                    <Table
-                        aria-label="Example table with static content"
-                    >
-                        <Table.Header>
-                            <Table.Column>RANK</Table.Column>
-                            <Table.Column>USERNAME</Table.Column>
-                            <Table.Column>PROFIT</Table.Column>
-                        </Table.Header>
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-                        <Table.Body>
-                            <Table.Row key="1">
-                                <Table.Cell>1</Table.Cell>
-                                <Table.Cell>user1</Table.Cell>
-                                <Table.Cell>$1000</Table.Cell>
-                            </Table.Row>
-                            <Table.Row key="2">
-                                <Table.Cell>2</Table.Cell>
-                                <Table.Cell>user2</Table.Cell>
-                                <Table.Cell>$900</Table.Cell>
-                            </Table.Row>
-                        </Table.Body>
-                    </Table>
-                </div>
-                <div className={styles.textPitch}>
-                    <h2>Why Wall St. Warriors?</h2>
-                    <p>Join a league and compete with your friends to see who can make the most money.</p>
-                </div>
+  const handleSlideChange = (index: React.SetStateAction<number>) => {
+    setCurrentSlide(index);
+  };
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentSlide(currentSlide => (currentSlide + 1) % 5);
+    }, 4500);
+    return () => clearInterval(intervalId);
+  }, []);
+
+  return (
+    <>
+      <div className={styles.mainContainer}>
+        <div className={styles.carouselContainer}>
+          <div className={styles["carouselTrack"]} style={{ transform: `translateX(-${currentSlide * 114.5}%)` }}>
+            <div className={styles["carousel-slide"]}>
+              <Image
+                src={Why}
+                alt="Home"
+                width={960}
+                height={540}
+                className={styles["carousel-slide-image"]}
+              />
             </div>
-        </>
-    );
+            <div className={styles["carousel-slide"]}>
+              <Image
+                src={Login}
+                alt="home"
+                width={960}
+                height={540}
+                className={styles["carousel-slide-image"]}
+              />
+            </div>
+            <div className={styles["carousel-slide"]}>
+              <Image
+                src={Create}
+                alt="Login"
+                width={960}
+                height={540}
+                className={styles["carousel-slide-image"]}
+              />
+            </div>
+            <div className={styles["carousel-slide"]}>
+              <Image
+                src={Stocks}
+                alt="Login"
+                width={960}
+                height={540}
+                className={styles["carousel-slide-image"]}
+              />
+            </div>
+            <div className={styles["carousel-slide"]}>
+              <Image
+                src={Profile}
+                alt="Login"
+                width={960}
+                height={540}
+                className={styles["carousel-slide-image"]}
+              />
+            </div>
+          </div>
+          <div className={styles.carouselButtons}>
+            <button onClick={() => handleSlideChange(0)}>1</button>
+            <button onClick={() => handleSlideChange(1)}>2</button>
+            <button onClick={() => handleSlideChange(2)}>3</button>
+            <button onClick={() => handleSlideChange(3)}>4</button>
+            <button onClick={() => handleSlideChange(4)}>5</button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
+
