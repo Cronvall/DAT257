@@ -11,6 +11,7 @@ import { Grid } from "@nextui-org/react";
 import { getCurrentUser } from "@/services/auth.service";
 import IUser from "@/types/user.type";
 import MyStats from "./components/myStats";
+import Footer from "@/components/footer";
 
 
 interface IRoom{
@@ -122,6 +123,7 @@ const Room: NextPage = () => {
 
               </Grid.Container>
           </div>
+          <Footer />
         </>
     );
 
