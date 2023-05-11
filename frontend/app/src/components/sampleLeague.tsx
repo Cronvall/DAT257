@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./styles/sampleLeague.module.css";
 import Create from "../assets/images/Create.png";
 import Login from "../assets/images/Login.png";
@@ -13,6 +13,12 @@ export default function SampleLeague() {
   const handleSlideChange = (index: React.SetStateAction<number>) => {
     setCurrentSlide(index);
   };
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentSlide(currentSlide => (currentSlide + 1) % 5);
+    }, 4500);
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <>
