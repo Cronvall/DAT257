@@ -40,31 +40,73 @@ public class loadDatabase {
             user2 = userRepository.save(user2);
             userRepository.save(user3);
 
-            Room room1 = Room.builder().owner(user1).name("IT").code(12).budget(10000).capacity(5).build();
-            Room room2 = Room.builder().owner(user2).name("Indek").code(13).budget(20000).capacity(6).build();
+            Room room1 = new Room();
+            room1.setOwner(user1);
+            room1.setName("IT");
+            room1.setCode(12);
+            room1.setBudget(10000);
+            room1.setCapacity(5);
+
+
+            Room room2 = new Room();
+            room2.setOwner(user2);
+            room2.setName("Indek");
+            room2.setCode(13);
+            room2.setBudget(20000);
+            room2.setCapacity(6);
+
 
             room1 = roomRepository.save(room1);
             room2 = roomRepository.save(room2);
+
+
+            Member owner1 = new Member();
+            owner1.setUser(user1);
+            owner1.setRoom(room1);
+
+            Portfolio portfolio1 = new Portfolio();
+            portfolio1.setRemainingBudget(room1.getBudget().floatValue());
+            portfolio1.setTotalValue((float)0);
+            portfolio1.setPercentageIncrease((float)0);
+            owner1.setPortfolio(portfolio1);
+            portfolio1.setMember(owner1);
+
+
+            Member owner2 = new Member();
+            owner2.setUser(user2);
+            owner2.setRoom(room2);
+
+            Portfolio portfolio2 = new Portfolio();
+            portfolio2.setRemainingBudget(room2.getBudget().floatValue());
+            portfolio2.setTotalValue((float)0);
+            portfolio2.setPercentageIncrease((float)0);
+            owner2.setPortfolio(portfolio2);
 
 
             Member member1 = new Member();
             member1.setUser(user1);
             member1.setRoom(room2);
 
-            Portfolio portfolio1 = new Portfolio();
-            portfolio1.setRemainingBudget(member1.getRoom().getBudget().floatValue());
-            member1.setPortfolio(portfolio1);
+            Portfolio portfolio3 = new Portfolio();
+            portfolio3.setRemainingBudget(member1.getRoom().getBudget().floatValue());
+            portfolio3.setTotalValue((float)0);
+            portfolio3.setPercentageIncrease((float)0);
+            member1.setPortfolio(portfolio3);
 
-            memberRepository.save(member1);
 
             Member member2 = new Member();
             member2.setUser(user2);
             member2.setRoom(room1);
 
-            Portfolio portfolio2 = new Portfolio();
-            portfolio2.setRemainingBudget(member2.getRoom().getBudget().floatValue());
-            member2.setPortfolio(portfolio2);
+            Portfolio portfolio4 = new Portfolio();
+            portfolio4.setRemainingBudget(member2.getRoom().getBudget().floatValue());
+            portfolio4.setTotalValue((float)0);
+            portfolio4.setPercentageIncrease((float)0);
+            member2.setPortfolio(portfolio4);
 
+
+            memberRepository.save(owner1);
+            memberRepository.save(owner2);
             memberRepository.save(member1);
             memberRepository.save(member2);
 
