@@ -43,9 +43,9 @@ public class StockService {
 
     public Stock updateSellStock(Stock currentStock, StockTransaction transaction){
         int amount = (currentStock.getAmount() - transaction.amount());
-        Float average = (currentStock.getAverage()) / amount;
+        Float average = (currentStock.getAverage() * currentStock.getAmount()) / amount;
 
-        currentStock.setAverage(average);
+        //currentStock.setAverage(average);
         currentStock.setAmount(amount);
         currentStock.setCurrent(transaction.price());
         currentStock.calculateProfit();
