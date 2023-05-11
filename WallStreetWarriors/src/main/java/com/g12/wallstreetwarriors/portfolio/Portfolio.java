@@ -35,7 +35,7 @@ public class Portfolio {
     @OneToMany(cascade = CascadeType.ALL)
     @ToString.Exclude
     @JsonManagedReference
-    private List<Stock> stocks;
+    private List<Stock> stocks = new ArrayList<>();
 
     @OneToOne
     @JsonIgnore
