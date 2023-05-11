@@ -76,8 +76,9 @@ public class PortfolioService {
             Stock currentStock = findStock.get();
             if (currentStock.getAmount() == transaction.amount()) {
 
-                pf.removeStock(currentStock);
+                pf.removeStock(currentStock, transaction);
                 portfolioRepository.save(pf);
+                stockRepository.delete(currentStock);
                 return null;
             }
             else {
@@ -93,7 +94,7 @@ public class PortfolioService {
     public void sellAll(Long portfolioId, Long stockId) {
         Portfolio portfolio = portfolioRepository.findById(portfolioId).get();
         Stock stock = stockRepository.findById(stockId).get();
-        portfolio.removeStock(stock);
+//        portfolio.removeStock(stock, );
         portfolioRepository.save(portfolio);
 
     }

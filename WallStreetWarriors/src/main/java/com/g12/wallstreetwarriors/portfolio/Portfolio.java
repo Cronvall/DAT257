@@ -61,10 +61,15 @@ public class Portfolio {
         remainingBudget += newStock.getCurrent()*transaction.amount();
     }
 
-    void removeStock(Stock stock) {
+    void removeStock(Stock stock, StockTransaction transaction) {
         stocks.remove(stock);
-        remainingBudget += stock.getAverage()*stock.getAmount();
+        remainingBudget += stock.getCurrent()*transaction.amount();
 
     }
+
+    void calculateProfit() {
+        percentageIncrease = (float)0;
+    }
+
 
 }
