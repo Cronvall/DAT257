@@ -81,6 +81,7 @@ public class loadDatabase {
             portfolio2.setTotalValue((float)0);
             portfolio2.setPercentageIncrease((float)0);
             owner2.setPortfolio(portfolio2);
+            portfolio2.setMember(owner2);
 
 
             Member member1 = new Member();
@@ -92,6 +93,7 @@ public class loadDatabase {
             portfolio3.setTotalValue((float)0);
             portfolio3.setPercentageIncrease((float)0);
             member1.setPortfolio(portfolio3);
+            portfolio3.setMember(member1);
 
 
             Member member2 = new Member();
@@ -103,6 +105,7 @@ public class loadDatabase {
             portfolio4.setTotalValue((float)0);
             portfolio4.setPercentageIncrease((float)0);
             member2.setPortfolio(portfolio4);
+            portfolio4.setMember(member2);
 
 
             memberRepository.save(owner1);
