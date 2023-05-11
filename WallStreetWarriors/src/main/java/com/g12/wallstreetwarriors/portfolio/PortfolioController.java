@@ -35,17 +35,17 @@ public class PortfolioController {
     }
 
     @PutMapping("/{id}/stocks/buy")
-    ResponseEntity<Stock> buyStock(@PathVariable Long id, @RequestBody StockTransaction transaction) throws Exception {
+    ResponseEntity<Portfolio> buyStock(@PathVariable Long id, @RequestBody StockTransaction transaction) throws Exception {
         return ResponseEntity.ok(portfolioService.stockBuyOrder(id, transaction));
     }
 
     @PutMapping("/{id}/stocks/sell")
-    ResponseEntity<Stock> sellStock(@PathVariable Long id, @RequestBody StockTransaction transaction) throws Exception {
+    ResponseEntity<Portfolio> sellStock(@PathVariable Long id, @RequestBody StockTransaction transaction) throws Exception {
         return ResponseEntity.ok(portfolioService.stockSellOrder(id, transaction));
     }
 
     @PatchMapping("/{id}/stocks/update")
-    ResponseEntity<List<Stock>> updateStocks(@PathVariable Long id) {
+    ResponseEntity<Portfolio> updateStocks(@PathVariable Long id) {
         return ResponseEntity.ok(portfolioService.updatePortfolioStocks(id));
     }
 

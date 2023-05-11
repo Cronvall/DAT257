@@ -44,14 +44,14 @@ public class Portfolio {
     void addStock(Stock stock) {
         if (stocks == null)
             stocks = new ArrayList<>();
-        remainingBudget -= stock.getAverage()*stock.getAmount();
+        remainingBudget -= stock.getCurrent()*stock.getAmount();
         stocks.add(stock);
     }
 
     void updateBuyStock(Stock currentStock, Stock newStock, StockTransaction transaction){
         int i = stocks.indexOf(currentStock);
         stocks.set(i, newStock);
-        remainingBudget -= newStock.getAverage()*transaction.amount();
+        remainingBudget -= newStock.getCurrent()*transaction.amount();
     }
 
     void updateSellStock(Stock currentStock, Stock newStock, StockTransaction transaction){

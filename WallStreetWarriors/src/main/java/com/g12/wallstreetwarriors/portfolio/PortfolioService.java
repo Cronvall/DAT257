@@ -48,7 +48,7 @@ public class PortfolioService {
         return stockRepository.findAllByPortfolioId(id);
     }
 
-    Stock stockBuyOrder(Long portfolio , StockTransaction transaction) throws Exception {
+    Portfolio stockBuyOrder(Long portfolio , StockTransaction transaction) throws Exception {
 
         Portfolio pf = getPortfolioById(portfolio);
 
@@ -57,16 +57,16 @@ public class PortfolioService {
                 Stock updatedStock = stockService.updateBuyStock(currentStock, transaction);
                 pf.updateBuyStock(currentStock, updatedStock, transaction);
                 portfolioRepository.save(pf);
-                return updatedStock;
+                return pf;
             }
         }
         Stock newStock = stockService.createStock(pf, transaction.ticker(), transaction.price(), transaction.amount());
         pf.addStock(newStock);
         portfolioRepository.save(pf);
-        return newStock;
+        return pf;
     }
 
-    Stock stockSellOrder(Long portfolioId , StockTransaction transaction) throws Exception {
+    Portfolio stockSellOrder(Long portfolioId , StockTransaction transaction) throws Exception {
 
         Portfolio pf = getPortfolioById(portfolioId);
         Optional<Stock> findStock = stockRepository.findByPortfolioIdAndTicker(portfolioId, transaction.ticker());
@@ -79,7 +79,6 @@ public class PortfolioService {
                 pf.removeStock(currentStock, transaction);
                 portfolioRepository.save(pf);
                 stockRepository.delete(currentStock);
-                return null;
             }
             else {
                 updatedStock = stockService.updateSellStock(currentStock, transaction);
@@ -87,7 +86,7 @@ public class PortfolioService {
                 portfolioRepository.save(pf);
             }
 
-            return updatedStock;
+            return pf;
         } else throw new Exception();
     }
 
@@ -107,17 +106,15 @@ public class PortfolioService {
         return portfolio;
     }
 
-    List<Stock> updatePortfolioStocks(Long portfolioId) {
-        List<Stock> stocks = getPortfolioStocks(portfolioId);
-        List<Stock> updateStocks = new ArrayList<>();
+    Portfolio updatePortfolioStocks(Long portfolioId) {
+        Portfolio portfolio = portfolioRepository.findById(portfolioId).get();
+        List<Stock> stocks = portfolio.getStocks();
         for (Stock stock : stocks) {
             Optional<StockApi> stockApi = stockApiService.getStockByTicker(stock.getTicker());
-            if (stockApi.isPresent()) {
-                stock.setCurrent(Float.parseFloat(stockApi.get().getValues().get(0).getClose()));
-                updateStocks.add(stock);
-            }
+            stockApi.ifPresent(api ->
+                    stock.setCurrent(Float.parseFloat(api.getValues().get(0).getClose())));
         }
-        return stockRepository.saveAll(updateStocks);
+        return portfolioRepository.save(portfolio);
     }
 
 }
