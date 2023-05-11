@@ -69,6 +69,7 @@ public class loadDatabase {
             portfolio1.setTotalValue((float)0);
             portfolio1.setPercentageIncrease((float)0);
             owner1.setPortfolio(portfolio1);
+            portfolio1.setMember(owner1);
 
 
             Member owner2 = new Member();

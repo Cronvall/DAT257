@@ -46,12 +46,14 @@ public class Portfolio {
             stocks = new ArrayList<>();
         remainingBudget -= stock.getCurrent()*stock.getAmount();
         stocks.add(stock);
+        calculateProfit();
     }
 
     void updateBuyStock(Stock currentStock, Stock newStock, StockTransaction transaction){
         int i = stocks.indexOf(currentStock);
         stocks.set(i, newStock);
         remainingBudget -= newStock.getCurrent()*transaction.amount();
+        calculateProfit();
     }
 
     void updateSellStock(Stock currentStock, Stock newStock, StockTransaction transaction){
@@ -59,16 +61,21 @@ public class Portfolio {
         stocks.set(i, newStock);
 
         remainingBudget += newStock.getCurrent()*transaction.amount();
+        calculateProfit();
     }
 
     void removeStock(Stock stock, StockTransaction transaction) {
         stocks.remove(stock);
         remainingBudget += stock.getCurrent()*transaction.amount();
-
+        calculateProfit();
     }
 
     void calculateProfit() {
-        percentageIncrease = (float)0;
+        totalValue = remainingBudget;
+        for(Stock stock : stocks) {
+            totalValue += (stock.getAverage()*stock.getAmount() + stock.getProfit());
+        }
+        percentageIncrease = ((totalValue / member.getRoom().getBudget()) - 1) * 100;
     }
 
 
