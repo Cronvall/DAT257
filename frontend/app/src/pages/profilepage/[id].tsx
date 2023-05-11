@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { NextPage } from 'next';
 import { useRouter } from "next/router";
 import axios from 'axios';
-import styles from './stock.module.css';
+import styles from './style.module.css';
 import NavBar from "@/components/navBar";
 import Footer from "@/components/footer";
 
@@ -32,7 +32,7 @@ const ProfilePage: NextPage = () => {
       axios.get(`http://localhost:8080/api/rooms`, {params : {userId : id}})
         .then(res => {
           console.log(res.data);
-          setLeagues(res.data); // update the leagues state variable with the data from your API
+          setLeagues(res.data);
           setError(false);
         })
         .catch(err => {
@@ -45,29 +45,30 @@ const ProfilePage: NextPage = () => {
   return (
     <>
     <NavBar transparent={false}/>
-      <div>
-        {
-        error ? 
-        <h1>Profile not found for {id}</h1>
-          :
-      <div>
-        <h1>Profile of {user}</h1>
-        <h2>Email: {email}</h2>
-        <h3> Currently in leagues: </h3>
-        <div>
-            {leagues.map((league: any, index: number) => (
-              <button key={index} onClick={() => router.push(`/room/${league.id}`)}>{league.name}</button>
-            ))}
+      <div className={styles.container}>
+        {error ? (
+          <h1>Profile not found for {id}</h1>
+        ) : (
+          <div>
+            <h1 className={styles["profile-heading"]}>Profile of {user}</h1>
+            <h2 className={styles["profile-label"]}>Email: {email}</h2>
+            <h3 className={styles["profile-label"]}>Currently in leagues:</h3>
+            <div>
+              {leagues.map((league: any, index: number) => (
+                <button
+                  key={index}
+                  className={styles["league-button"]}
+                  onClick={() => router.push(`/room/${league.id}`)}
+                >
+                  {league.name}
+                </button>
+              ))}
+            </div>
           </div>
-        
+        )}
       </div>
-        }
-      </div>  
+    </>
+  );
+};
 
-      </>
-      
-  )
-}
-
-
-export default ProfilePage
+export default ProfilePage;
