@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import style from "./style.module.css"
-import Member from './member'
 import { Line, LineChart, XAxis, YAxis } from "recharts"
 import { useRouter } from "next/router";
 import { NextPage } from "next";
+import NavBar from "@/components/navBar";
 
 const Room: NextPage = () => {
 
@@ -15,20 +15,20 @@ const Room: NextPage = () => {
 
 
   const getRoom = async () => {
-    try{
-      axios.get(`http://localhost:8080/api/rooms/${roomCode}`)
-      .then(res => {
-        const members = res.data.members;
-        const room = res.data.name;
-        console.log(members)
-        console.log(room)
-        getUsers(members);
-        getName(room);
-      })
-    }
-    catch(e){
-      console.log(e)
-    }
+    // try{
+    //   axios.get(`http://localhost:8080/api/rooms/${roomCode}`)
+    //   .then(res => {
+    //     const members = res.data.members;
+    //     const room = res.data.name;
+    //     console.log(members)
+    //     console.log(room)
+    //     getUsers(members);
+    //     getName(room);
+    //   })
+    // }
+    // catch(e){
+    //   console.log(e)
+    // }
   };
 
   useEffect (() => {
@@ -58,12 +58,13 @@ const Room: NextPage = () => {
 
     return(
         <>
+        <NavBar transparent={false} />
         <div className={style.container}>
             <h1 className={style.name}>{room}</h1>
             <div className={style.body}>
                 <div className={style.memberContainer}>
                     <h3>Members</h3>
-                    <div className={style.memberList}><Member users={users}/></div>
+                    <div className={style.memberList}></div>
                 </div>
                 <LineChart width={500} height={300} data={data}>
                         <XAxis dataKey="name" />
