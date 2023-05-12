@@ -83,7 +83,7 @@ const SignupSection = (props : {router: NextRouter}) => {
                             width="16rem" height="6rem"/>
                         <HoloButton 
                             onClick={() => props.router.push("/login")} txt="Create League" 
-                            width="16rem" height="3rem"/>      
+                            width="16rem" height="6rem"/>      
                     </>
   
                 }
