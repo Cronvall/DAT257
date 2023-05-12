@@ -53,7 +53,7 @@ const MyProfile = () => {
                 <button
                   key={index}
                   className={styles["league-button"]}
-                  onClick={() => router.push(`/room/${league.id}`)}
+                  onClick={() => router.push(`/room/${league.code}`)}
                 >
                   {league.name}
                 </button>
