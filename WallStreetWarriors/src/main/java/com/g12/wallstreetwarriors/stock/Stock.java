@@ -31,9 +31,11 @@ public class Stock {
 
     @Column(name = "value")
     private Float profit;
-
-    @Transient
+    
     private Float profitPercentage;
+
+
+    private Float totalValue;
 
     @ManyToOne
     @JsonBackReference
@@ -42,6 +44,7 @@ public class Stock {
     void calculateProfit() {
         profit = (current - average) * amount;
         profitPercentage = ((current - average) / average) * 100;
+        totalValue = average * amount;
     }
 
 }
