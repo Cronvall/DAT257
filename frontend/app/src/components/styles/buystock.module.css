@@ -47,6 +47,15 @@
     position: absolute;
     margin-top: 5rem;
 }
+
+.amount{
+    position: absolute;
+    margin-top: 7rem;
+}
+.cost{
+    position: absolute;
+    margin-top: 9rem;
+}
       
 
 .button{

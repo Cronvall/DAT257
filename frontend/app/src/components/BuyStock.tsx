@@ -1,8 +1,7 @@
 import style from "./styles/buystock.module.css"
 //s
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useRouter } from "next/router";
 import { getCurrentUser } from "@/services/auth.service";
 import { NextPage } from "next";
 import Dropdown from 'react-dropdown';
@@ -16,18 +15,55 @@ interface IBuyData {
  
 const BuyStock: NextPage<IBuyData> = ({ticker,price,onClose}) => {
 
+  const [amount, setAmount] = useState<number | undefined>(0);
+  const [buyPrice, setBuyPrice] = useState<number | undefined>(0);
+  const handleNumberChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value =parseInt(event.target.value);
+    if (value > 0){
+      setAmount(value ? value : undefined);
+      setBuyPrice(price * value);
+    }
     
-   
+  };
+
+
+
+  const [portfolios, setPortfolios] = useState<string[]>([]);
+
+  const LookupPortfoilos = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/rooms?${getCurrentUser()?.id}`);
+      
+      let newPortfolios: string[] = [];
+      response.data.forEach((room: any) => {
+        room.members.forEach((port: any) => {
+          if (port.id.userId === getCurrentUser()?.id) {
+             const portfolioString = `${room.name}: ${port.portfolio.remainingBudget}$`;
+             newPortfolios.push(portfolioString);
+          }
+  });
+});
+setPortfolios(newPortfolios);
+
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+    
+  };
+  useEffect(() => {
+    LookupPortfoilos()
+    
+  }, []);
+  console.log(portfolios)
    
     
-    const options = [
-      'one', 'two', 'three'
-    ];
+    
 
     const onSelect= () =>{
         console.log("new")
     }
-    const defaultOption = options[0];
+    const defaultOption = portfolios[0]
    
       
 
@@ -37,7 +73,10 @@ const BuyStock: NextPage<IBuyData> = ({ticker,price,onClose}) => {
         <div className={style.centering}>
         <p className={style.ticker}>{ticker}</p>
         <p className={style.price}>{price} $</p>
-        <Dropdown className={style.select} options={options} onChange={onSelect} value={defaultOption} placeholder="Select an option" />
+        <Dropdown className={style.select} options={portfolios} onChange={onSelect} value={defaultOption} placeholder="Select an option" />
+
+        <input className={style.amount} type="number" value={amount} onChange={handleNumberChange} placeholder="Amount" />
+        <p className={style.cost} > {buyPrice}$</p>
         </div>
         <button onClick={onClose} className={style.button}>Close</button>
       </div>
