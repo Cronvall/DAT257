@@ -18,6 +18,7 @@ export default function Home() {
           <SignupSection router={router}/>
           <SampleLeague />
         </div>
+        <div className={styles.whiteSpace} />
 
       </div>
       <Footer />

@@ -24,7 +24,7 @@ const Breadcrumbs = (props: IProps) => {
         return (
             <div className={styles.breadcrumbsContainer} style={{color: txtColor}}>
 
-                    <div key={"home"} className={styles.breadcrumbsSec}>
+                    <div className={styles.breadcrumbsSec}>
                         <button 
                         onClick={() => router.push(`/`)} 
                         className={styles.breadcrumbBtn}
@@ -36,20 +36,20 @@ const Breadcrumbs = (props: IProps) => {
                 {              
                 path.map((x, i) => {
                     return (
-                        <>
-                        <div key={i + "devider"} className={styles.breadcrumbsSec}>
-                            <h3>&gt;</h3>
+                        <div className={styles.breadcrumbsSec} key={i}>
+                            <div style={{marginLeft:"0.75rem"}}>
+                                <h3>&gt;</h3>
+                            </div>
+                            <div style={{marginLeft:"1rem"}}>
+                                <button 
+                                    onClick={() => router.push(`/${x}`)} 
+                                    className={styles.breadcrumbBtn}
+                                    style={{color: txtColor}}
+                                >
+                                    <h3>{x}</h3>
+                                </button>
+                            </div>
                         </div>
-                        <div key={i} className={styles.breadcrumbsSec}>
-                            <button 
-                                onClick={() => router.push(`/${x}`)} 
-                                className={styles.breadcrumbBtn}
-                                style={{color: txtColor}}
-                            >
-                                <h3>{x}</h3>
-                            </button>
-                        </div>
-                        </>
                     )
                 })
                 }
