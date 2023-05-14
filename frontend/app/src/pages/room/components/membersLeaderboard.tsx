@@ -1,84 +1,16 @@
-import React, { useEffect } from 'react';
-import { Table } from '@nextui-org/react'
-
-interface IUserPortfolio{
-    username: string;
-    email: string;
-    balance: number;
-    portfolioValue: number;
-    growth: number;
-}
-
-interface IMember{
-    id: number;
-    username: string;
-    email: string;
-    password: string;
-}    
-
+import React from 'react';
+import { Table, Link } from '@nextui-org/react'
+import IMember from '../interfaces/IMember';
+import axios from 'axios';
 
 interface Iprops {
-    users?: IUserPortfolio[] | undefined;
+    users?: IMember[] | undefined;
+    budget?: number;
 }
 
 
 const MembersLeaderboard = (props: Iprops) => {
 
-    //Change to false when backend is ready
-    const [hasUsers, setHasUsers] = React.useState(true);
-
-    //Remove prepopulated users when backend is ready
-    const [users, setUsers] = React.useState<IUserPortfolio[]>([
-        {
-            username: "test1",
-            email: "test1@gmail.com",
-            balance: 1000,
-            portfolioValue: 2000,
-            growth: -80,
-        },
-        {
-            username: "test2",
-            email: "test2@gmail.com",
-            balance: 800,
-            portfolioValue: 6000,
-            growth: -40
-        },
-        {
-            username: "test3",
-            email: "test3@gmail.com",
-            balance: 500,
-            portfolioValue: 15000,
-            growth: 50
-        },
-        {
-            username: "test4",
-            email: "test4@gmail.com",
-            balance: 200,
-            portfolioValue: 1100,
-            growth: 10
-        },
-        {
-            username: "test5",
-            email: "test5@gmail.com",
-            balance: 250,
-            portfolioValue: 4100,
-            growth: -25
-        },
-        {
-            username: "test6",
-            email: "test6@gmail.com",
-            balance: 200,
-            portfolioValue: 1100,
-            growth: 10
-        },
-        {
-            username: "test7",
-            email: "test7@gmail.com",
-            balance: 230,
-            portfolioValue: 1600,
-            growth: 13
-        },
-    ]);
 
     const tableColumns = [
         { name: "Username", selector: "username", sortable: true, type: "string" },
@@ -86,21 +18,54 @@ const MembersLeaderboard = (props: Iprops) => {
         { name: "Portfolio Value", selector: "portfolioValue", sortable: true, type: "number" },
         { name: "Growth %", selector: "growth", sortable: true, type: "number"}
     ];
-            
     
 
-    useEffect(() => {
-        setHasUsers(props.users !== undefined);
 
-        //Sort users by portfolio value
-        users.sort((a, b) => ( a.portfolioValue > b.portfolioValue ? -1 : 1));
-    }, []);
+    const getUserName = (userId: number): string | undefined => {
+        try{
+            axios.get(`http://localhost:8080/api/users/${userId}`).
+            then(res => {
+                console.log("received username",res.data.username);
+                return res.data.username;
+            })
+        }
+        catch(e){
+            console.log(e);
+            return "Problemo";
+        }
+    };
+
+    const renderCell =  (row: IMember, columnKey: React.Key) => {
+        // Will be marked as an error by Typescript, but works in practice
+
+        switch(columnKey){
+            case "username":
+                return <Link href={"/profilepage/"+row.id.userId}>{getUserName(row.id.userId) ||"dyn uNames"}</Link>;
+            case "balance":
+                return( 
+                <span>
+                    {"$" + row.portfolio.remainingBudget}
+                </span>
+                );
+            case "portfolioValue":
+                return(
+                    <span>
+                     {"$" + (row.portfolio.totalValue + row.portfolio.remainingBudget)}
+                     </span>);
+
+            case "growth":
+                let value = ((row.portfolio.totalValue + row.portfolio.remainingBudget)/
+                (props.budget || 1) * 100 - 100);
+                return(
+                    <span style={value >= 0 ? {color: "#6fe3b4"} : {color: "#ff6961"}}>
+                        {value.toFixed(2) + "%"}
+                    </span>
+                );
+        }
+    };
     
     return (
         <>
-        {
-
-            hasUsers ?
             <Table
                 striped
                 sticked
@@ -121,26 +86,14 @@ const MembersLeaderboard = (props: Iprops) => {
                         )
                     }
                 </Table.Header>
-                <Table.Body items={users}>
-                        {
-                            (item) => (
-                                <Table.Row key={item.username} css={
-                                    {
-                                    marginBottom: "5rem",
-                                }}>
-                                    <Table.Cell>{item.username}</Table.Cell>
-                                    <Table.Cell>{item.balance}</Table.Cell>
-                                    <Table.Cell>{item.portfolioValue}</Table.Cell>
-                                    <Table.Cell css={item.growth > 0 ?
-                                         {color: "#6fe3b4"} : {color: "#ff6961"
-                                        }}
-                                    >
-                                        {item.growth} %
-                                    </Table.Cell>
-                                </Table.Row>
-                            )
-                            
-                        }
+                <Table.Body items={props.users || []}>
+                    {(item) => (
+                        <Table.Row key={item.id.userId} css={{marginBottom: "5rem"}}>
+                          {(columnKey) => (
+                            <Table.Cell key={columnKey}> {renderCell(item, columnKey)} </Table.Cell>
+                          )}  
+                          </Table.Row>
+                    )}
                 </Table.Body>
                     <Table.Pagination 
                         noMargin
@@ -148,9 +101,6 @@ const MembersLeaderboard = (props: Iprops) => {
                         rowsPerPage={5}
                     />
             </Table>
-            :
-            <div>No members found</div>
-        }
         </>
     );
 };

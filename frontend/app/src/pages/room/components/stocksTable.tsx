@@ -1,56 +1,20 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Table, Link } from '@nextui-org/react'
+import IStock from '../interfaces/IStock';
 
-interface IStock{
-    key; number;
-    ticker: string;
-    number: number;
-    portfolioValue: number;
-    growth: number;
+
+interface IProps{
+    stocks: IStock[];
 }
 
-
-
-const StocksTable = () => {
-
-
-    //Remove prepopulated users when backend is ready
-    const stocks: IStock[] = [
-        {
-            key: 1,
-            ticker: "GOOGL",
-            number: 5,
-            portfolioValue: 2000,
-            growth: -80,
-        },
-        {
-            key: 2,
-            ticker: "META",
-            number: 3,
-            portfolioValue: 6000,
-            growth: -40
-        },
-        {
-            key: 3,
-            ticker: "TSLA",
-            number: 2,
-            portfolioValue: 15000,
-            growth: 50
-        },
-        {
-            key: 4,
-            ticker: "AAPL",
-            number: 1,
-            portfolioValue: 1100,
-            growth: 10
-        }
-    ];
+const StocksTable = (props: IProps) => {
 
     const tableColumns = [
         { name: "Ticker", selector: "ticker", type: "string" },
-        { name: "Number #", selector: "number", sortable: true, type: "number"},
-        { name: "Value $", selector: "portfolioValue", sortable: true, type: "number" },
-        { name: "Growth %", selector: "growth", sortable: true, type: "number"}
+        { name: "amount #", selector: "amount", sortable: true, type: "number"},
+        { name: "Price $", selector: "current", sortable: true, type: "number" },
+        { name: "Total $", selector: "total", sortable: true, type: "number"},
+        { name: "profit", selector: "profit", sortable: true, type: "number"}
     ];
 
     const renderCell = (row: IStock, columnKey: React.Key) => {
@@ -60,17 +24,20 @@ const StocksTable = () => {
         switch(columnKey){
             case "ticker":
                 return <Link href={"/stock/"+cellValue}>${cellValue}</Link>;
-            case "growth":
+            case "profit":
                 return( 
-                <span style={cellValue > 0 ? {color: "#6fe3b4"} : {color: "#ff6961"}} >
+                <span style={cellValue >= 0 ? {color: "#6fe3b4"} : {color: "#ff6961"}} >
                     {cellValue} %
                 </span>
                 );
-            case "portfolioValue":
+            case "current":
                 return "$ " + cellValue;
 
-            case "number":
+            case "amount":
                 return "# " + cellValue;
+
+            case "total":
+                return "$ " + row.current * row.amount;
         }
     };
 
@@ -96,10 +63,10 @@ const StocksTable = () => {
                         )
                     }
                 </Table.Header>
-                <Table.Body items={stocks}>
+                <Table.Body items={props.stocks}>
 
                     {(item) => (
-                        <Table.Row key={item.key} css={{marginBottom: "5rem"}}>
+                        <Table.Row key={item.ticker} css={{marginBottom: "5rem"}}>
                           {(columnKey) => (
                             <Table.Cell key={columnKey}> {renderCell(item, columnKey)} </Table.Cell>
                           )}  
