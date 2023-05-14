@@ -10,34 +10,11 @@ import StocksTable from "./components/stocksTable";
 import { Grid } from "@nextui-org/react";
 import { getCurrentUser } from "@/services/auth.service";
 import IUser from "@/types/user.type";
+import IMember from "./interfaces/IMember";
 import MyStats from "./components/myStats";
 import Footer from "@/components/footer";
-
-
-interface IRoom{
-  id: number;
-  name: string;
-  capacity: number;
-  code: number;
-  budget: number;
-  startDate: number;
-  endDate: number;
-  owner: {
-    id: number;
-    username: string;
-    email: string;
-    password: string;
-  };
-  members: [
-    {
-      id: number;
-      username: string;
-      email: string;
-      password: string;
-    }
-  ];  
-}
-
+import IRoom from "./interfaces/IRoom";
+import IStock from "./interfaces/IStock";
 
 const Room: NextPage = () => {
 
@@ -45,6 +22,8 @@ const Room: NextPage = () => {
 
   const [currentUser, setCurrentUser] = useState<IUser | undefined>(undefined);
   const [roomData, setRoomData] = useState<IRoom | undefined>(undefined);
+  const [currentUserPortfolio, setCurrentUserPortfolio] = useState<IStock[]>([]);
+  const [members, setMembers] = useState<IMember[] | undefined>([]);
 
 
   const getRoom = async () => {
@@ -52,33 +31,42 @@ const Room: NextPage = () => {
     try{
       axios.get(`http://localhost:8080/api/rooms/${roomCode}`)
       .then(res => {
-        console.log(res.data);
         setRoomData(res.data);
+        console.log(res.data)
       })
+
     }
     catch(e){
       console.log(e)
     }
   };
 
-
+// On init get current user
   useEffect(() => {
     setCurrentUser(getCurrentUser());
   }, []);
 
-
+//When router is ready get room data
   useEffect(() => {
     if(router.isReady){
       getRoom();
     }
-    console.log('roomData:',roomData)
   }, [router.isReady]);
+
+  //When room data is ready get current user portfolio
+  useEffect(() => {
+    roomData?.members.forEach(member => {
+      if(member.id.userId === currentUser?.id){
+        setCurrentUserPortfolio(member.portfolio.stocks);
+      }
+    });
+    setMembers(roomData?.members);
+  }, [roomData, currentUser]);
 
 
     return(
         <>
           <NavBar transparent={false}/>
-
           <div className={style.mainContainer}>
             <div className={style.headerContainer}>
               <h1 className={style.name}>{roomData?.name || "pathname"}</h1>
@@ -95,7 +83,7 @@ const Room: NextPage = () => {
                   xs={12} sm={12} md={12} lg={6} xl={6}
                 >
                     <h2>Leaderboard</h2>
-                    <MembersLeaderboard users={undefined}/>
+                    <MembersLeaderboard users={members} budget={roomData?.budget}/>
                 </Grid>
 
                 <Grid 
@@ -111,7 +99,7 @@ const Room: NextPage = () => {
                 >
 
                   <h2>{currentUser?.username} Portfolio</h2>
-                  <StocksTable/>
+                  <StocksTable stocks={currentUserPortfolio}/>
                 </Grid>
                 <Grid
                   className={style.memberContainer}

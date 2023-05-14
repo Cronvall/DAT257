@@ -7,6 +7,7 @@ interface IMember{
       percentageIncrease: number | undefined;
       remainingBudget: number;
       stocks: IStock[];
+      totalValue: number;
     }
 };
 
