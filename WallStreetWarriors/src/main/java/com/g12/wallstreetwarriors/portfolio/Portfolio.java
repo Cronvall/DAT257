@@ -27,7 +27,6 @@ public class Portfolio {
 
     private Float totalValue ;
 
-    @Transient
     private Float percentageIncrease;
 
     private Float remainingBudget;

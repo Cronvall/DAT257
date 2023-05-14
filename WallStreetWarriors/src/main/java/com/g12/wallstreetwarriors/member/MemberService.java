@@ -26,7 +26,9 @@ public class MemberService {
         Member newMember = new Member();
         newMember.setRoom(room);
         newMember.setUser(user);
-        newMember.setPortfolio(portfolioService.createPortfolio(room));
+        Portfolio portfolio = portfolioService.createPortfolio(room);
+        newMember.setPortfolio(portfolio);
+        portfolio.setMember(newMember);
 
         return newMember;
     }

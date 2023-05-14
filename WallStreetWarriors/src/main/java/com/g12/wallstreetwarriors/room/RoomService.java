@@ -65,8 +65,8 @@ public class RoomService {
     Room addMember(User user, Room room) {
         Member member = memberService.createMember(user, room);
         memberRepository.save(member);
-        room.addMember(member);
-        return room;
+        //room.addMember(member);
+        return roomRepository.save(room);
     }
 
     Boolean roomCodeIsValid(Integer roomCode, Integer code) {
