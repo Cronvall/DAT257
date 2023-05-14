@@ -15,6 +15,7 @@ import MyStats from "./components/myStats";
 import Footer from "@/components/footer";
 import IRoom from "./interfaces/IRoom";
 import IStock from "./interfaces/IStock";
+import BuyStock from "./components/buyStock";
 
 const Room: NextPage = () => {
 
@@ -106,7 +107,7 @@ const Room: NextPage = () => {
                   xs={12} sm={12} md={12} lg={6} xl={6}
                 >
                   <h2>My Stats</h2>
-                  <MyStats/>
+                  <BuyStock/>
                 </Grid>
 
               </Grid.Container>
