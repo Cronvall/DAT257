@@ -106,8 +106,10 @@ const Room: NextPage = () => {
                   className={style.memberContainer}
                   xs={12} sm={12} md={12} lg={6} xl={6}
                 >
-                  <h2>My Stats</h2>
-                  <BuyStock/>
+                  <h2>Stock Finder</h2>
+                  <BuyStock portfolioId={
+                    roomData?.members.find(member => member.id.userId === currentUser?.id)?.portfolio.id
+                  }/>
                 </Grid>
 
               </Grid.Container>

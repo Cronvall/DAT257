@@ -31,13 +31,13 @@ const StocksTable = (props: IProps) => {
                 </span>
                 );
             case "current":
-                return "$ " + cellValue;
+                return "$" + cellValue;
 
             case "amount":
-                return "# " + cellValue;
+                return cellValue;
 
             case "total":
-                return "$ " + row.current * row.amount;
+                return "$" + (row.current * row.amount).toFixed(2);
         }
     };
 

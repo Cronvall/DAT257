@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Input } from "@nextui-org/react";
 import axios from "axios";
-import { Line, LineChart, ResponsiveContainer, XAxis, YAxis, Legend, CartesianGrid, Tooltip } from "recharts";
+import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import Router, { useRouter } from "next/router";
 
 
 interface IstockData {
@@ -15,10 +16,17 @@ interface IstockData {
     historyDates : Array<string>
 }
 
-const BuyStock = () => {
+interface IProps {
+    portfolioId: number | undefined;
+}
+
+const BuyStock = (props: IProps) => {
 
     const [currentStock, setCurrentStock] = useState<IstockData | undefined>(undefined);
     const [searchStock, setSearchStock] = useState<string>("");
+    const [currentStockAmount, setCurrentStockAmount] = useState<number>(0);
+
+    const router = useRouter();
 
     const handleSearchStock = () => {
         try{
@@ -37,12 +45,42 @@ const BuyStock = () => {
         }
     }
 
+    const handleBuyStock = () => {
+        try{
+            if(currentStock === undefined){
+                console.log("No stock to buy")
+                return;
+            }
+            if(currentStockAmount === 0 || currentStockAmount === undefined || 
+                typeof currentStockAmount !== "number"){
+                console.log("No amount to buy")
+                return;
+            }
+            axios.put(`http://localhost:8080/api/portfolios/${props.portfolioId}/stocks/buy`, {
+                ticker: currentStock.symbol,
+                price: currentStock.currentPrice,
+                amount: currentStockAmount
+            })
+            .then(res => {
+                console.log(res.data)
+                //Tempory solution since we don't fetch the new state of the database
+                router.reload();
+            })
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
+
+
     const chartElements = () => {
         const trend = (array: number[]) =>(array[array.length - 1] - array[0]) / array.length;
         const trendData = currentStock?.historyPrices.map((x,i) => ({
             ev: i*trend(currentStock?.historyPrices)+currentStock?.historyPrices[0],
             pv: x
         }))
+        const min = currentStock !== undefined ? Math.min(...currentStock?.historyPrices) : 0;
+        const max = currentStock !== undefined ? Math.max(...currentStock?.historyPrices) : 100;
         return(
             <div style={{
                 display: "flex",
@@ -59,7 +97,10 @@ const BuyStock = () => {
                 aria-label="stockChart"
                 >
                     <XAxis dataKey="name" />
-                    <YAxis />
+                    <YAxis 
+                        type="number" 
+                        domain={[min, max]}
+                    />
                     <Line type="monotone" dataKey="pv" stroke="#82CA9D" dot={false}/>
                     <Line type="monotone" dataKey="ev" stroke="#DEC018" strokeDasharray="2 2" dot={false}/>
                 </LineChart>
@@ -111,8 +152,11 @@ const BuyStock = () => {
                             borderRadius: "15px",
                         }}
                         aria-label="stockAmount"
+                        type="number"
+                        value={currentStockAmount}
+                        onChange={(e) => setCurrentStockAmount(+e.target.value)}
                         />
-                        <Button>
+                        <Button onPress={handleBuyStock}>
                             Buy
                         </Button>
                     </div>
@@ -134,7 +178,8 @@ const BuyStock = () => {
             boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.3)",
             margin: "2rem",
             alignItems:"flex-start",
-            minWidth: "35rem"
+            minWidth: "35rem",
+            maxWidth: "50rem"
         }}
         aria-label="mainContainer">
             <div style={{

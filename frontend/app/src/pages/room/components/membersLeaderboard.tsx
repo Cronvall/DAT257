@@ -50,11 +50,11 @@ const MembersLeaderboard = (props: Iprops) => {
             case "portfolioValue":
                 return(
                     <span>
-                     {"$" + (row.portfolio.totalValue + row.portfolio.remainingBudget)}
+                     {"$" + (row.portfolio.totalValue)}
                      </span>);
 
             case "growth":
-                let value = ((row.portfolio.totalValue + row.portfolio.remainingBudget)/
+                let value = ((row.portfolio.totalValue)/
                 (props.budget || 1) * 100 - 100);
                 return(
                     <span style={value >= 0 ? {color: "#6fe3b4"} : {color: "#ff6961"}}>

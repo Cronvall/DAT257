@@ -24,6 +24,9 @@ const SignupSection = (props : {router: NextRouter}) => {
 
     useEffect(() => {
         setSignedIn(!!getCurrentUser()?.username);
+    }, []);
+
+    useEffect(() => {
         try{
             axios.get("http://localhost:8080/api/rooms",{
                 params: {userId: getCurrentUser()?.id}
@@ -60,6 +63,9 @@ const SignupSection = (props : {router: NextRouter}) => {
 
 
       const joinedLeaguesElement = () => {
+
+
+
         return (
             <div style={{
                 display: myLeagues.length > 0 ? "block" : "none",
@@ -152,7 +158,11 @@ const SignupSection = (props : {router: NextRouter}) => {
                     <></>
                 }
             </div>
-            {joinedLeaguesElement()}
+            {
+                signedIn ?
+                joinedLeaguesElement()
+                : <></>
+            }
         </div>
     );
 };
