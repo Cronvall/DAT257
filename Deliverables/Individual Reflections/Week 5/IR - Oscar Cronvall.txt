@@ -1,0 +1,18 @@
+Week 5
+
+What do I want to learn or understand better? Consider e.g. teamwork, Scrum, agile processes, technologies etc? 
+   The upcoming week I want to make all the components in the league dashboard work.
+   This is a big task since it requires some redesigning of the backend but would actualy bring
+   usefullness to the graphs and history based analysis of your results.
+   
+
+What is my contribution towards the team’s deliveries? How can I help my team do better next sprint?
+    This week I've spent alot of time connecting the backend to frontend in the league dashboard.
+    
+    
+    
+Changes/improvements from last week's reflection?
+    The largest change this week is that I've collaborated alot with both Keivan and Johannes since they
+    have a way better knowledge then me on how the backend functions in detail.
+    
+    
