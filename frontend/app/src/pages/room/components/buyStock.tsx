@@ -38,7 +38,11 @@ const BuyStock = () => {
     }
 
     const chartElements = () => {
-        const data = currentStock?.historyPrices.map(x => ({pv: x}));
+        const trend = (array: number[]) =>(array[array.length - 1] - array[0]) / array.length;
+        const trendData = currentStock?.historyPrices.map((x,i) => ({
+            ev: i*trend(currentStock?.historyPrices)+currentStock?.historyPrices[0],
+            pv: x
+        }))
         return(
             <div style={{
                 display: "flex",
@@ -51,12 +55,13 @@ const BuyStock = () => {
                 <LineChart
                 width={500}
                 height={300}
-                data={data}
+                data={trendData}
                 aria-label="stockChart"
                 >
                     <XAxis dataKey="name" />
                     <YAxis />
-                    <Line type="monotone" dataKey="pv" stroke="#8884d8" dot={false}/>
+                    <Line type="monotone" dataKey="pv" stroke="#82CA9D" dot={false}/>
+                    <Line type="monotone" dataKey="ev" stroke="#DEC018" strokeDasharray="2 2" dot={false}/>
                 </LineChart>
                 </ResponsiveContainer>
             </div>
