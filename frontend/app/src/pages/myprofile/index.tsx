@@ -26,6 +26,7 @@ const MyProfile = () => {
       .then((res) => {
         console.log('rooms ', res.data);
         setLeagues(res.data);
+        console.log(res.data[0].members[1].portfolio.stocks[0].ticker)
       })
       .catch((err) => {
         console.log(err);
@@ -65,8 +66,17 @@ const MyProfile = () => {
                   </button>
                   <div>
                     Stocks:
-                    {member ? member.portfolio.stocks : "N/A"}
-                    <br></br>
+                    {member ? (
+                      member.portfolio.stocks.map(
+                        (stock: any, stockIndex: number) => (
+                          <div key={stockIndex}>
+                            {stock.ticker}
+                          </div>
+                        )
+                      )
+                    ) : (
+                      "N/A"
+                    )}
                     Increase: {member ? member.portfolio.percentageIncrease + '%': "N/A"}
                   </div>
                 </div>
