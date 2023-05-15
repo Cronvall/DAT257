@@ -24,7 +24,7 @@ const MyProfile = () => {
         params: { userId: getCurrentUser()?.id },
       })
       .then((res) => {
-        console.log(res.data);
+        console.log('rooms ', res.data);
         setLeagues(res.data);
       })
       .catch((err) => {
@@ -49,16 +49,30 @@ const MyProfile = () => {
               Leagues:
             </label>
             <div>
-              {leagues.map((league: any, index: number) => (
-                <button
-                  key={index}
-                  className={styles["league-button"]}
-                  onClick={() => router.push(`/room/${league.code}`)}
-                >
-                  {league.name}
-                </button>
-              ))}
-            </div>
+            {leagues.map((league: any, index: number) => {
+              // Find the member corresponding to the current user ID
+              const member = league.members.find(
+                (member: any) => member.id.userId === getCurrentUser()?.id
+              );
+
+              return (
+                <div key={index}>
+                  <button
+                    className={styles["league-button"]}
+                    onClick={() => router.push(`/room/${league.code}`)}
+                  >
+                    {league.name}
+                  </button>
+                  <div>
+                    Stocks:
+                    {member ? member.portfolio.stocks : "N/A"}
+                    <br></br>
+                    Increase: {member ? member.portfolio.percentageIncrease + '%': "N/A"}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
           </>
         ) : (
           <>
