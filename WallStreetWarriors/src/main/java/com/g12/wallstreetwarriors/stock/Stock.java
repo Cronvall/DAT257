@@ -41,10 +41,10 @@ public class Stock {
     @JsonBackReference
     private Portfolio portfolio;
 
-    void calculateProfit() {
+    public void calculateProfit() {
         profit = (current - average) * amount;
         profitPercentage = ((current - average) / average) * 100;
-        totalValue = average * amount;
+        totalValue = (average * amount) + profit;
     }
 
 }

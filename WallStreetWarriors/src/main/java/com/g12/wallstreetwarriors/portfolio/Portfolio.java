@@ -29,6 +29,7 @@ public class Portfolio {
 
     private Float percentageIncrease;
 
+    @Min(0)
     private Float remainingBudget;
 
     @OneToMany(cascade = CascadeType.ALL)
@@ -40,7 +41,7 @@ public class Portfolio {
     @JsonIgnore
     private Member member;
 
-    void addStock(Stock stock) {
+    public void addStock(Stock stock) {
         if (stocks == null)
             stocks = new ArrayList<>();
         remainingBudget -= stock.getCurrent()*stock.getAmount();
@@ -69,11 +70,14 @@ public class Portfolio {
         calculateProfit();
     }
 
-    void calculateProfit() {
+    public void calculateProfit() {
         totalValue = remainingBudget;
         for(Stock stock : stocks) {
-            totalValue += (stock.getAverage()*stock.getAmount() + stock.getProfit());
+            totalValue += (stock.getTotalValue());
         }
+
+        System.out.println(totalValue);
+        System.out.println(member.getRoom().getBudget());
         percentageIncrease = ((totalValue / member.getRoom().getBudget()) - 1) * 100;
     }
 

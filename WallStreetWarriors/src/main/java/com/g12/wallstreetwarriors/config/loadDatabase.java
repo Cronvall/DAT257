@@ -5,6 +5,7 @@ import com.g12.wallstreetwarriors.member.MemberRepository;
 import com.g12.wallstreetwarriors.portfolio.Portfolio;
 import com.g12.wallstreetwarriors.room.Room;
 import com.g12.wallstreetwarriors.room.RoomRepository;
+import com.g12.wallstreetwarriors.stock.Stock;
 import com.g12.wallstreetwarriors.user.User;
 import com.g12.wallstreetwarriors.user.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -64,21 +65,46 @@ public class loadDatabase {
             owner1.setUser(user1);
             owner1.setRoom(room1);
 
+            Stock aaplStock = new Stock();
+            aaplStock.setTicker("AAPL");
+            aaplStock.setCurrent(160f);
+            aaplStock.setAmount(10);
+            aaplStock.setAverage(160f);
+            aaplStock.calculateProfit();
+
+            Stock msftStock = new Stock();
+            msftStock.setTicker("MSFT");
+            msftStock.setCurrent(320f);
+            msftStock.setAmount(5);
+            msftStock.setAverage(320f);
+            msftStock.calculateProfit();
+
             Portfolio portfolio1 = new Portfolio();
             portfolio1.setRemainingBudget(room1.getBudget().floatValue());
-            portfolio1.setTotalValue((float)0);
+            portfolio1.setTotalValue(room1.getBudget().floatValue());
             portfolio1.setPercentageIncrease((float)0);
             owner1.setPortfolio(portfolio1);
             portfolio1.setMember(owner1);
+
+            portfolio1.addStock(aaplStock);
+            aaplStock.setCurrent(180f);
+            aaplStock.calculateProfit();
+
+            portfolio1.addStock(msftStock);
+            msftStock.setCurrent(310f);
+            msftStock.calculateProfit();
+
+            portfolio1.calculateProfit();
 
 
             Member owner2 = new Member();
             owner2.setUser(user2);
             owner2.setRoom(room2);
 
+
             Portfolio portfolio2 = new Portfolio();
             portfolio2.setRemainingBudget(room2.getBudget().floatValue());
-            portfolio2.setTotalValue((float)0);
+            portfolio2.setTotalValue(room2.getBudget().floatValue());
             portfolio2.setPercentageIncrease((float)0);
             owner2.setPortfolio(portfolio2);
             portfolio2.setMember(owner2);
@@ -89,8 +115,8 @@ public class loadDatabase {
             member1.setRoom(room2);
 
             Portfolio portfolio3 = new Portfolio();
-            portfolio3.setRemainingBudget(member1.getRoom().getBudget().floatValue());
-            portfolio3.setTotalValue((float)0);
+            portfolio3.setRemainingBudget(room2.getBudget().floatValue());
+            portfolio3.setTotalValue(room2.getBudget().floatValue());
             portfolio3.setPercentageIncrease((float)0);
             member1.setPortfolio(portfolio3);
             portfolio3.setMember(member1);
@@ -101,11 +127,24 @@ public class loadDatabase {
             member2.setRoom(room1);
 
             Portfolio portfolio4 = new Portfolio();
-            portfolio4.setRemainingBudget(member2.getRoom().getBudget().floatValue());
-            portfolio4.setTotalValue((float)0);
+            portfolio4.setRemainingBudget(room1.getBudget().floatValue());
+            portfolio4.setTotalValue(room1.getBudget().floatValue());
             portfolio4.setPercentageIncrease((float)0);
             member2.setPortfolio(portfolio4);
             portfolio4.setMember(member2);
+
+            Stock tslaStock = new Stock();
+            tslaStock.setTicker("TSLA");
+            tslaStock.setCurrent(200f);
+            tslaStock.setAmount(20);
+            tslaStock.setAverage(200f);
+            tslaStock.calculateProfit();
+
+            portfolio4.addStock(tslaStock);
+            tslaStock.setCurrent(167f);
+            tslaStock.calculateProfit();
+
+            portfolio4.calculateProfit();
 
 
             memberRepository.save(owner1);
