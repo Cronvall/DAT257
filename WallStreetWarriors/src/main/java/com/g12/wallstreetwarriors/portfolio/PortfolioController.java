@@ -35,11 +35,14 @@ public class PortfolioController {
     }
 
     @PutMapping("/{id}/stocks/buy")
+    @CrossOrigin(origins = "http://localhost:3000")
     ResponseEntity<Portfolio> buyStock(@PathVariable Long id, @RequestBody StockTransaction transaction) throws Exception {
+        System.out.println(transaction.amount());
         return ResponseEntity.ok(portfolioService.stockBuyOrder(id, transaction));
     }
 
     @PutMapping("/{id}/stocks/sell")
+    @CrossOrigin(origins = "http://localhost:3000")
     ResponseEntity<Portfolio> sellStock(@PathVariable Long id, @RequestBody StockTransaction transaction) throws Exception {
         return ResponseEntity.ok(portfolioService.stockSellOrder(id, transaction));
     }
