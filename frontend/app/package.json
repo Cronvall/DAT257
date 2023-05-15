@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.6.1",
+    "@emotion/react": "^11.11.0",
+    "@emotion/styled": "^11.11.0",
     "@nextui-org/react": "^1.0.0-beta.12",
     "@reactivers/hooks": "^1.0.15",
     "@types/node": "18.15.11",
@@ -19,6 +22,7 @@
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
     "formik": "^2.2.9",
+    "framer-motion": "^10.12.10",
     "next": "13.3.0",
     "react": "18.2.0",
     "react-datepicker": "^4.11.0",

@@ -3,6 +3,8 @@ package com.g12.wallstreetwarriors.stockApi;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 public class RequestStock {
 
@@ -24,8 +26,18 @@ public class RequestStock {
         this.exchange = stock.getMeta().getExchange();
         this.openPrice = Math.round((Double.parseDouble(stock.getValues().get(0).getOpen())) * 100.0) / 100.0;
         this.currentPrice = Math.round((Double.parseDouble(stock.getValues().get(0).getClose())) * 100.0) / 100.0;
-        this.todayChange = Math.round((currentPrice - openPrice) * 100.0) / 100.0;
-        this.todayProcent =  (Math.round((currentPrice/openPrice) * 100.0) / 100.0) - 1;
+
+        this.todayChange = currentPrice - openPrice;
+        DecimalFormat df = new DecimalFormat("####.##");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+        String formattedChange = df.format(todayChange);
+        this.todayChange = Double.parseDouble(formattedChange);
+
+
+        double todayProcent = ((currentPrice - openPrice) / openPrice) * 100;
+        String formattedProcent = df.format(todayProcent);
+        this.todayProcent = Double.parseDouble(formattedProcent);
+
 
         for (StockApi.StockValue d: stock.getValues()){
             this.historyPrices.add(Double.parseDouble(d.getClose()));
