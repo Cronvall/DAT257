@@ -17,7 +17,7 @@ const StockGraph: NextPage<stockgraph> = ({ prices,dates }) => {
 
   return (
     
-      <LineChart width={525} height={275} data={data} className={styles.chart}>
+      <LineChart width={720} height={275} data={data} className={styles.chart}>
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="date" />
       <YAxis />
