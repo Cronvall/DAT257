@@ -14,7 +14,7 @@ interface IBuyData {
     price: number;
   }
   interface buyRequest{
-    symbol: string;
+    ticker: string;
     price: number;
     amount?: number;
   }
@@ -46,6 +46,7 @@ const BuyStock: NextPage<IBuyData> = ({ticker,price,onClose}) => {
       const newPortfolios = response.data.reduce((acc: Option[], room: any) => {
         room.members.forEach((port: any) => {
           if (port.id.userId === getCurrentUser()?.id) {
+           
             const portfolioString: Option = {
               label: `${room.name}: ${port.portfolio.remainingBudget}$`,
               value: port.id.roomId
@@ -79,42 +80,44 @@ const BuyStock: NextPage<IBuyData> = ({ticker,price,onClose}) => {
    
     const buyButton = async () => {
       let transaction :buyRequest = {
-        symbol: ticker,
+        ticker : ticker,
         price: price,
         amount: amount
       }
-      
-      try {
-        axios
-        .put(`http://localhost:8080/api/portfolios/${defValue}/stocks/buy`,transaction )
-        .then((response: AxiosResponse) => {
-          console.log("Stock buy order successful", response.data);
-        })
-      } catch (error) {
-        console.log(error);
-        throw error;
-      }
+      console.log(transaction)
+      axios.put(`http://localhost:8080/api/portfolios/${defValue}/stocks/buy`, {
+        ticker : ticker,
+        price: price,
+        amount: amount
+    })
+    .then(res => {
+        console.log(res.data)
+        //Tempory solution since we don’t fetch the new state of the database
+        //router.reload();
+    })
+      LookupPortfolios()
       onClose()
     };
 
     const sellButton = async () => {
       let transaction :buyRequest = {
-        symbol: ticker,
+        ticker: ticker,
         price: price,
         amount: amount
       }
       
-      try {
-        axios
-        .put(`http://localhost:8080/api/portfolios/${defValue}/stocks/sell`,transaction )
-        .then((response: AxiosResponse) => {
-          console.log("Stock buy order successful", response.data);
-        })
-      } catch (error) {
-        console.log(error);
-        throw error;
-      }
-      
+      axios.put(`http://localhost:8080/api/portfolios/${defValue}/stocks/sell`, {
+        ticker : ticker,
+        price: price,
+        amount: amount
+    })
+    .then(res => {
+        console.log(res.data)
+        //Tempory solution since we don’t fetch the new state of the database
+        //router.reload();
+    })
+      LookupPortfolios()
+      onClose()
     };
   
 
