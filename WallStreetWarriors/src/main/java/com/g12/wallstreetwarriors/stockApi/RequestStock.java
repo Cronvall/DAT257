@@ -28,14 +28,16 @@ public class RequestStock {
         this.currentPrice = Math.round((Double.parseDouble(stock.getValues().get(0).getClose())) * 100.0) / 100.0;
 
         this.todayChange = currentPrice - openPrice;
-        DecimalFormat df = new DecimalFormat("####.##");
+        DecimalFormat df = new DecimalFormat("##.##");
         df.setRoundingMode(RoundingMode.HALF_UP);
         String formattedChange = df.format(todayChange);
+        formattedChange = formattedChange.replace(",", ".");
         this.todayChange = Double.parseDouble(formattedChange);
 
 
         double todayProcent = ((currentPrice - openPrice) / openPrice) * 100;
         String formattedProcent = df.format(todayProcent);
+        formattedProcent = formattedProcent.replace(",", ".");
         this.todayProcent = Double.parseDouble(formattedProcent);
 
 
