@@ -41,6 +41,7 @@ public class PortfolioController {
     }
 
     @PutMapping("/{id}/stocks/sell")
+    @CrossOrigin(origins = "http://localhost:3000")
     ResponseEntity<Portfolio> sellStock(@PathVariable Long id, @RequestBody StockTransaction transaction) throws Exception {
         return ResponseEntity.ok(portfolioService.stockSellOrder(id, transaction));
     }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Input } from "@nextui-org/react";
 import axios from "axios";
-import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { Legend, Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import Router, { useRouter } from "next/router";
 
 
@@ -64,7 +64,7 @@ const BuyStock = (props: IProps) => {
             .then(res => {
                 console.log(res.data)
                 //Tempory solution since we don't fetch the new state of the database
-                router.reload();
+                //router.reload();
             })
         }
         catch(e){
@@ -76,8 +76,8 @@ const BuyStock = (props: IProps) => {
     const chartElements = () => {
         const trend = (array: number[]) =>(array[array.length - 1] - array[0]) / array.length;
         const trendData = currentStock?.historyPrices.map((x,i) => ({
-            ev: i*trend(currentStock?.historyPrices)+currentStock?.historyPrices[0],
-            pv: x
+            trend: i*trend(currentStock?.historyPrices)+currentStock?.historyPrices[0],
+            price: x
         }))
         const min = currentStock !== undefined ? Math.min(...currentStock?.historyPrices) : 0;
         const max = currentStock !== undefined ? Math.max(...currentStock?.historyPrices) : 100;
@@ -87,22 +87,25 @@ const BuyStock = (props: IProps) => {
                 alignItems: "center",
                 width: "100%",
                 height: "75%",
+                minHeight: "20rem",
+                padding: "1.5rem",
             }}
             aria-label="stockChartContainer">
                 <ResponsiveContainer width="100%" height="100%" aria-label="stockChart">
                 <LineChart
                 width={500}
-                height={300}
+                height={500}
                 data={trendData}
                 aria-label="stockChart"
                 >
+                    <Legend />
                     <XAxis dataKey="name" />
                     <YAxis 
                         type="number" 
                         domain={[min, max]}
                     />
-                    <Line type="monotone" dataKey="pv" stroke="#82CA9D" dot={false}/>
-                    <Line type="monotone" dataKey="ev" stroke="#DEC018" strokeDasharray="2 2" dot={false}/>
+                    <Line type="monotone" dataKey="price" stroke="#82CA9D" dot={false}/>
+                    <Line type="monotone" dataKey="trend" stroke="#DEC018" strokeDasharray="2 2" dot={false}/>
                 </LineChart>
                 </ResponsiveContainer>
             </div>
@@ -118,7 +121,6 @@ const BuyStock = (props: IProps) => {
                     alignItems: "center",
                     width: "100%",
                     height: "75%",
-                    padding: "0.5rem",
                 }}
                 aria-label="stockContainer">
                     <div style={{
@@ -131,7 +133,7 @@ const BuyStock = (props: IProps) => {
                         <h1 style={{
                             fontSize: "1.5rem",
                             fontWeight: "bold",
-                            padding: "2rem",
+                            padding: "1rem",
                         }}
                         aria-label="stockName">
                             {currentStock?.symbol}
@@ -171,15 +173,14 @@ const BuyStock = (props: IProps) => {
         <div style={{
             display: "flex",
             flexDirection: "column",
-            height: "30vh",
             width: "50vw",
             borderRadius: "10px",
             backgroundColor: "#f5f5f5",
             boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.3)",
-            margin: "2rem",
             alignItems:"flex-start",
             minWidth: "35rem",
-            maxWidth: "50rem"
+            maxWidth: "525px",
+            minHeight: "25rem",
         }}
         aria-label="mainContainer">
             <div style={{
