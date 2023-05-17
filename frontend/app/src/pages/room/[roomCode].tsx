@@ -15,6 +15,8 @@ import MyStats from "./components/myStats";
 import Footer from "@/components/footer";
 import IRoom from "./interfaces/IRoom";
 import IStock from "./interfaces/IStock";
+import BuyStock from "./components/buyStock";
+import OthersStocks from "./components/othersStocks";
 
 const Room: NextPage = () => {
 
@@ -23,6 +25,7 @@ const Room: NextPage = () => {
   const [currentUser, setCurrentUser] = useState<IUser | undefined>(undefined);
   const [roomData, setRoomData] = useState<IRoom | undefined>(undefined);
   const [currentUserPortfolio, setCurrentUserPortfolio] = useState<IStock[]>([]);
+  const [currentPortfolioId, setCurrentPortfolioId] = useState<number | undefined>(undefined);
   const [members, setMembers] = useState<IMember[] | undefined>([]);
 
 
@@ -58,6 +61,7 @@ const Room: NextPage = () => {
     roomData?.members.forEach(member => {
       if(member.id.userId === currentUser?.id){
         setCurrentUserPortfolio(member.portfolio.stocks);
+        setCurrentPortfolioId(member.portfolio.id);
       }
     });
     setMembers(roomData?.members);
@@ -90,8 +94,10 @@ const Room: NextPage = () => {
                   className={style.chartContainer}
                   xs={12} sm={12} md={12} lg={6} xl={6}
                 >
-                  <h2>Performance</h2>
-                  <LeagueChart/>
+                  <h2>Stock Finder</h2>
+                  <BuyStock portfolioId={
+                    roomData?.members.find(member => member.id.userId === currentUser?.id)?.portfolio.id
+                  }/>
                 </Grid>
                 <Grid
                   className={style.memberContainer}
@@ -99,14 +105,13 @@ const Room: NextPage = () => {
                 >
 
                   <h2>{currentUser?.username} Portfolio</h2>
-                  <StocksTable stocks={currentUserPortfolio}/>
+                  <StocksTable stocks={currentUserPortfolio} currentPortfolio={currentPortfolioId || 0}/>
                 </Grid>
                 <Grid
                   className={style.memberContainer}
                   xs={12} sm={12} md={12} lg={6} xl={6}
                 >
-                  <h2>My Stats</h2>
-                  <MyStats/>
+                  <OthersStocks members={roomData?.members || []}/>
                 </Grid>
 
               </Grid.Container>

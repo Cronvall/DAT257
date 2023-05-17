@@ -2,6 +2,7 @@ import React from 'react';
 import { Table, Link } from '@nextui-org/react'
 import IMember from '../interfaces/IMember';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 interface Iprops {
     users?: IMember[] | undefined;
@@ -11,6 +12,7 @@ interface Iprops {
 
 const MembersLeaderboard = (props: Iprops) => {
 
+    const router = useRouter();
 
     const tableColumns = [
         { name: "Username", selector: "username", sortable: true, type: "string" },
@@ -25,7 +27,6 @@ const MembersLeaderboard = (props: Iprops) => {
         try{
             axios.get(`http://localhost:8080/api/users/${userId}`).
             then(res => {
-                console.log("received username",res.data.username);
                 return res.data.username;
             })
         }
@@ -50,11 +51,11 @@ const MembersLeaderboard = (props: Iprops) => {
             case "portfolioValue":
                 return(
                     <span>
-                     {"$" + (row.portfolio.totalValue + row.portfolio.remainingBudget)}
+                     {"$" + (row.portfolio.totalValue)}
                      </span>);
 
             case "growth":
-                let value = ((row.portfolio.totalValue + row.portfolio.remainingBudget)/
+                let value = ((row.portfolio.totalValue)/
                 (props.budget || 1) * 100 - 100);
                 return(
                     <span style={value >= 0 ? {color: "#6fe3b4"} : {color: "#ff6961"}}>
@@ -90,7 +91,8 @@ const MembersLeaderboard = (props: Iprops) => {
                     {(item) => (
                         <Table.Row key={item.id.userId} css={{marginBottom: "5rem"}}>
                           {(columnKey) => (
-                            <Table.Cell key={columnKey}> {renderCell(item, columnKey)} </Table.Cell>
+                            <Table.Cell key={columnKey}> { renderCell(item, columnKey) } 
+                            </Table.Cell>
                           )}  
                           </Table.Row>
                     )}

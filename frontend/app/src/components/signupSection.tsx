@@ -19,11 +19,25 @@ const SignupSection = (props : {router: NextRouter}) => {
 
     // should be dynamic and depending on if user is signed in or not
     const [enterLeagueCode, setEnterLeagueCode] = useState(false);
+    const [myLeagues, setMyLeagues] = useState<[]>([]);
 
 
     useEffect(() => {
         setSignedIn(!!getCurrentUser()?.username);
-    
+    }, []);
+
+    useEffect(() => {
+        try{
+            axios.get("http://localhost:8080/api/rooms",{
+                params: {userId: getCurrentUser()?.id}
+            })
+            .then((response) => {
+                setMyLeagues(response.data)
+            })
+        }
+        catch(e){
+            console.log(e)
+        }
     }, []);
 
     const handleJoinRoom = async () => {
@@ -46,6 +60,38 @@ const SignupSection = (props : {router: NextRouter}) => {
 
         router.push(`/room/${roomCode}`,)
       };
+
+
+      const joinedLeaguesElement = () => {
+
+
+
+        return (
+            <div style={{
+                display: myLeagues.length > 0 ? "block" : "none",
+                textAlign: "center"
+            }}>
+                <h1>Joined Leagues</h1>
+                <div style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    flexWrap: "wrap",
+                    gap: "1rem",
+                    marginTop: "2rem"
+                }}>
+                    {
+                        myLeagues.map((league: any, index: number) => (
+                            <HoloButton
+                                width="12rem" height={"4rem"}
+                                onClick={() => router.push(`/room/${league.code}`)}
+                                txt={league.name}
+                            />
+                        ))
+                    }
+                </div>
+            </div>
+        )
+    };
 
     return (
         <div className={styles.mainContainer}>
@@ -112,6 +158,11 @@ const SignupSection = (props : {router: NextRouter}) => {
                     <></>
                 }
             </div>
+            {
+                signedIn ?
+                joinedLeaguesElement()
+                : <></>
+            }
         </div>
     );
 };
