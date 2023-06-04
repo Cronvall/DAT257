@@ -7,6 +7,7 @@ A web application to educate people about the stock market by letting users comp
 - Backend code: /WallStreetWarriors/src (Java spring boot)
 - Deliverables are located in: /Deliverables
 - Kanban board: See __Project__ tab above
+- Stock data/api from Twelvedata: https://twelvedata.com/
 
 Authors:
 - Moritz Berger
