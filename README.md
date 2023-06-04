@@ -1,5 +1,22 @@
 # DAT257
-Group 12's project in DAT257
+Group 12's project in DAT257.
+A project created in the course Agile Software Project Management at Chalmers University of Technology.
+A web application to educate people about the stock market by letting users compete against each other with fictional stock portfolios updated with real-time stock data in a safe environment.
+
+- Frontend code: /frontend/app/src (React, TS and Next.js)
+- Backend code: /WallStreetWarriors/src (Java spring boot)
+- Deliverables are located in: /Deliverables
+- Kanban board: See __Project__ tab above
+
+Authors:
+- Moritz Berger
+- Oscar Cronvall
+- Keivan Habibi
+- Isac Hansson
+- Johannes Johansson
+- Oscar Julsgård
+- Fabian Kaneby
+- Adam Westberg
 
 # How start development environment
 
